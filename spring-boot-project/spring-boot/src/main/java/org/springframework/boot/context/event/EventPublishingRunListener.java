@@ -135,11 +135,13 @@ class EventPublishingRunListener implements SpringApplicationRunListener, Ordere
 				}
 			}
 			this.initialMulticaster.setErrorHandler(new LoggingErrorHandler());
+			logger.info("[SPRING-BOOT] 自定义日志---发布事件（广播）：ApplicationFailedEvent");
 			this.initialMulticaster.multicastEvent(event);
 		}
 	}
 
 	private void multicastInitialEvent(ApplicationEvent event) {
+		logger.info("[SPRING-BOOT] 自定义日志---发布事件中（广播）："+event.getClass().getName()+"，timestamp："+event.getTimestamp());
 		refreshApplicationListeners();
 		this.initialMulticaster.multicastEvent(event);
 	}

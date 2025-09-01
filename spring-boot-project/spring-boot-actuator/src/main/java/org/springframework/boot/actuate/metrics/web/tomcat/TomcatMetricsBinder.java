@@ -32,7 +32,8 @@ import org.springframework.boot.web.embedded.tomcat.TomcatWebServer;
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * Binds {@link TomcatMetrics} in response to the {@link ApplicationStartedEvent}.
  *
@@ -40,7 +41,7 @@ import org.springframework.context.ApplicationListener;
  * @since 2.1.0
  */
 public class TomcatMetricsBinder implements ApplicationListener<ApplicationStartedEvent>, DisposableBean {
-
+	private static final Log logger = LogFactory.getLog(TomcatMetricsBinder.class);
 	private final MeterRegistry meterRegistry;
 
 	private final Iterable<Tag> tags;
@@ -58,6 +59,7 @@ public class TomcatMetricsBinder implements ApplicationListener<ApplicationStart
 
 	@Override
 	public void onApplicationEvent(ApplicationStartedEvent event) {
+		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationStartedEvent，timestamp："+event.getTimestamp());
 		ApplicationContext applicationContext = event.getApplicationContext();
 		Manager manager = findManager(applicationContext);
 		this.tomcatMetrics = new TomcatMetrics(manager, this.tags);

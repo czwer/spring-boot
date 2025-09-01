@@ -24,7 +24,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.security.authorization.event.AuthorizationDeniedEvent;
 import org.springframework.security.authorization.event.AuthorizationEvent;
 import org.springframework.security.authorization.event.AuthorizationGrantedEvent;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * Abstract {@link ApplicationListener} to expose Spring Security
  * {@link AuthorizationDeniedEvent authorization denied} and
@@ -36,6 +37,7 @@ import org.springframework.security.authorization.event.AuthorizationGrantedEven
  */
 public abstract class AbstractAuthorizationAuditListener
 		implements ApplicationListener<AuthorizationEvent>, ApplicationEventPublisherAware {
+	private static final Log logger = LogFactory.getLog(AbstractAuthorizationAuditListener.class);
 
 	private ApplicationEventPublisher publisher;
 
@@ -50,6 +52,7 @@ public abstract class AbstractAuthorizationAuditListener
 
 	protected void publish(AuditEvent event) {
 		if (getPublisher() != null) {
+			logger.info("[SPRING-BOOT] 自定义日志---发布事件：AuditApplicationEvent");
 			getPublisher().publishEvent(new AuditApplicationEvent(event));
 		}
 	}

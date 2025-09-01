@@ -37,7 +37,7 @@ import org.springframework.util.Assert;
  */
 public class ApplicationAvailabilityBean
 		implements ApplicationAvailability, ApplicationListener<AvailabilityChangeEvent<?>> {
-
+	private static final Log logger2 = LogFactory.getLog(ApplicationAvailabilityBean.class);
 	private final Map<Class<? extends AvailabilityState>, AvailabilityChangeEvent<?>> events = new ConcurrentHashMap<>();
 
 	private final Log logger;
@@ -72,6 +72,7 @@ public class ApplicationAvailabilityBean
 
 	@Override
 	public void onApplicationEvent(AvailabilityChangeEvent<?> event) {
+		logger2.info("[SPRING-BOOT] 自定义日志---监听到事件：AvailabilityChangeEvent，timestamp："+event.getTimestamp());
 		Class<? extends AvailabilityState> type = getStateType(event.getState());
 		if (this.logger.isDebugEnabled()) {
 			this.logger.debug(getLogMessage(type, event));

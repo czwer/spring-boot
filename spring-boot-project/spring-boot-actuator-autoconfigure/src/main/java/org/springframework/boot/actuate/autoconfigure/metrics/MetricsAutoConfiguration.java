@@ -35,7 +35,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.core.annotation.Order;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link EnableAutoConfiguration Auto-configuration} for Micrometer-based metrics.
  *
@@ -80,6 +81,7 @@ public class MetricsAutoConfiguration {
 	 * shutdown process.
 	 */
 	static class MeterRegistryCloser implements ApplicationListener<ContextClosedEvent> {
+		private static final Log logger = LogFactory.getLog(MeterRegistryCloser.class);
 
 		private final List<MeterRegistry> meterRegistries;
 
@@ -89,6 +91,7 @@ public class MetricsAutoConfiguration {
 
 		@Override
 		public void onApplicationEvent(ContextClosedEvent event) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ContextClosedEvent，timestamp："+event.getTimestamp());
 			for (MeterRegistry meterRegistry : this.meterRegistries) {
 				if (!meterRegistry.isClosed()) {
 					meterRegistry.close();

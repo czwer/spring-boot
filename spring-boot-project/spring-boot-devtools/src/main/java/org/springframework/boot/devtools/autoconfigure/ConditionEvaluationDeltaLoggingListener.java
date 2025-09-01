@@ -45,6 +45,7 @@ class ConditionEvaluationDeltaLoggingListener
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
+		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationReadyEvent，timestamp："+event.getTimestamp());
 		if (!event.getApplicationContext().equals(this.context)) {
 			return;
 		}

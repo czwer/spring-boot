@@ -76,7 +76,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.util.function.ThrowingSupplier;
 import org.springframework.web.context.ConfigurableWebApplicationContext;
 import org.springframework.web.context.support.GenericWebApplicationContext;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * A {@link ContextLoader} that can be used to test Spring Boot applications (those that
  * normally startup using {@link SpringApplication}). Although this loader can be used
@@ -480,7 +481,7 @@ public class SpringBootContextLoader extends AbstractContextLoader implements Ao
 	 */
 	private class PrepareEnvironmentListener
 			implements ApplicationListener<ApplicationEnvironmentPreparedEvent>, PriorityOrdered {
-
+		private static final Log logger2 = LogFactory.getLog(PrepareEnvironmentListener.class);
 		private final MergedContextConfiguration mergedConfig;
 
 		PrepareEnvironmentListener(MergedContextConfiguration mergedConfig) {
@@ -494,6 +495,7 @@ public class SpringBootContextLoader extends AbstractContextLoader implements Ao
 
 		@Override
 		public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
+			logger2.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEnvironmentPreparedEvent，timestamp："+event.getTimestamp());
 			prepareEnvironment(this.mergedConfig, event.getSpringApplication(), event.getEnvironment(), true);
 		}
 

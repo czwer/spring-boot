@@ -34,7 +34,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.core.env.Environment;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link ApplicationListener} that listens for an {@link DockerComposeServicesReadyEvent}
  * in order to establish service connections.
@@ -45,7 +46,7 @@ import org.springframework.util.StringUtils;
  */
 class DockerComposeServiceConnectionsApplicationListener
 		implements ApplicationListener<DockerComposeServicesReadyEvent> {
-
+	private static final Log logger = LogFactory.getLog(DockerComposeServiceConnectionsApplicationListener.class);
 	private final ConnectionDetailsFactories factories;
 
 	DockerComposeServiceConnectionsApplicationListener() {
@@ -58,6 +59,7 @@ class DockerComposeServiceConnectionsApplicationListener
 
 	@Override
 	public void onApplicationEvent(DockerComposeServicesReadyEvent event) {
+		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：DockerComposeServicesReadyEvent，timestamp："+event.getTimestamp());
 		ApplicationContext applicationContext = event.getSource();
 		if (applicationContext instanceof BeanDefinitionRegistry registry) {
 			Environment environment = applicationContext.getEnvironment();

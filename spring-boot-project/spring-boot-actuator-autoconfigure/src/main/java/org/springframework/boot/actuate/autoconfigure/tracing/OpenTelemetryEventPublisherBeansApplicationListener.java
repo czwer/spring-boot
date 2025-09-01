@@ -37,6 +37,8 @@ import org.springframework.core.ResolvableType;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * {@link ApplicationListener} to add an OpenTelemetry {@link ContextStorage} wrapper for
@@ -52,6 +54,8 @@ import org.springframework.util.MultiValueMap;
  * @see OpenTelemetryEventPublisherBeansTestExecutionListener
  */
 public class OpenTelemetryEventPublisherBeansApplicationListener implements GenericApplicationListener {
+
+	private static final Log logger = LogFactory.getLog(OpenTelemetryEventPublisherBeansApplicationListener.class);
 
 	private static final boolean OTEL_CONTEXT_PRESENT = ClassUtils.isPresent("io.opentelemetry.context.ContextStorage",
 			null);
@@ -80,9 +84,11 @@ public class OpenTelemetryEventPublisherBeansApplicationListener implements Gene
 			return;
 		}
 		if (event instanceof ApplicationStartingEvent) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationStartingEvent)，timestamp："+event.getTimestamp());
 			addWrapper();
 		}
 		if (event instanceof ContextRefreshedEvent contextRefreshedEvent) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ContextRefreshedEvent)，timestamp："+event.getTimestamp());
 			ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();
 			List<EventPublishingContextWrapper> publishers = applicationContext
 				.getBeansOfType(EventPublisher.class, true, false)
@@ -93,6 +99,7 @@ public class OpenTelemetryEventPublisherBeansApplicationListener implements Gene
 			Wrapper.instance.put(applicationContext, publishers);
 		}
 		if (event instanceof ContextClosedEvent contextClosedEvent) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ContextClosedEvent)，timestamp："+event.getTimestamp());
 			Wrapper.instance.remove(contextClosedEvent.getApplicationContext());
 		}
 	}

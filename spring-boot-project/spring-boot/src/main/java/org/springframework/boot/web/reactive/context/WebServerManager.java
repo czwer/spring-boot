@@ -27,7 +27,8 @@ import org.springframework.http.server.reactive.HttpHandler;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.util.Assert;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * Internal class used to manage the server and the {@link HttpHandler}, taking care not
  * to initialize the handler too early.
@@ -35,7 +36,7 @@ import org.springframework.util.Assert;
  * @author Andy Wilkinson
  */
 class WebServerManager {
-
+	private static final Log logger = LogFactory.getLog(WebServerManager.class);
 	private final ReactiveWebServerApplicationContext applicationContext;
 
 	private final DelayedInitializationHttpHandler handler;
@@ -53,6 +54,7 @@ class WebServerManager {
 	void start() {
 		this.handler.initializeHandler();
 		this.webServer.start();
+		logger.info("[SPRING-BOOT] 自定义日志---发布事件：ReactiveWebServerInitializedEvent");
 		this.applicationContext
 			.publishEvent(new ReactiveWebServerInitializedEvent(this.webServer, this.applicationContext));
 	}

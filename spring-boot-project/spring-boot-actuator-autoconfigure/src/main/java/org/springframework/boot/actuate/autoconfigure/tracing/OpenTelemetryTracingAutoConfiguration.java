@@ -195,6 +195,7 @@ public class OpenTelemetryTracingAutoConfiguration {
 
 		@Override
 		public void publishEvent(Object event) {
+			logger.info("[SPRING-BOOT] 自定义日志---发布事件："+event.getClass().getName());
 			for (EventListener listener : this.listeners) {
 				listener.onEvent(event);
 			}

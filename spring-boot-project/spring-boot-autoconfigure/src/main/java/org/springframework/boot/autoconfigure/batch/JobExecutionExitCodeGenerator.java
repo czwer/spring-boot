@@ -22,7 +22,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.context.ApplicationListener;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link ExitCodeGenerator} for {@link JobExecutionEvent}s.
  *
@@ -30,11 +31,13 @@ import org.springframework.context.ApplicationListener;
  * @since 1.0.0
  */
 public class JobExecutionExitCodeGenerator implements ApplicationListener<JobExecutionEvent>, ExitCodeGenerator {
+	private static final Log logger = LogFactory.getLog(JobExecutionExitCodeGenerator.class);
 
 	private final List<JobExecution> executions = new CopyOnWriteArrayList<>();
 
 	@Override
 	public void onApplicationEvent(JobExecutionEvent event) {
+		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：JobExecutionEvent，timestamp："+event.getTimestamp());
 		this.executions.add(event.getJobExecution());
 	}
 

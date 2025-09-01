@@ -48,7 +48,8 @@ import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.javapoet.ClassName;
 import org.springframework.util.Assert;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link SmartLifecycle} used to initialize the management context when it's running on a
  * different port.
@@ -57,6 +58,9 @@ import org.springframework.util.Assert;
  * @author Phillip Webb
  */
 class ChildManagementContextInitializer implements BeanRegistrationAotProcessor, SmartLifecycle {
+
+	private static final Log logger = LogFactory.getLog(ChildManagementContextInitializer.class);
+
 
 	private final ManagementContextFactory managementContextFactory;
 
@@ -225,11 +229,13 @@ class ChildManagementContextInitializer implements BeanRegistrationAotProcessor,
 		@Override
 		public void onApplicationEvent(ApplicationEvent event) {
 			if (event instanceof ApplicationFailedEvent applicationFailedEvent) {
+				logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationFailedEvent)，timestamp："+event.getTimestamp());
 				onApplicationFailedEvent(applicationFailedEvent);
 			}
 		}
 
 		private void onApplicationFailedEvent(ApplicationFailedEvent event) {
+
 			propagateCloseIfNecessary(event.getApplicationContext());
 		}
 

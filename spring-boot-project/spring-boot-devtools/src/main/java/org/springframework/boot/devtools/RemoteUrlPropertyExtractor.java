@@ -30,7 +30,8 @@ import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.PropertySource;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link ApplicationListener} to extract the remote URL for the
  * {@link RemoteSpringApplication} to use.
@@ -39,11 +40,13 @@ import org.springframework.util.StringUtils;
  * @author Andy Wilkinson
  */
 class RemoteUrlPropertyExtractor implements ApplicationListener<ApplicationEnvironmentPreparedEvent>, Ordered {
+	private static final Log logger = LogFactory.getLog(RemoteUrlPropertyExtractor.class);
 
 	private static final String NON_OPTION_ARGS = CommandLinePropertySource.DEFAULT_NON_OPTION_ARGS_PROPERTY_NAME;
 
 	@Override
 	public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
+		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEnvironmentPreparedEvent，timestamp："+event.getTimestamp());
 		ConfigurableEnvironment environment = event.getEnvironment();
 		String url = cleanRemoteUrl(environment.getProperty(NON_OPTION_ARGS));
 		Assert.state(StringUtils.hasLength(url), "No remote URL specified");

@@ -18,7 +18,8 @@ package org.springframework.boot.actuate.audit.listener;
 
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.context.ApplicationListener;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * Abstract {@link ApplicationListener} to handle {@link AuditApplicationEvent}s.
  *
@@ -27,8 +28,11 @@ import org.springframework.context.ApplicationListener;
  */
 public abstract class AbstractAuditListener implements ApplicationListener<AuditApplicationEvent> {
 
+	private static final Log logger = LogFactory.getLog(AbstractAuditListener.class);
+
 	@Override
 	public void onApplicationEvent(AuditApplicationEvent event) {
+		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：AuditApplicationEvent，timestamp："+event.getTimestamp());
 		onAuditEvent(event.getAuditEvent());
 	}
 

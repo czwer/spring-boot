@@ -46,7 +46,8 @@ import org.springframework.core.PriorityOrdered;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link ApplicationContextInitializer} to create a shared
  * {@link CachingMetadataReaderFactory} between the
@@ -191,6 +192,8 @@ class SharedMetadataReaderFactoryContextInitializer implements
 			implements FactoryBean<ConcurrentReferenceCachingMetadataReaderFactory>, ResourceLoaderAware,
 			ApplicationListener<ContextRefreshedEvent> {
 
+		private static final Log logger = LogFactory.getLog(SharedMetadataReaderFactoryBean.class);
+
 		private ConcurrentReferenceCachingMetadataReaderFactory metadataReaderFactory;
 
 		@Override
@@ -215,6 +218,7 @@ class SharedMetadataReaderFactoryContextInitializer implements
 
 		@Override
 		public void onApplicationEvent(ContextRefreshedEvent event) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ContextRefreshedEvent，timestamp："+event.getTimestamp());
 			this.metadataReaderFactory.clearCache();
 		}
 

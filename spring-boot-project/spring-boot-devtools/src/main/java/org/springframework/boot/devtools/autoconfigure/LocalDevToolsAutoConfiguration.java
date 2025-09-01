@@ -99,6 +99,7 @@ public class LocalDevToolsAutoConfiguration {
 	@ConditionalOnBooleanProperty(name = "spring.devtools.restart.enabled", matchIfMissing = true)
 	static class RestartConfiguration {
 
+
 		private final DevToolsProperties properties;
 
 		RestartConfiguration(DevToolsProperties properties) {
@@ -158,6 +159,7 @@ public class LocalDevToolsAutoConfiguration {
 	}
 
 	static class LiveReloadServerEventListener implements GenericApplicationListener {
+		private static final Log logger = LogFactory.getLog(LiveReloadServerEventListener.class);
 
 		private final OptionalLiveReloadServer liveReloadServer;
 
@@ -184,6 +186,7 @@ public class LocalDevToolsAutoConfiguration {
 		public void onApplicationEvent(ApplicationEvent event) {
 			if (event instanceof ContextRefreshedEvent || (event instanceof ClassPathChangedEvent classPathChangedEvent
 					&& !classPathChangedEvent.isRestartRequired())) {
+				logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ContextRefreshedEvent or ClassPathChangedEvent)，timestamp："+event.getTimestamp());
 				this.liveReloadServer.triggerReload();
 			}
 		}
@@ -207,6 +210,7 @@ public class LocalDevToolsAutoConfiguration {
 
 		@Override
 		public void onApplicationEvent(ClassPathChangedEvent event) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ClassPathChangedEvent，timestamp："+event.getTimestamp());
 			if (event.isRestartRequired()) {
 				logger.info(LogMessage.format("Restarting due to %s", event.overview()));
 				logger.debug(LogMessage.format("Change set: %s", event.getChangeSet()));

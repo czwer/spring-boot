@@ -23,6 +23,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.Ordered;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * {@link ApplicationContextInitializer} for setting the parent context. Also publishes
@@ -34,7 +36,7 @@ import org.springframework.core.Ordered;
  */
 public class ParentContextApplicationContextInitializer
 		implements ApplicationContextInitializer<ConfigurableApplicationContext>, Ordered {
-
+    private static final Log logger = LogFactory.getLog(ParentContextApplicationContextInitializer.class);
 	private int order = Ordered.HIGHEST_PRECEDENCE;
 
 	private final ApplicationContext parent;
@@ -74,6 +76,7 @@ public class ParentContextApplicationContextInitializer
 			ApplicationContext context = event.getApplicationContext();
 			if (context instanceof ConfigurableApplicationContext configurableApplicationContext
 					&& context == event.getSource()) {
+				logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ContextRefreshedEvent(ConfigurableApplicationContext)，timestamp："+event.getTimestamp()+"，转换成发布事件：ParentContextAvailableEvent");
 				context.publishEvent(new ParentContextAvailableEvent(configurableApplicationContext));
 			}
 		}

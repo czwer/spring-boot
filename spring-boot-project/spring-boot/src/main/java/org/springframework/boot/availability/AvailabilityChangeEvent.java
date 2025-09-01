@@ -22,7 +22,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.PayloadApplicationEvent;
 import org.springframework.core.ResolvableType;
 import org.springframework.util.Assert;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link ApplicationEvent} sent when the {@link AvailabilityState} of the application
  * changes.
@@ -35,7 +36,7 @@ import org.springframework.util.Assert;
  * @since 2.3.0
  */
 public class AvailabilityChangeEvent<S extends AvailabilityState> extends PayloadApplicationEvent<S> {
-
+	private static final Log logger = LogFactory.getLog(AvailabilityChangeEvent.class);
 	/**
 	 * Create a new {@link AvailabilityChangeEvent} instance.
 	 * @param source the source of the event
@@ -89,6 +90,7 @@ public class AvailabilityChangeEvent<S extends AvailabilityState> extends Payloa
 	public static <S extends AvailabilityState> void publish(ApplicationEventPublisher publisher, Object source,
 			S state) {
 		Assert.notNull(publisher, "'publisher' must not be null");
+		logger.info("[SPRING-BOOT] 自定义日志---发布事件：AvailabilityChangeEvent");
 		publisher.publishEvent(new AvailabilityChangeEvent<>(source, state));
 	}
 

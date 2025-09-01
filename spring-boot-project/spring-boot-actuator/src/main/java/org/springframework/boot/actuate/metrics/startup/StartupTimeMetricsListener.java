@@ -30,7 +30,8 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.event.SmartApplicationListener;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * Binds application startup metrics in response to {@link ApplicationStartedEvent} and
  * {@link ApplicationReadyEvent}.
@@ -40,7 +41,7 @@ import org.springframework.context.event.SmartApplicationListener;
  * @since 2.6.0
  */
 public class StartupTimeMetricsListener implements SmartApplicationListener {
-
+	private static final Log logger = LogFactory.getLog(StartupTimeMetricsListener.class);
 	/**
 	 * The default name to use for the application started time metric.
 	 */
@@ -95,9 +96,11 @@ public class StartupTimeMetricsListener implements SmartApplicationListener {
 	@Override
 	public void onApplicationEvent(ApplicationEvent event) {
 		if (event instanceof ApplicationStartedEvent startedEvent) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationStartedEvent)，timestamp："+event.getTimestamp());
 			onApplicationStarted(startedEvent);
 		}
 		if (event instanceof ApplicationReadyEvent readyEvent) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationReadyEvent)，timestamp："+event.getTimestamp());
 			onApplicationReady(readyEvent);
 		}
 	}

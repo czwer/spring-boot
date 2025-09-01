@@ -21,16 +21,18 @@ import java.lang.reflect.Method;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.util.ReflectionUtils;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link ApplicationListener} to cleanup caches once the context is loaded.
  *
  * @author Phillip Webb
  */
 class ClearCachesApplicationListener implements ApplicationListener<ContextRefreshedEvent> {
-
+	private static final Log logger = LogFactory.getLog(ClearCachesApplicationListener.class);
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
+		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ContextRefreshedEvent，timestamp："+event.getTimestamp());
 		ReflectionUtils.clearCache();
 		clearClassLoaderCaches(Thread.currentThread().getContextClassLoader());
 	}

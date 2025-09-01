@@ -209,6 +209,7 @@ public class JobLauncherApplicationRunner
 		JobParameters parameters = getNextJobParameters(job, jobParameters);
 		JobExecution execution = this.jobLauncher.run(job, parameters);
 		if (this.publisher != null) {
+			logger.info("[SPRING-BOOT] 自定义日志---发布事件：JobExecutionEvent");
 			this.publisher.publishEvent(new JobExecutionEvent(execution));
 		}
 	}

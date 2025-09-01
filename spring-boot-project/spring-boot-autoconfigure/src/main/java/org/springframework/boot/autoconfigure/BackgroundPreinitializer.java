@@ -37,7 +37,8 @@ import org.springframework.core.Ordered;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link ApplicationListener} to trigger early initialization in a background thread of
  * time-consuming tasks.
@@ -53,7 +54,7 @@ import org.springframework.http.converter.support.AllEncompassingFormHttpMessage
  * @since 1.3.0
  */
 public class BackgroundPreinitializer implements ApplicationListener<SpringApplicationEvent>, Ordered {
-
+	private static final Log logger = LogFactory.getLog(BackgroundPreinitializer.class);
 	/**
 	 * System property that instructs Spring Boot how to run pre initialization. When the
 	 * property is set to {@code true}, no pre-initialization happens and each item is
@@ -82,11 +83,13 @@ public class BackgroundPreinitializer implements ApplicationListener<SpringAppli
 		}
 		if (event instanceof ApplicationEnvironmentPreparedEvent
 				&& preinitializationStarted.compareAndSet(false, true)) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：SpringApplicationEvent(ApplicationEnvironmentPreparedEvent)，timestamp："+event.getTimestamp());
 			performPreinitialization();
 		}
 		if ((event instanceof ApplicationReadyEvent || event instanceof ApplicationFailedEvent)
 				&& preinitializationStarted.get()) {
 			try {
+				logger.info("[SPRING-BOOT] 自定义日志---监听到事件：SpringApplicationEvent(ApplicationReadyEvent or ApplicationFailedEvent)，timestamp："+event.getTimestamp());
 				preinitializationComplete.await();
 			}
 			catch (InterruptedException ex) {

@@ -24,7 +24,8 @@ import org.springframework.boot.env.EnvironmentPostProcessorApplicationListener;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * An {@link ApplicationListener} that configures {@link AnsiOutput} depending on the
  * value of the property {@code spring.output.ansi.enabled}. See {@link Enabled} for valid
@@ -36,9 +37,11 @@ import org.springframework.core.env.ConfigurableEnvironment;
  */
 public class AnsiOutputApplicationListener
 		implements ApplicationListener<ApplicationEnvironmentPreparedEvent>, Ordered {
+	private static final Log logger = LogFactory.getLog(AnsiOutputApplicationListener.class);
 
 	@Override
 	public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
+		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEnvironmentPreparedEvent，timestamp："+event.getTimestamp());
 		ConfigurableEnvironment environment = event.getEnvironment();
 		Binder.get(environment)
 			.bind("spring.output.ansi.enabled", AnsiOutput.Enabled.class)

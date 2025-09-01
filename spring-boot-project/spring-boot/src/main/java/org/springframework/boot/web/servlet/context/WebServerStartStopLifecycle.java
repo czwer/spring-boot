@@ -19,7 +19,8 @@ package org.springframework.boot.web.servlet.context;
 import org.springframework.boot.web.context.WebServerGracefulShutdownLifecycle;
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.context.SmartLifecycle;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link SmartLifecycle} to start and stop the {@link WebServer} in a
  * {@link ServletWebServerApplicationContext}.
@@ -27,7 +28,7 @@ import org.springframework.context.SmartLifecycle;
  * @author Andy Wilkinson
  */
 class WebServerStartStopLifecycle implements SmartLifecycle {
-
+	private static final Log logger = LogFactory.getLog(WebServerStartStopLifecycle.class);
 	private final ServletWebServerApplicationContext applicationContext;
 
 	private final WebServer webServer;
@@ -43,6 +44,7 @@ class WebServerStartStopLifecycle implements SmartLifecycle {
 	public void start() {
 		this.webServer.start();
 		this.running = true;
+		logger.info("[SPRING-BOOT] 自定义日志---发布事件：ServletWebServerInitializedEvent");
 		this.applicationContext
 			.publishEvent(new ServletWebServerInitializedEvent(this.webServer, this.applicationContext));
 	}

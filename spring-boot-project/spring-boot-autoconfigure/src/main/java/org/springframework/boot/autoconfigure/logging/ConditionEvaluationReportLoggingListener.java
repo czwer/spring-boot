@@ -30,7 +30,8 @@ import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.core.Ordered;
 import org.springframework.core.ResolvableType;
 import org.springframework.util.Assert;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link ApplicationContextInitializer} that writes the {@link ConditionEvaluationReport}
  * to the log. Reports are logged at the {@link LogLevel#DEBUG DEBUG} level. A crash
@@ -49,7 +50,6 @@ import org.springframework.util.Assert;
  */
 public class ConditionEvaluationReportLoggingListener
 		implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-
 	private final LogLevel logLevel;
 
 	public ConditionEvaluationReportLoggingListener() {
@@ -83,6 +83,7 @@ public class ConditionEvaluationReportLoggingListener
 	}
 
 	private final class ConditionEvaluationReportListener implements GenericApplicationListener {
+		private static final Log logger2 = LogFactory.getLog(ConditionEvaluationReportListener.class);
 
 		private final ConfigurableApplicationContext context;
 
@@ -131,12 +132,14 @@ public class ConditionEvaluationReportLoggingListener
 		@Override
 		public void onApplicationEvent(ApplicationEvent event) {
 			if (event instanceof ContextRefreshedEvent contextRefreshedEvent) {
+				logger2.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ContextRefreshedEvent)，timestamp："+event.getTimestamp());
 				if (contextRefreshedEvent.getApplicationContext() == this.context) {
 					this.logger.logReport(false);
 				}
 			}
 			else if (event instanceof ApplicationFailedEvent applicationFailedEvent
 					&& applicationFailedEvent.getApplicationContext() == this.context) {
+				logger2.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationFailedEvent)，timestamp："+event.getTimestamp());
 				this.logger.logReport(true);
 			}
 		}

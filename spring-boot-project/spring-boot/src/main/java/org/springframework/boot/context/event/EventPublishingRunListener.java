@@ -52,6 +52,7 @@ import org.springframework.util.ErrorHandler;
  * @author Chris Bono
  */
 class EventPublishingRunListener implements SpringApplicationRunListener, Ordered {
+    private static final Log logger = LogFactory.getLog(EventPublishingRunListener.class);
 
 	private final SpringApplication application;
 
@@ -72,18 +73,21 @@ class EventPublishingRunListener implements SpringApplicationRunListener, Ordere
 
 	@Override
 	public void starting(ConfigurableBootstrapContext bootstrapContext) {
+		logger.info("[SPRING-BOOT] 自定义日志---发布事件（广播）：ApplicationStartingEvent");
 		multicastInitialEvent(new ApplicationStartingEvent(bootstrapContext, this.application, this.args));
 	}
 
 	@Override
 	public void environmentPrepared(ConfigurableBootstrapContext bootstrapContext,
 			ConfigurableEnvironment environment) {
+		logger.info("[SPRING-BOOT] 自定义日志---发布事件（广播）：ApplicationEnvironmentPreparedEvent");
 		multicastInitialEvent(
 				new ApplicationEnvironmentPreparedEvent(bootstrapContext, this.application, this.args, environment));
 	}
 
 	@Override
 	public void contextPrepared(ConfigurableApplicationContext context) {
+		logger.info("[SPRING-BOOT] 自定义日志---发布事件（广播）：ApplicationContextInitializedEvent");
 		multicastInitialEvent(new ApplicationContextInitializedEvent(this.application, this.args, context));
 	}
 
@@ -95,17 +99,20 @@ class EventPublishingRunListener implements SpringApplicationRunListener, Ordere
 			}
 			context.addApplicationListener(listener);
 		}
+		logger.info("[SPRING-BOOT] 自定义日志---发布事件（广播）：ApplicationPreparedEvent");
 		multicastInitialEvent(new ApplicationPreparedEvent(this.application, this.args, context));
 	}
 
 	@Override
 	public void started(ConfigurableApplicationContext context, Duration timeTaken) {
+		logger.info("[SPRING-BOOT] 自定义日志---发布事件：ApplicationStartedEvent");
 		context.publishEvent(new ApplicationStartedEvent(this.application, this.args, context, timeTaken));
 		AvailabilityChangeEvent.publish(context, LivenessState.CORRECT);
 	}
 
 	@Override
 	public void ready(ConfigurableApplicationContext context, Duration timeTaken) {
+		logger.info("[SPRING-BOOT] 自定义日志---发布事件：ApplicationReadyEvent");
 		context.publishEvent(new ApplicationReadyEvent(this.application, this.args, context, timeTaken));
 		AvailabilityChangeEvent.publish(context, ReadinessState.ACCEPTING_TRAFFIC);
 	}
@@ -116,6 +123,7 @@ class EventPublishingRunListener implements SpringApplicationRunListener, Ordere
 		if (context != null && context.isActive()) {
 			// Listeners have been registered to the application context so we should
 			// use it at this point if we can
+			logger.info("[SPRING-BOOT] 自定义日志---发布事件：ApplicationFailedEvent");
 			context.publishEvent(event);
 		}
 		else {

@@ -221,7 +221,7 @@ public abstract class SpringBootServletInitializer implements WebApplicationInit
 	 */
 	private static final class WebEnvironmentPropertySourceInitializer
 			implements ApplicationListener<ApplicationEnvironmentPreparedEvent>, Ordered {
-
+		private static final Log logger = LogFactory.getLog(WebEnvironmentPropertySourceInitializer.class);
 		private final ServletContext servletContext;
 
 		private WebEnvironmentPropertySourceInitializer(ServletContext servletContext) {
@@ -230,6 +230,7 @@ public abstract class SpringBootServletInitializer implements WebApplicationInit
 
 		@Override
 		public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEnvironmentPreparedEvent，timestamp："+event.getTimestamp());
 			ConfigurableEnvironment environment = event.getEnvironment();
 			if (environment instanceof ConfigurableWebEnvironment configurableWebEnvironment) {
 				configurableWebEnvironment.initPropertySources(this.servletContext, null);

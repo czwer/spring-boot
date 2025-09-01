@@ -27,7 +27,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.core.Ordered;
 import org.springframework.util.ObjectUtils;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * Listener that closes the application context if its parent is closed. It listens for
  * refresh events and grabs the current context from there, and then listens for closed
@@ -39,7 +40,7 @@ import org.springframework.util.ObjectUtils;
  */
 public class ParentContextCloserApplicationListener
 		implements ApplicationListener<ParentContextAvailableEvent>, ApplicationContextAware, Ordered {
-
+	private static final Log logger = LogFactory.getLog(ParentContextCloserApplicationListener.class);
 	private final int order = Ordered.LOWEST_PRECEDENCE - 10;
 
 	private ApplicationContext context;
@@ -56,6 +57,7 @@ public class ParentContextCloserApplicationListener
 
 	@Override
 	public void onApplicationEvent(ParentContextAvailableEvent event) {
+		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ParentContextAvailableEvent，timestamp："+event.getTimestamp());
 		maybeInstallListenerInParent(event.getApplicationContext());
 	}
 
@@ -88,6 +90,7 @@ public class ParentContextCloserApplicationListener
 
 		@Override
 		public void onApplicationEvent(ContextClosedEvent event) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ContextClosedEvent，timestamp："+event.getTimestamp());
 			ConfigurableApplicationContext context = this.childContext.get();
 			if ((context != null) && (event.getApplicationContext() == context.getParent()) && context.isActive()) {
 				context.close();

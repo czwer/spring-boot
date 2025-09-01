@@ -24,7 +24,8 @@ import org.springframework.boot.context.event.ApplicationPreparedEvent;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link ApplicationListener} used to set up a {@link DockerComposeLifecycleManager}.
  *
@@ -33,6 +34,7 @@ import org.springframework.context.ConfigurableApplicationContext;
  * @author Phillip Webb
  */
 class DockerComposeListener implements ApplicationListener<ApplicationPreparedEvent> {
+	private static final Log logger = LogFactory.getLog(DockerComposeListener.class);
 
 	private final SpringApplicationShutdownHandlers shutdownHandlers;
 
@@ -46,6 +48,7 @@ class DockerComposeListener implements ApplicationListener<ApplicationPreparedEv
 
 	@Override
 	public void onApplicationEvent(ApplicationPreparedEvent event) {
+		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationPreparedEvent，timestamp："+event.getTimestamp());
 		ConfigurableApplicationContext applicationContext = event.getApplicationContext();
 		Binder binder = Binder.get(applicationContext.getEnvironment());
 		DockerComposeProperties properties = DockerComposeProperties.get(binder);

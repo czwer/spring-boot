@@ -17,7 +17,8 @@
 package org.springframework.boot.rsocket.context;
 
 import io.rsocket.SocketAcceptor;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.rsocket.server.RSocketServer;
 import org.springframework.boot.rsocket.server.RSocketServerFactory;
 import org.springframework.context.ApplicationEventPublisher;
@@ -32,7 +33,7 @@ import org.springframework.util.Assert;
  * @since 2.2.0
  */
 public class RSocketServerBootstrap implements ApplicationEventPublisherAware, SmartLifecycle {
-
+    private static final Log logger = LogFactory.getLog(RSocketServerBootstrap.class);
 	private final RSocketServer server;
 
 	private ApplicationEventPublisher eventPublisher;
@@ -50,6 +51,7 @@ public class RSocketServerBootstrap implements ApplicationEventPublisherAware, S
 	@Override
 	public void start() {
 		this.server.start();
+		logger.info("[SPRING-BOOT] 自定义日志---发布事件：RSocketServerInitializedEvent");
 		this.eventPublisher.publishEvent(new RSocketServerInitializedEvent(this.server));
 	}
 

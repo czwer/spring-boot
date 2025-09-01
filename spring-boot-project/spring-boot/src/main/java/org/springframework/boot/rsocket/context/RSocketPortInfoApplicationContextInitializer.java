@@ -30,7 +30,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link ApplicationContextInitializer} that sets {@link Environment} properties for the
  * ports that {@link RSocketServer} servers are actually listening on. The property
@@ -52,6 +53,7 @@ public class RSocketPortInfoApplicationContextInitializer
 	}
 
 	private static class Listener implements ApplicationListener<RSocketServerInitializedEvent> {
+		private static final Log logger = LogFactory.getLog(Listener.class);
 
 		private static final String PROPERTY_NAME = "local.rsocket.server.port";
 
@@ -65,6 +67,7 @@ public class RSocketPortInfoApplicationContextInitializer
 
 		@Override
 		public void onApplicationEvent(RSocketServerInitializedEvent event) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：RSocketServerInitializedEvent，timestamp："+event.getTimestamp());
 			if (event.getServer().address() != null) {
 				setPortProperty(this.applicationContext, event.getServer().address().getPort());
 			}

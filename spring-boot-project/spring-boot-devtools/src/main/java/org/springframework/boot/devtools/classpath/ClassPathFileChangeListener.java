@@ -25,7 +25,8 @@ import org.springframework.boot.devtools.filewatch.FileSystemWatcher;
 import org.springframework.boot.devtools.restart.AgentReloader;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.util.Assert;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * A {@link FileChangeListener} to publish {@link ClassPathChangedEvent
  * ClassPathChangedEvents}.
@@ -34,7 +35,7 @@ import org.springframework.util.Assert;
  * @see ClassPathFileSystemWatcher
  */
 class ClassPathFileChangeListener implements FileChangeListener {
-
+    private static final Log logger = LogFactory.getLog(ClassPathFileChangeListener.class);
 	private final ApplicationEventPublisher eventPublisher;
 
 	private final ClassPathRestartStrategy restartStrategy;
@@ -64,6 +65,7 @@ class ClassPathFileChangeListener implements FileChangeListener {
 	}
 
 	private void publishEvent(ClassPathChangedEvent event) {
+		logger.info("[SPRING-BOOT] 自定义日志---发布事件：ClassPathChangedEvent");
 		this.eventPublisher.publishEvent(event);
 		if (event.isRestartRequired() && this.fileSystemWatcherToStop != null) {
 			this.fileSystemWatcherToStop.stop();

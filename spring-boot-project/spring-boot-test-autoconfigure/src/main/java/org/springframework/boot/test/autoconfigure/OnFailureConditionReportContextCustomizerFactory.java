@@ -30,7 +30,8 @@ import org.springframework.test.context.ContextConfigurationAttributes;
 import org.springframework.test.context.ContextCustomizer;
 import org.springframework.test.context.ContextCustomizerFactory;
 import org.springframework.test.context.MergedContextConfiguration;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link ContextCustomizerFactory} that customizes the {@link ApplicationContext
  * application context} such that a {@link ConditionEvaluationReport condition evaluation
@@ -75,6 +76,7 @@ class OnFailureConditionReportContextCustomizerFactory implements ContextCustomi
 	}
 
 	private static final class ApplicationFailureListener implements ApplicationListener<ApplicationFailedEvent> {
+		private static final Log logger = LogFactory.getLog(ApplicationFailureListener.class);
 
 		private final Supplier<ConditionEvaluationReport> reportSupplier;
 
@@ -84,6 +86,7 @@ class OnFailureConditionReportContextCustomizerFactory implements ContextCustomi
 
 		@Override
 		public void onApplicationEvent(ApplicationFailedEvent event) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationFailedEvent，timestamp："+event.getTimestamp());
 			if (shouldPrintReport(event.getApplicationContext())) {
 				System.err.println(new ConditionEvaluationReportMessage(this.reportSupplier.get()));
 			}

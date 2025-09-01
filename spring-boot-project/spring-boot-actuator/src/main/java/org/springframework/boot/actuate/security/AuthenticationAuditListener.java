@@ -27,7 +27,8 @@ import org.springframework.security.authentication.event.AuthenticationSuccessEv
 import org.springframework.security.authentication.event.LogoutSuccessEvent;
 import org.springframework.security.web.authentication.switchuser.AuthenticationSwitchUserEvent;
 import org.springframework.util.ClassUtils;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * Default implementation of {@link AbstractAuthenticationAuditListener}.
  *
@@ -36,7 +37,7 @@ import org.springframework.util.ClassUtils;
  * @since 1.0.0
  */
 public class AuthenticationAuditListener extends AbstractAuthenticationAuditListener {
-
+	private static final Log logger = LogFactory.getLog(AuthenticationAuditListener.class);
 	/**
 	 * Authentication success event type.
 	 */
@@ -73,15 +74,18 @@ public class AuthenticationAuditListener extends AbstractAuthenticationAuditList
 	@Override
 	public void onApplicationEvent(AbstractAuthenticationEvent event) {
 		if (event instanceof AbstractAuthenticationFailureEvent failureEvent) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：AbstractAuthenticationEvent(AbstractAuthenticationFailureEvent)，timestamp："+event.getTimestamp());
 			onAuthenticationFailureEvent(failureEvent);
 		}
 		else if (this.webListener != null && this.webListener.accepts(event)) {
 			this.webListener.process(this, event);
 		}
 		else if (event instanceof AuthenticationSuccessEvent successEvent) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：AbstractAuthenticationEvent(AuthenticationSuccessEvent)，timestamp："+event.getTimestamp());
 			onAuthenticationSuccessEvent(successEvent);
 		}
 		else if (event instanceof LogoutSuccessEvent logoutSuccessEvent) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：AbstractAuthenticationEvent(LogoutSuccessEvent)，timestamp："+event.getTimestamp());
 			onLogoutSuccessEvent(logoutSuccessEvent);
 		}
 	}

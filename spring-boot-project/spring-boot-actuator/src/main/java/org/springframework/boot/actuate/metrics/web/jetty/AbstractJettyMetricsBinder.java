@@ -24,7 +24,8 @@ import org.springframework.boot.web.embedded.jetty.JettyWebServer;
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * Base class for binding Jetty metrics in response to an {@link ApplicationStartedEvent}.
  *
@@ -32,9 +33,10 @@ import org.springframework.context.ApplicationListener;
  * @since 2.6.0
  */
 public abstract class AbstractJettyMetricsBinder implements ApplicationListener<ApplicationStartedEvent> {
-
+	private static final Log logger = LogFactory.getLog(AbstractJettyMetricsBinder.class);
 	@Override
 	public void onApplicationEvent(ApplicationStartedEvent event) {
+		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationStartedEvent，timestamp："+event.getTimestamp());
 		Server server = findServer(event.getApplicationContext());
 		if (server != null) {
 			bindMetrics(server);

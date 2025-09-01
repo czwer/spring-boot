@@ -40,7 +40,8 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.ConfigurationCondition;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.core.type.MethodMetadata;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link EnableAutoConfiguration Auto-configuration} for DevTools-specific R2DBC
  * configuration.
@@ -53,7 +54,7 @@ import org.springframework.core.type.MethodMetadata;
 @Conditional(DevToolsConnectionFactoryCondition.class)
 @AutoConfiguration(after = R2dbcAutoConfiguration.class)
 public class DevToolsR2dbcAutoConfiguration {
-
+	private static final Log logger = LogFactory.getLog(DevToolsR2dbcAutoConfiguration.class);
 	@Bean
 	InMemoryR2dbcDatabaseShutdownExecutor inMemoryR2dbcDatabaseShutdownExecutor(
 			ApplicationEventPublisher eventPublisher, ConnectionFactory connectionFactory) {
@@ -78,6 +79,7 @@ public class DevToolsR2dbcAutoConfiguration {
 				Mono.usingWhen(this.connectionFactory.create(), this::executeShutdown, this::closeConnection,
 						this::closeConnection, this::closeConnection)
 					.block();
+				logger.info("[SPRING-BOOT] 自定义日志---发布事件：R2dbcDatabaseShutdownEvent");
 				this.eventPublisher.publishEvent(new R2dbcDatabaseShutdownEvent(this.connectionFactory));
 			}
 		}

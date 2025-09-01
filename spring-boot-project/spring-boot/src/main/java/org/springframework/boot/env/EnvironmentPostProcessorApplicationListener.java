@@ -48,7 +48,8 @@ import org.springframework.javapoet.CodeBlock;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ObjectUtils;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link SmartApplicationListener} used to trigger {@link EnvironmentPostProcessor
  * EnvironmentPostProcessors} registered in the {@code spring.factories} file.
@@ -58,7 +59,7 @@ import org.springframework.util.ObjectUtils;
  * @since 2.4.0
  */
 public class EnvironmentPostProcessorApplicationListener implements SmartApplicationListener, Ordered {
-
+	private static final Log logger = LogFactory.getLog(EnvironmentPostProcessorApplicationListener.class);
 	private static final String AOT_FEATURE_NAME = "EnvironmentPostProcessor";
 
 	/**
@@ -112,12 +113,15 @@ public class EnvironmentPostProcessorApplicationListener implements SmartApplica
 	@Override
 	public void onApplicationEvent(ApplicationEvent event) {
 		if (event instanceof ApplicationEnvironmentPreparedEvent environmentPreparedEvent) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationEnvironmentPreparedEvent)，timestamp："+event.getTimestamp());
 			onApplicationEnvironmentPreparedEvent(environmentPreparedEvent);
 		}
 		if (event instanceof ApplicationPreparedEvent) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp());
 			onApplicationPreparedEvent();
 		}
 		if (event instanceof ApplicationFailedEvent) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationFailedEvent)，timestamp："+event.getTimestamp());
 			onApplicationFailedEvent();
 		}
 	}

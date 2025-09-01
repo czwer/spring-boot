@@ -24,7 +24,8 @@ import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.security.authorization.event.AuthorizationDeniedEvent;
 import org.springframework.security.authorization.event.AuthorizationEvent;
 import org.springframework.security.core.Authentication;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * Default implementation of {@link AbstractAuthorizationAuditListener}.
  *
@@ -33,7 +34,7 @@ import org.springframework.security.core.Authentication;
  * @since 1.0.0
  */
 public class AuthorizationAuditListener extends AbstractAuthorizationAuditListener {
-
+	private static final Log logger = LogFactory.getLog(AuthorizationAuditListener.class);
 	/**
 	 * Authorization failure event type.
 	 */
@@ -41,6 +42,7 @@ public class AuthorizationAuditListener extends AbstractAuthorizationAuditListen
 
 	@Override
 	public void onApplicationEvent(AuthorizationEvent event) {
+		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：AuthorizationEvent，timestamp："+event.getTimestamp());
 		if (event instanceof AuthorizationDeniedEvent<?> authorizationDeniedEvent) {
 			onAuthorizationDeniedEvent(authorizationDeniedEvent);
 		}

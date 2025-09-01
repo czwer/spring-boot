@@ -877,6 +877,7 @@ public class SpringApplication {
 		int exitCode = getExitCodeFromException(context, exception);
 		if (exitCode != 0) {
 			if (context != null) {
+				logger.info("[SPRING-BOOT] 自定义日志---发布事件：ExitCodeEvent");
 				context.publishEvent(new ExitCodeEvent(context, exitCode));
 			}
 			SpringBootExceptionHandler handler = getSpringBootExceptionHandler();
@@ -1401,6 +1402,7 @@ public class SpringApplication {
 				generators.addAll(beans);
 				exitCode = generators.getExitCode();
 				if (exitCode != 0) {
+					logger.info("[SPRING-BOOT] 自定义日志---发布事件：ExitCodeEvent");
 					context.publishEvent(new ExitCodeEvent(context, exitCode));
 				}
 			}
@@ -1677,9 +1679,11 @@ public class SpringApplication {
 		@Override
 		public void onApplicationEvent(ApplicationContextEvent event) {
 			if (event instanceof ContextRefreshedEvent) {
+				logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationContextEvent(ContextRefreshedEvent)，timestamp："+event.getTimestamp());
 				startKeepAliveThread();
 			}
 			else if (event instanceof ContextClosedEvent) {
+				logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationContextEvent(ContextClosedEvent)，timestamp："+event.getTimestamp());
 				stopKeepAliveThread();
 			}
 		}

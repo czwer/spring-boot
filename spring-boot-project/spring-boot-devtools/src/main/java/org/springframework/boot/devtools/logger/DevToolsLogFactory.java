@@ -20,6 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.boot.context.event.ApplicationPreparedEvent;
 import org.springframework.boot.logging.DeferredLog;
@@ -57,9 +58,11 @@ public final class DevToolsLogFactory {
 	 * Listener used to log and switch when the context is ready.
 	 */
 	static class Listener implements ApplicationListener<ApplicationPreparedEvent> {
+		private static final Log logger = LogFactory.getLog(Listener.class);
 
 		@Override
 		public void onApplicationEvent(ApplicationPreparedEvent event) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationPreparedEvent，timestamp："+event.getTimestamp());
 			synchronized (logs) {
 				logs.forEach((log, source) -> {
 					if (log instanceof DeferredLog deferredLog) {

@@ -31,7 +31,8 @@ import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 import org.springframework.util.StringUtils;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link ApplicationContextInitializer} that sets {@link Environment} properties for the
  * ports that {@link WebServer} servers are actually listening on. The property
@@ -51,7 +52,7 @@ import org.springframework.util.StringUtils;
  */
 public class ServerPortInfoApplicationContextInitializer implements
 		ApplicationContextInitializer<ConfigurableApplicationContext>, ApplicationListener<WebServerInitializedEvent> {
-
+	private static final Log logger = LogFactory.getLog(ServerPortInfoApplicationContextInitializer.class);
 	private static final String PROPERTY_SOURCE_NAME = "server.ports";
 
 	@Override
@@ -61,6 +62,7 @@ public class ServerPortInfoApplicationContextInitializer implements
 
 	@Override
 	public void onApplicationEvent(WebServerInitializedEvent event) {
+		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：WebServerInitializedEvent，timestamp："+event.getTimestamp());
 		String propertyName = "local." + getName(event.getApplicationContext()) + ".port";
 		setPortProperty(event.getApplicationContext(), propertyName, event.getWebServer().getPort());
 	}

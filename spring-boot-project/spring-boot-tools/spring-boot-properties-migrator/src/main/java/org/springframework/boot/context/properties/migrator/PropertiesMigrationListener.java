@@ -51,9 +51,11 @@ class PropertiesMigrationListener implements ApplicationListener<SpringApplicati
 	@Override
 	public void onApplicationEvent(SpringApplicationEvent event) {
 		if (event instanceof ApplicationPreparedEvent preparedEvent) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：SpringApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp());
 			onApplicationPreparedEvent(preparedEvent);
 		}
 		if (event instanceof ApplicationReadyEvent || event instanceof ApplicationFailedEvent) {
+			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：SpringApplicationEvent(ApplicationReadyEvent or ApplicationFailedEvent)，timestamp："+event.getTimestamp());
 			logLegacyPropertiesReport();
 		}
 	}

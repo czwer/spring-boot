@@ -19,6 +19,9 @@ package org.springframework.boot;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.aot.AotDetector;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -33,7 +36,7 @@ import org.springframework.core.io.support.SpringFactoriesLoader;
  * @author Phillip Webb
  */
 class DefaultApplicationContextFactory implements ApplicationContextFactory {
-
+	private static final Log logger = LogFactory.getLog(DefaultApplicationContextFactory.class);
 	@Override
 	public Class<? extends ConfigurableEnvironment> getEnvironmentType(WebApplicationType webApplicationType) {
 		return getFromSpringFactories(webApplicationType, ApplicationContextFactory::getEnvironmentType, null);
@@ -58,8 +61,10 @@ class DefaultApplicationContextFactory implements ApplicationContextFactory {
 
 	private ConfigurableApplicationContext createDefaultApplicationContext() {
 		if (!AotDetector.useGeneratedArtifacts()) {
+			logger.info("[SPRING-BOOT] 自定义日志---createContext ：AnnotationConfigApplicationContext");
 			return new AnnotationConfigApplicationContext();
 		}
+		logger.info("[SPRING-BOOT] 自定义日志---createContext ：GenericApplicationContext");
 		return new GenericApplicationContext();
 	}
 

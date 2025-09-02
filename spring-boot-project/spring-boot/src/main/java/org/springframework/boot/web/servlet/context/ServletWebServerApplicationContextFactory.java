@@ -16,6 +16,9 @@
 
 package org.springframework.boot.web.servlet.context;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.aot.AotDetector;
 import org.springframework.boot.ApplicationContextFactory;
 import org.springframework.boot.WebApplicationType;
@@ -31,7 +34,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
  * @author Andy Wilkinson
  */
 class ServletWebServerApplicationContextFactory implements ApplicationContextFactory {
-
+	private static final Log logger = LogFactory.getLog(ServletWebServerApplicationContextFactory.class);
 	@Override
 	public Class<? extends ConfigurableEnvironment> getEnvironmentType(WebApplicationType webApplicationType) {
 		return (webApplicationType != WebApplicationType.SERVLET) ? null : ApplicationServletEnvironment.class;
@@ -49,8 +52,10 @@ class ServletWebServerApplicationContextFactory implements ApplicationContextFac
 
 	private ConfigurableApplicationContext createContext() {
 		if (!AotDetector.useGeneratedArtifacts()) {
+			logger.info("[SPRING-BOOT] 自定义日志---createContext ：AnnotationConfigServletWebServerApplicationContext");
 			return new AnnotationConfigServletWebServerApplicationContext();
 		}
+		logger.info("[SPRING-BOOT] 自定义日志---createContext ：ServletWebServerApplicationContext");
 		return new ServletWebServerApplicationContext();
 	}
 

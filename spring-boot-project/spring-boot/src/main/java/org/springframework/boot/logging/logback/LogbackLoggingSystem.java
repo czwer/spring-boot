@@ -103,7 +103,7 @@ public class LogbackLoggingSystem extends AbstractLoggingSystem implements BeanF
 		@Override
 		public FilterReply decide(Marker marker, ch.qos.logback.classic.Logger logger, Level level, String format,
 				Object[] params, Throwable t) {
-			return FilterReply.DENY;
+			return FilterReply.ACCEPT;
 		}
 
 	};

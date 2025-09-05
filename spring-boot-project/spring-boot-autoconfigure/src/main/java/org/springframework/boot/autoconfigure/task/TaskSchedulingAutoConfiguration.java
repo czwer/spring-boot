@@ -16,11 +16,15 @@
 
 package org.springframework.boot.autoconfigure.task;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.boot.LazyInitializationExcludeFilter;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.ssl.SslAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
@@ -42,10 +46,12 @@ import org.springframework.scheduling.config.TaskManagementConfigUtils;
 		TaskSchedulingConfigurations.SimpleAsyncTaskSchedulerBuilderConfiguration.class,
 		TaskSchedulingConfigurations.TaskSchedulerConfiguration.class })
 public class TaskSchedulingAutoConfiguration {
+	private static final Log logger = LogFactory.getLog(TaskSchedulingAutoConfiguration.class);
 
 	@Bean
 	@ConditionalOnBean(name = TaskManagementConfigUtils.SCHEDULED_ANNOTATION_PROCESSOR_BEAN_NAME)
 	public static LazyInitializationExcludeFilter scheduledBeanLazyInitializationExcludeFilter() {
+		logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：ScheduledBeanLazyInitializationExcludeFilter（）");
 		return new ScheduledBeanLazyInitializationExcludeFilter();
 	}
 

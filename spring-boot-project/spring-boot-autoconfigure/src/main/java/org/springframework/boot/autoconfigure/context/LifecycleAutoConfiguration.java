@@ -16,8 +16,12 @@
 
 package org.springframework.boot.autoconfigure.context;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.SearchStrategy;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -35,6 +39,7 @@ import org.springframework.context.support.DefaultLifecycleProcessor;
 @AutoConfiguration
 @EnableConfigurationProperties(LifecycleProperties.class)
 public class LifecycleAutoConfiguration {
+	private static final Log logger = LogFactory.getLog(LifecycleAutoConfiguration.class);
 
 	@Bean(name = AbstractApplicationContext.LIFECYCLE_PROCESSOR_BEAN_NAME)
 	@ConditionalOnMissingBean(name = AbstractApplicationContext.LIFECYCLE_PROCESSOR_BEAN_NAME,
@@ -42,6 +47,7 @@ public class LifecycleAutoConfiguration {
 	public DefaultLifecycleProcessor defaultLifecycleProcessor(LifecycleProperties properties) {
 		DefaultLifecycleProcessor lifecycleProcessor = new DefaultLifecycleProcessor();
 		lifecycleProcessor.setTimeoutPerShutdownPhase(properties.getTimeoutPerShutdownPhase().toMillis());
+		logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：DefaultLifecycleProcessor（）");
 		return lifecycleProcessor;
 	}
 

@@ -74,18 +74,18 @@ public class AuthenticationAuditListener extends AbstractAuthenticationAuditList
 	@Override
 	public void onApplicationEvent(AbstractAuthenticationEvent event) {
 		if (event instanceof AbstractAuthenticationFailureEvent failureEvent) {
-			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：AbstractAuthenticationEvent(AbstractAuthenticationFailureEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：AbstractAuthenticationEvent(AbstractAuthenticationFailureEvent)，timestamp："+event.getTimestamp());
 			onAuthenticationFailureEvent(failureEvent);
 		}
 		else if (this.webListener != null && this.webListener.accepts(event)) {
 			this.webListener.process(this, event);
 		}
 		else if (event instanceof AuthenticationSuccessEvent successEvent) {
-			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：AbstractAuthenticationEvent(AuthenticationSuccessEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：AbstractAuthenticationEvent(AuthenticationSuccessEvent)，timestamp："+event.getTimestamp());
 			onAuthenticationSuccessEvent(successEvent);
 		}
 		else if (event instanceof LogoutSuccessEvent logoutSuccessEvent) {
-			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：AbstractAuthenticationEvent(LogoutSuccessEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：AbstractAuthenticationEvent(LogoutSuccessEvent)，timestamp："+event.getTimestamp());
 			onLogoutSuccessEvent(logoutSuccessEvent);
 		}
 	}

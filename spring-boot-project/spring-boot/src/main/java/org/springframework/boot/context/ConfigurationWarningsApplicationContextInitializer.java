@@ -56,6 +56,7 @@ public class ConfigurationWarningsApplicationContextInitializer
 
 	@Override
 	public void initialize(ConfigurableApplicationContext context) {
+		logger.info("[SPRING_BOOT] 自定义日志---添加BeanFactoryPostProcessor：ConfigurationWarningsPostProcessor（作用：在应用启动时检查潜在的配置问题，并发出警告日志以提醒开发者）");
 		context.addBeanFactoryPostProcessor(new ConfigurationWarningsPostProcessor(getChecks()));
 	}
 

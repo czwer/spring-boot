@@ -54,7 +54,7 @@ class WebServerManager {
 	void start() {
 		this.handler.initializeHandler();
 		this.webServer.start();
-		logger.info("[SPRING-BOOT] 自定义日志---发布事件：ReactiveWebServerInitializedEvent");
+		logger.info("[SPRING_BOOT] 自定义日志---发布事件：ReactiveWebServerInitializedEvent");
 		this.applicationContext
 			.publishEvent(new ReactiveWebServerInitializedEvent(this.webServer, this.applicationContext));
 	}

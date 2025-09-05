@@ -84,7 +84,7 @@ public class WebServerPortFileWriter implements ApplicationListener<WebServerIni
 
 	@Override
 	public void onApplicationEvent(WebServerInitializedEvent event) {
-		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：WebServerInitializedEvent，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：WebServerInitializedEvent，timestamp："+event.getTimestamp());
 		File portFile = getPortFile(event.getApplicationContext());
 		try {
 			String port = String.valueOf(event.getWebServer().getPort());

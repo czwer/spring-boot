@@ -59,7 +59,7 @@ class DockerComposeServiceConnectionsApplicationListener
 
 	@Override
 	public void onApplicationEvent(DockerComposeServicesReadyEvent event) {
-		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：DockerComposeServicesReadyEvent，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：DockerComposeServicesReadyEvent，timestamp："+event.getTimestamp());
 		ApplicationContext applicationContext = event.getSource();
 		if (applicationContext instanceof BeanDefinitionRegistry registry) {
 			Environment environment = applicationContext.getEnvironment();

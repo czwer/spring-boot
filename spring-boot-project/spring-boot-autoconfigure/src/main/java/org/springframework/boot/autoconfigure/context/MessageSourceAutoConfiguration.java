@@ -22,6 +22,9 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.aot.hint.RuntimeHints;
 import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -69,6 +72,7 @@ import org.springframework.util.StringUtils;
 @EnableConfigurationProperties(MessageSourceProperties.class)
 @ImportRuntimeHints(MessageSourceRuntimeHints.class)
 public class MessageSourceAutoConfiguration {
+	private static final Log logger = LogFactory.getLog(MessageSourceAutoConfiguration.class);
 
 	private static final Resource[] NO_RESOURCES = {};
 
@@ -89,6 +93,7 @@ public class MessageSourceAutoConfiguration {
 		messageSource.setAlwaysUseMessageFormat(properties.isAlwaysUseMessageFormat());
 		messageSource.setUseCodeAsDefaultMessage(properties.isUseCodeAsDefaultMessage());
 		messageSource.setCommonMessages(loadCommonMessages(properties.getCommonMessages()));
+		logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：MessageSource（）");
 		return messageSource;
 	}
 

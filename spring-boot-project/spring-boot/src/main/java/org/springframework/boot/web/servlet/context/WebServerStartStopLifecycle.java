@@ -44,7 +44,7 @@ class WebServerStartStopLifecycle implements SmartLifecycle {
 	public void start() {
 		this.webServer.start();
 		this.running = true;
-		logger.info("[SPRING-BOOT] 自定义日志---发布事件：ServletWebServerInitializedEvent");
+		logger.info("[SPRING_BOOT] 自定义日志---发布事件：ServletWebServerInitializedEvent");
 		this.applicationContext
 			.publishEvent(new ServletWebServerInitializedEvent(this.webServer, this.applicationContext));
 	}

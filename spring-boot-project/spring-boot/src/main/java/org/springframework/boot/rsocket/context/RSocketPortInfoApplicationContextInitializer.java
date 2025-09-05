@@ -46,9 +46,11 @@ import org.apache.commons.logging.LogFactory;
  */
 public class RSocketPortInfoApplicationContextInitializer
 		implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+	private static final Log logger = LogFactory.getLog(RSocketPortInfoApplicationContextInitializer.class);
 
 	@Override
 	public void initialize(ConfigurableApplicationContext applicationContext) {
+		logger.info("[SPRING_BOOT] 自定义日志---添加ApplicationListener：org.springframework.boot.rsocket.context.RSocketPortInfoApplicationContextInitializer.Listener（作用：在服务器启动后暴露其运行时端口）");
 		applicationContext.addApplicationListener(new Listener(applicationContext));
 	}
 
@@ -67,7 +69,7 @@ public class RSocketPortInfoApplicationContextInitializer
 
 		@Override
 		public void onApplicationEvent(RSocketServerInitializedEvent event) {
-			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：RSocketServerInitializedEvent，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：RSocketServerInitializedEvent，timestamp："+event.getTimestamp());
 			if (event.getServer().address() != null) {
 				setPortProperty(this.applicationContext, event.getServer().address().getPort());
 			}

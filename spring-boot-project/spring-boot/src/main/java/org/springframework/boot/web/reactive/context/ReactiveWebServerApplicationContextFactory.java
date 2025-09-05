@@ -52,10 +52,10 @@ class ReactiveWebServerApplicationContextFactory implements ApplicationContextFa
 
 	private ConfigurableApplicationContext createContext() {
 		if (!AotDetector.useGeneratedArtifacts()) {
-			logger.info("[SPRING-BOOT] 自定义日志---createContext ：AnnotationConfigReactiveWebServerApplicationContext");
+			logger.info("[SPRING_BOOT] 自定义日志---createContext ：AnnotationConfigReactiveWebServerApplicationContext");
 			return new AnnotationConfigReactiveWebServerApplicationContext();
 		}
-		logger.info("[SPRING-BOOT] 自定义日志---createContext ：ReactiveWebServerApplicationContext");
+		logger.info("[SPRING_BOOT] 自定义日志---createContext ：ReactiveWebServerApplicationContext");
 		return new ReactiveWebServerApplicationContext();
 	}
 

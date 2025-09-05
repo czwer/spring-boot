@@ -57,7 +57,7 @@ public class ParentContextCloserApplicationListener
 
 	@Override
 	public void onApplicationEvent(ParentContextAvailableEvent event) {
-		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ParentContextAvailableEvent，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ParentContextAvailableEvent，timestamp："+event.getTimestamp());
 		maybeInstallListenerInParent(event.getApplicationContext());
 	}
 
@@ -90,7 +90,7 @@ public class ParentContextCloserApplicationListener
 
 		@Override
 		public void onApplicationEvent(ContextClosedEvent event) {
-			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ContextClosedEvent，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ContextClosedEvent，timestamp："+event.getTimestamp());
 			ConfigurableApplicationContext context = this.childContext.get();
 			if ((context != null) && (event.getApplicationContext() == context.getParent()) && context.isActive()) {
 				context.close();

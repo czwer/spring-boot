@@ -50,6 +50,8 @@ import org.apache.commons.logging.LogFactory;
  */
 public class ConditionEvaluationReportLoggingListener
 		implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+	private static final Log logger = LogFactory.getLog(ConditionEvaluationReportLoggingListener.class);
+
 	private final LogLevel logLevel;
 
 	public ConditionEvaluationReportLoggingListener() {
@@ -79,6 +81,7 @@ public class ConditionEvaluationReportLoggingListener
 
 	@Override
 	public void initialize(ConfigurableApplicationContext applicationContext) {
+		logger.info("[SPRING_BOOT] 自定义日志---添加ApplicationListener：ConditionEvaluationReportListener（作用：监听应用上下文事件并记录自动配置条件评估报告的内部类）");
 		applicationContext.addApplicationListener(new ConditionEvaluationReportListener(applicationContext));
 	}
 
@@ -132,14 +135,14 @@ public class ConditionEvaluationReportLoggingListener
 		@Override
 		public void onApplicationEvent(ApplicationEvent event) {
 			if (event instanceof ContextRefreshedEvent contextRefreshedEvent) {
-				logger2.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ContextRefreshedEvent)，timestamp："+event.getTimestamp());
+				logger2.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ContextRefreshedEvent)，timestamp："+event.getTimestamp());
 				if (contextRefreshedEvent.getApplicationContext() == this.context) {
 					this.logger.logReport(false);
 				}
 			}
 			else if (event instanceof ApplicationFailedEvent applicationFailedEvent
 					&& applicationFailedEvent.getApplicationContext() == this.context) {
-				logger2.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationFailedEvent)，timestamp："+event.getTimestamp());
+				logger2.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationFailedEvent)，timestamp："+event.getTimestamp());
 				this.logger.logReport(true);
 			}
 		}

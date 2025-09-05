@@ -52,10 +52,10 @@ class ServletWebServerApplicationContextFactory implements ApplicationContextFac
 
 	private ConfigurableApplicationContext createContext() {
 		if (!AotDetector.useGeneratedArtifacts()) {
-			logger.info("[SPRING-BOOT] 自定义日志---createContext ：AnnotationConfigServletWebServerApplicationContext");
+			logger.info("[SPRING_BOOT] 自定义日志---createContext ：AnnotationConfigServletWebServerApplicationContext");
 			return new AnnotationConfigServletWebServerApplicationContext();
 		}
-		logger.info("[SPRING-BOOT] 自定义日志---createContext ：ServletWebServerApplicationContext");
+		logger.info("[SPRING_BOOT] 自定义日志---createContext ：ServletWebServerApplicationContext");
 		return new ServletWebServerApplicationContext();
 	}
 

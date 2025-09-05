@@ -16,8 +16,12 @@
 
 package org.springframework.boot.autoconfigure.availability;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
 import org.springframework.boot.availability.ApplicationAvailability;
 import org.springframework.boot.availability.ApplicationAvailabilityBean;
 import org.springframework.context.annotation.Bean;
@@ -32,10 +36,12 @@ import org.springframework.context.annotation.Bean;
  */
 @AutoConfiguration
 public class ApplicationAvailabilityAutoConfiguration {
+	private static final Log logger = LogFactory.getLog(ApplicationAvailabilityAutoConfiguration.class);
 
 	@Bean
 	@ConditionalOnMissingBean(ApplicationAvailability.class)
 	public ApplicationAvailabilityBean applicationAvailability() {
+		logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：ApplicationAvailabilityBean（）");
 		return new ApplicationAvailabilityBean();
 	}
 

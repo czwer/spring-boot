@@ -32,7 +32,7 @@ class ClearCachesApplicationListener implements ApplicationListener<ContextRefre
 	private static final Log logger = LogFactory.getLog(ClearCachesApplicationListener.class);
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ContextRefreshedEvent，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ContextRefreshedEvent，timestamp："+event.getTimestamp());
 		ReflectionUtils.clearCache();
 		clearClassLoaderCaches(Thread.currentThread().getContextClassLoader());
 	}

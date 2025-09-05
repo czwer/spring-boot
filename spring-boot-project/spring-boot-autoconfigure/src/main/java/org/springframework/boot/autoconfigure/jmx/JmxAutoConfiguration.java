@@ -18,6 +18,9 @@ package org.springframework.boot.autoconfigure.jmx;
 
 import javax.management.MBeanServer;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -25,6 +28,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProp
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.SearchStrategy;
+import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableMBeanExport;
@@ -54,6 +58,7 @@ import org.springframework.util.StringUtils;
 @ConditionalOnClass({ MBeanExporter.class })
 @ConditionalOnBooleanProperty("spring.jmx.enabled")
 public class JmxAutoConfiguration {
+	private static final Log logger = LogFactory.getLog(JmxAutoConfiguration.class);
 
 	private final JmxProperties properties;
 
@@ -73,6 +78,7 @@ public class JmxAutoConfiguration {
 			exporter.setServer(beanFactory.getBean(serverBean, MBeanServer.class));
 		}
 		exporter.setEnsureUniqueRuntimeObjectNames(this.properties.isUniqueNames());
+		logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：AnnotationMBeanExporter（）");
 		return exporter;
 	}
 
@@ -85,6 +91,7 @@ public class JmxAutoConfiguration {
 			namingStrategy.setDefaultDomain(defaultDomain);
 		}
 		namingStrategy.setEnsureUniqueRuntimeObjectNames(this.properties.isUniqueNames());
+		logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：ParentAwareNamingStrategy（）");
 		return namingStrategy;
 	}
 
@@ -94,6 +101,7 @@ public class JmxAutoConfiguration {
 		MBeanServerFactoryBean factory = new MBeanServerFactoryBean();
 		factory.setLocateExistingServerIfPossible(true);
 		factory.afterPropertiesSet();
+		logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：MBeanServer（）");
 		return factory.getObject();
 	}
 

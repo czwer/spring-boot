@@ -230,7 +230,7 @@ public abstract class SpringBootServletInitializer implements WebApplicationInit
 
 		@Override
 		public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
-			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEnvironmentPreparedEvent，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEnvironmentPreparedEvent，timestamp："+event.getTimestamp());
 			ConfigurableEnvironment environment = event.getEnvironment();
 			if (environment instanceof ConfigurableWebEnvironment configurableWebEnvironment) {
 				configurableWebEnvironment.initPropertySources(this.servletContext, null);

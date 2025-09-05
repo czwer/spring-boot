@@ -16,10 +16,14 @@
 
 package org.springframework.boot.autoconfigure.cache;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration;
 import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration.CacheConfigurationImportSelector;
 import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration.CacheManagerEntityManagerFactoryDependsOnPostProcessor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -61,16 +65,19 @@ import org.springframework.util.Assert;
 @EnableConfigurationProperties(CacheProperties.class)
 @Import({ CacheConfigurationImportSelector.class, CacheManagerEntityManagerFactoryDependsOnPostProcessor.class })
 public class CacheAutoConfiguration {
+	private static final Log logger = LogFactory.getLog(CacheAutoConfiguration.class);
 
 	@Bean
 	@ConditionalOnMissingBean
 	public CacheManagerCustomizers cacheManagerCustomizers(ObjectProvider<CacheManagerCustomizer<?>> customizers) {
+		logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：CacheManagerCustomizers（）");
 		return new CacheManagerCustomizers(customizers.orderedStream().toList());
 	}
 
 	@Bean
 	public CacheManagerValidator cacheAutoConfigurationValidator(CacheProperties cacheProperties,
 			ObjectProvider<CacheManager> cacheManager) {
+		logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：CacheManagerValidator（）");
 		return new CacheManagerValidator(cacheProperties, cacheManager);
 	}
 

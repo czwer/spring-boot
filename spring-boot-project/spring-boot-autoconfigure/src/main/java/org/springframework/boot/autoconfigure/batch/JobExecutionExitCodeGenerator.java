@@ -37,7 +37,7 @@ public class JobExecutionExitCodeGenerator implements ApplicationListener<JobExe
 
 	@Override
 	public void onApplicationEvent(JobExecutionEvent event) {
-		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：JobExecutionEvent，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：JobExecutionEvent，timestamp："+event.getTimestamp());
 		this.executions.add(event.getJobExecution());
 	}
 

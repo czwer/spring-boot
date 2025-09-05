@@ -36,7 +36,7 @@ public abstract class AbstractJettyMetricsBinder implements ApplicationListener<
 	private static final Log logger = LogFactory.getLog(AbstractJettyMetricsBinder.class);
 	@Override
 	public void onApplicationEvent(ApplicationStartedEvent event) {
-		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationStartedEvent，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationStartedEvent，timestamp："+event.getTimestamp());
 		Server server = findServer(event.getApplicationContext());
 		if (server != null) {
 			bindMetrics(server);

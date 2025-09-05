@@ -89,7 +89,7 @@ public class ClassPathChangeUploader implements ApplicationListener<ClassPathCha
 
 	@Override
 	public void onApplicationEvent(ClassPathChangedEvent event) {
-		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ClassPathChangedEvent，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ClassPathChangedEvent，timestamp："+event.getTimestamp());
 		try {
 			ClassLoaderFiles classLoaderFiles = getClassLoaderFiles(event);
 			byte[] bytes = serialize(classLoaderFiles);

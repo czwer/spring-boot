@@ -57,12 +57,13 @@ public class ServerPortInfoApplicationContextInitializer implements
 
 	@Override
 	public void initialize(ConfigurableApplicationContext applicationContext) {
+		logger.info("[SPRING_BOOT] 自定义日志---添加ApplicationListener：ServerPortInfoApplicationContextInitializer（作用：在服务器启动后暴露其运行时端口）");
 		applicationContext.addApplicationListener(this);
 	}
 
 	@Override
 	public void onApplicationEvent(WebServerInitializedEvent event) {
-		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：WebServerInitializedEvent，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：WebServerInitializedEvent，timestamp："+event.getTimestamp());
 		String propertyName = "local." + getName(event.getApplicationContext()) + ".port";
 		setPortProperty(event.getApplicationContext(), propertyName, event.getWebServer().getPort());
 	}

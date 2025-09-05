@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Properties;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionMessage;
@@ -27,6 +30,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnResource;
 import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
+import org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.boot.info.GitProperties;
@@ -50,6 +54,7 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 @AutoConfiguration
 @EnableConfigurationProperties(ProjectInfoProperties.class)
 public class ProjectInfoAutoConfiguration {
+	private static final Log logger = LogFactory.getLog(ProjectInfoAutoConfiguration.class);
 
 	private final ProjectInfoProperties properties;
 
@@ -61,6 +66,7 @@ public class ProjectInfoAutoConfiguration {
 	@ConditionalOnMissingBean
 	@Bean
 	public GitProperties gitProperties() throws Exception {
+		logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：GitProperties（）");
 		return new GitProperties(
 				loadFrom(this.properties.getGit().getLocation(), "git", this.properties.getGit().getEncoding()));
 	}
@@ -69,6 +75,7 @@ public class ProjectInfoAutoConfiguration {
 	@ConditionalOnMissingBean
 	@Bean
 	public BuildProperties buildProperties() throws Exception {
+		logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：BuildProperties（）");
 		return new BuildProperties(
 				loadFrom(this.properties.getBuild().getLocation(), "build", this.properties.getBuild().getEncoding()));
 	}

@@ -76,7 +76,7 @@ public class ParentContextApplicationContextInitializer
 			ApplicationContext context = event.getApplicationContext();
 			if (context instanceof ConfigurableApplicationContext configurableApplicationContext
 					&& context == event.getSource()) {
-				logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ContextRefreshedEvent(ConfigurableApplicationContext)，timestamp："+event.getTimestamp()+"，转换成发布事件：ParentContextAvailableEvent");
+				logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ContextRefreshedEvent(ConfigurableApplicationContext)，timestamp："+event.getTimestamp()+"，转换成发布事件：ParentContextAvailableEvent");
 				context.publishEvent(new ParentContextAvailableEvent(configurableApplicationContext));
 			}
 		}

@@ -32,7 +32,7 @@ public abstract class AbstractAuditListener implements ApplicationListener<Audit
 
 	@Override
 	public void onApplicationEvent(AuditApplicationEvent event) {
-		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：AuditApplicationEvent，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：AuditApplicationEvent，timestamp："+event.getTimestamp());
 		onAuditEvent(event.getAuditEvent());
 	}
 

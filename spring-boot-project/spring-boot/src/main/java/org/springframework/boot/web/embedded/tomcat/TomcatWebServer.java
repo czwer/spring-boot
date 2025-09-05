@@ -109,6 +109,7 @@ public class TomcatWebServer implements WebServer {
 
 	private void initialize() throws WebServerException {
 		logger.info("Tomcat initialized with " + getPortsDescription(false));
+		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：触发嵌入式Web服务器的创建和启动：tomcat");
 		synchronized (this.monitor) {
 			try {
 				addInstanceIdToEngineName();

@@ -86,7 +86,7 @@ class OnFailureConditionReportContextCustomizerFactory implements ContextCustomi
 
 		@Override
 		public void onApplicationEvent(ApplicationFailedEvent event) {
-			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationFailedEvent，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationFailedEvent，timestamp："+event.getTimestamp());
 			if (shouldPrintReport(event.getApplicationContext())) {
 				System.err.println(new ConditionEvaluationReportMessage(this.reportSupplier.get()));
 			}

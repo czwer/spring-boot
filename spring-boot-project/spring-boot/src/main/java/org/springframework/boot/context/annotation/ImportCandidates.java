@@ -27,6 +27,10 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.core.io.UrlResource;
 import org.springframework.util.Assert;
 
@@ -41,6 +45,8 @@ import org.springframework.util.Assert;
  * @since 2.7.0
  */
 public final class ImportCandidates implements Iterable<String> {
+
+	private static final Log logger = LogFactory.getLog(ImportCandidates.class);
 
 	private static final String LOCATION = "META-INF/spring/%s.imports";
 
@@ -84,7 +90,9 @@ public final class ImportCandidates implements Iterable<String> {
 		List<String> importCandidates = new ArrayList<>();
 		while (urls.hasMoreElements()) {
 			URL url = urls.nextElement();
-			importCandidates.addAll(readCandidateConfigurations(url));
+			List<String> subImportCandidates = readCandidateConfigurations(url);
+			subImportCandidates.forEach(s -> {logger.info("[SPRING_BOOT] 自定义日志---加载存在META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports的jar："+url.getPath()+",包含："+s);});
+			importCandidates.addAll(subImportCandidates);
 		}
 		return new ImportCandidates(importCandidates);
 	}

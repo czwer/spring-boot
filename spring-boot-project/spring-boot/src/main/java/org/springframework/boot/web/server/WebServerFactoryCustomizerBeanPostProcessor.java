@@ -29,7 +29,8 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.util.LambdaSafe;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 import org.springframework.util.Assert;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link BeanPostProcessor} that applies all {@link WebServerFactoryCustomizer} beans
  * from the bean factory to {@link WebServerFactory} beans.
@@ -40,7 +41,7 @@ import org.springframework.util.Assert;
  * @since 2.0.0
  */
 public class WebServerFactoryCustomizerBeanPostProcessor implements BeanPostProcessor, BeanFactoryAware {
-
+	private static final Log logger = LogFactory.getLog(WebServerFactoryCustomizerBeanPostProcessor.class);
 	private ListableBeanFactory beanFactory;
 
 	private List<WebServerFactoryCustomizer<?>> customizers;
@@ -54,6 +55,7 @@ public class WebServerFactoryCustomizerBeanPostProcessor implements BeanPostProc
 	@Override
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 		if (bean instanceof WebServerFactory webServerFactory) {
+			logger.info("[SPRING_BOOT] 自定义日志---在Web服务器工厂Bean初始化之前，对其执行定制化操作："+beanName);
 			postProcessBeforeInitialization(webServerFactory);
 		}
 		return bean;

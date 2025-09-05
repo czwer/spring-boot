@@ -96,11 +96,11 @@ public class StartupTimeMetricsListener implements SmartApplicationListener {
 	@Override
 	public void onApplicationEvent(ApplicationEvent event) {
 		if (event instanceof ApplicationStartedEvent startedEvent) {
-			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationStartedEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationStartedEvent)，timestamp："+event.getTimestamp());
 			onApplicationStarted(startedEvent);
 		}
 		if (event instanceof ApplicationReadyEvent readyEvent) {
-			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationReadyEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationReadyEvent)，timestamp："+event.getTimestamp());
 			onApplicationReady(readyEvent);
 		}
 	}

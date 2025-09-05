@@ -61,10 +61,10 @@ class DefaultApplicationContextFactory implements ApplicationContextFactory {
 
 	private ConfigurableApplicationContext createDefaultApplicationContext() {
 		if (!AotDetector.useGeneratedArtifacts()) {
-			logger.info("[SPRING-BOOT] 自定义日志---createContext ：AnnotationConfigApplicationContext");
+			logger.info("[SPRING_BOOT] 自定义日志---createContext ：AnnotationConfigApplicationContext");
 			return new AnnotationConfigApplicationContext();
 		}
-		logger.info("[SPRING-BOOT] 自定义日志---createContext ：GenericApplicationContext");
+		logger.info("[SPRING_BOOT] 自定义日志---createContext ：GenericApplicationContext");
 		return new GenericApplicationContext();
 	}
 

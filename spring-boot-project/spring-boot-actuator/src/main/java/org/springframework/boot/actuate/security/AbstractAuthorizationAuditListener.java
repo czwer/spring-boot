@@ -52,7 +52,7 @@ public abstract class AbstractAuthorizationAuditListener
 
 	protected void publish(AuditEvent event) {
 		if (getPublisher() != null) {
-			logger.info("[SPRING-BOOT] 自定义日志---发布事件：AuditApplicationEvent");
+			logger.info("[SPRING_BOOT] 自定义日志---发布事件：AuditApplicationEvent");
 			getPublisher().publishEvent(new AuditApplicationEvent(event));
 		}
 	}

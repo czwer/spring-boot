@@ -53,7 +53,7 @@ import org.springframework.util.Assert;
 public class SpringApplicationAdminMXBeanRegistrar implements ApplicationContextAware, GenericApplicationListener,
 		EnvironmentAware, InitializingBean, DisposableBean {
 
-	private static final Log logger = LogFactory.getLog(SpringApplicationAdmin.class);
+	private static final Log logger = LogFactory.getLog(SpringApplicationAdminMXBeanRegistrar.class);
 
 	private ConfigurableApplicationContext applicationContext;
 
@@ -99,11 +99,11 @@ public class SpringApplicationAdminMXBeanRegistrar implements ApplicationContext
 	@Override
 	public void onApplicationEvent(ApplicationEvent event) {
 		if (event instanceof ApplicationReadyEvent readyEvent) {
-			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationReadyEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationReadyEvent)，timestamp："+event.getTimestamp());
 			onApplicationReadyEvent(readyEvent);
 		}
 		if (event instanceof WebServerInitializedEvent initializedEvent) {
-			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(WebServerInitializedEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(WebServerInitializedEvent)，timestamp："+event.getTimestamp());
 			onWebServerInitializedEvent(initializedEvent);
 		}
 	}

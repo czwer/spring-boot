@@ -90,7 +90,7 @@ public class AvailabilityChangeEvent<S extends AvailabilityState> extends Payloa
 	public static <S extends AvailabilityState> void publish(ApplicationEventPublisher publisher, Object source,
 			S state) {
 		Assert.notNull(publisher, "'publisher' must not be null");
-		logger.info("[SPRING-BOOT] 自定义日志---发布事件：AvailabilityChangeEvent");
+		logger.info("[SPRING_BOOT] 自定义日志---发布事件：AvailabilityChangeEvent");
 		publisher.publishEvent(new AvailabilityChangeEvent<>(source, state));
 	}
 

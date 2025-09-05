@@ -40,6 +40,7 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.boot.context.ConfigurationWarningsApplicationContextInitializer;
 import org.springframework.boot.context.annotation.ImportCandidates;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.EnvironmentAware;
@@ -421,6 +422,7 @@ public class AutoConfigurationImportSelector implements DeferredImportSelector, 
 
 	private static final class AutoConfigurationGroup
 			implements DeferredImportSelector.Group, BeanClassLoaderAware, BeanFactoryAware, ResourceLoaderAware {
+		private static final Log logger = LogFactory.getLog(AutoConfigurationGroup.class);
 
 		private final Map<String, AnnotationMetadata> entries = new LinkedHashMap<>();
 
@@ -470,6 +472,7 @@ public class AutoConfigurationImportSelector implements DeferredImportSelector, 
 			this.autoConfigurationEntries.add(autoConfigurationEntry);
 			for (String importClassName : autoConfigurationEntry.getConfigurations()) {
 				this.entries.putIfAbsent(importClassName, annotationMetadata);
+				logger.info("[SPRING_BOOT] 自定义日志---/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports下有效的：AutoConfiguration配置类："+importClassName);
 			}
 		}
 

@@ -229,7 +229,7 @@ class ChildManagementContextInitializer implements BeanRegistrationAotProcessor,
 		@Override
 		public void onApplicationEvent(ApplicationEvent event) {
 			if (event instanceof ApplicationFailedEvent applicationFailedEvent) {
-				logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationFailedEvent)，timestamp："+event.getTimestamp());
+				logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationFailedEvent)，timestamp："+event.getTimestamp());
 				onApplicationFailedEvent(applicationFailedEvent);
 			}
 		}

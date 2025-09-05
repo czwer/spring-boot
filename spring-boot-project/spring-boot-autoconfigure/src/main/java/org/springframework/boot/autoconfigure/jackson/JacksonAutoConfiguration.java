@@ -38,6 +38,8 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.cfg.ConstructorDetector;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.aot.hint.ReflectionHints;
 import org.springframework.aot.hint.RuntimeHints;
@@ -49,6 +51,7 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration;
 import org.springframework.boot.autoconfigure.jackson.JacksonProperties.ConstructorDetectorStrategy;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.jackson.JsonComponentModule;
@@ -87,6 +90,7 @@ import org.springframework.util.ReflectionUtils;
 @AutoConfiguration
 @ConditionalOnClass(ObjectMapper.class)
 public class JacksonAutoConfiguration {
+	private static final Log logger = LogFactory.getLog(JacksonAutoConfiguration.class);
 
 	private static final Map<?, Boolean> FEATURE_DEFAULTS;
 
@@ -99,6 +103,7 @@ public class JacksonAutoConfiguration {
 
 	@Bean
 	public JsonComponentModule jsonComponentModule() {
+		logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：JsonComponentModule（）");
 		return new JsonComponentModule();
 	}
 
@@ -109,6 +114,7 @@ public class JacksonAutoConfiguration {
 		static JsonMixinModuleEntries jsonMixinModuleEntries(ApplicationContext context) {
 			List<String> packages = AutoConfigurationPackages.has(context) ? AutoConfigurationPackages.get(context)
 					: Collections.emptyList();
+			logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：JsonMixinModuleEntries（）");
 			return JsonMixinModuleEntries.scan(context, packages);
 		}
 
@@ -116,6 +122,7 @@ public class JacksonAutoConfiguration {
 		JsonMixinModule jsonMixinModule(ApplicationContext context, JsonMixinModuleEntries entries) {
 			JsonMixinModule jsonMixinModule = new JsonMixinModule();
 			jsonMixinModule.registerEntries(entries, context.getClassLoader());
+			logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：JsonMixinModule（）");
 			return jsonMixinModule;
 		}
 
@@ -129,6 +136,7 @@ public class JacksonAutoConfiguration {
 		@Primary
 		@ConditionalOnMissingBean
 		ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder) {
+			logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：ObjectMapper（）");
 			return builder.createXmlMapper(false).build();
 		}
 
@@ -141,6 +149,7 @@ public class JacksonAutoConfiguration {
 		@Bean
 		@ConditionalOnMissingBean
 		ParameterNamesModule parameterNamesModule() {
+			logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：ParameterNamesModule（）");
 			return new ParameterNamesModule(JsonCreator.Mode.DEFAULT);
 		}
 
@@ -158,6 +167,7 @@ public class JacksonAutoConfiguration {
 			Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
 			builder.applicationContext(applicationContext);
 			customize(builder, customizers);
+			logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：Jackson2ObjectMapperBuilder（）");
 			return builder;
 		}
 
@@ -178,6 +188,7 @@ public class JacksonAutoConfiguration {
 		@Bean
 		StandardJackson2ObjectMapperBuilderCustomizer standardJacksonObjectMapperBuilderCustomizer(
 				JacksonProperties jacksonProperties, ObjectProvider<Module> modules) {
+			logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：StandardJackson2ObjectMapperBuilderCustomizer（）");
 			return new StandardJackson2ObjectMapperBuilderCustomizer(jacksonProperties, modules.stream().toList());
 		}
 

@@ -113,15 +113,15 @@ public class EnvironmentPostProcessorApplicationListener implements SmartApplica
 	@Override
 	public void onApplicationEvent(ApplicationEvent event) {
 		if (event instanceof ApplicationEnvironmentPreparedEvent environmentPreparedEvent) {
-			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationEnvironmentPreparedEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationEnvironmentPreparedEvent)，timestamp："+event.getTimestamp());
 			onApplicationEnvironmentPreparedEvent(environmentPreparedEvent);
 		}
 		if (event instanceof ApplicationPreparedEvent) {
-			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp());
 			onApplicationPreparedEvent();
 		}
 		if (event instanceof ApplicationFailedEvent) {
-			logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationFailedEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationFailedEvent)，timestamp："+event.getTimestamp());
 			onApplicationFailedEvent();
 		}
 	}

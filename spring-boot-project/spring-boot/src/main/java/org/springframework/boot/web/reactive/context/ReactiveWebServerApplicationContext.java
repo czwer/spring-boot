@@ -30,7 +30,8 @@ import org.springframework.context.ApplicationContextException;
 import org.springframework.core.metrics.StartupStep;
 import org.springframework.http.server.reactive.HttpHandler;
 import org.springframework.util.StringUtils;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * A {@link GenericReactiveWebApplicationContext} that can be used to bootstrap itself
  * from a contained {@link ReactiveWebServerFactory} bean.
@@ -40,7 +41,7 @@ import org.springframework.util.StringUtils;
  */
 public class ReactiveWebServerApplicationContext extends GenericReactiveWebApplicationContext
 		implements ConfigurableWebServerApplicationContext {
-
+	private static final Log logger = LogFactory.getLog(ReactiveWebServerApplicationContext.class);
 	private volatile WebServerManager serverManager;
 
 	private String serverNamespace;
@@ -82,6 +83,7 @@ public class ReactiveWebServerApplicationContext extends GenericReactiveWebAppli
 
 	@Override
 	protected void onRefresh() {
+		logger.info("[SPRING_BOOT] 自定义日志---实现AbstractApplicationContext.onRefresh：创建并启动嵌入式响应式Web服务器");
 		super.onRefresh();
 		try {
 			createWebServer();

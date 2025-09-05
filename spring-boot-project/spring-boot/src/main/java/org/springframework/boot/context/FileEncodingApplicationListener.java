@@ -57,7 +57,7 @@ public class FileEncodingApplicationListener
 
 	@Override
 	public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
-		logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEnvironmentPreparedEvent，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEnvironmentPreparedEvent，timestamp："+event.getTimestamp());
 		ConfigurableEnvironment environment = event.getEnvironment();
 		String desired = environment.getProperty("spring.mandatory-file-encoding");
 		if (desired == null) {

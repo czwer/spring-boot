@@ -16,6 +16,9 @@
 
 package org.springframework.boot.autoconfigure.context;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -36,10 +39,13 @@ import org.springframework.core.Ordered;
 @AutoConfiguration
 @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
 public class PropertyPlaceholderAutoConfiguration {
+	private static final Log logger = LogFactory.getLog(PropertyPlaceholderAutoConfiguration.class);
+
 
 	@Bean
 	@ConditionalOnMissingBean(search = SearchStrategy.CURRENT)
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+		logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：PropertySourcesPlaceholderConfigurer（）");
 		return new PropertySourcesPlaceholderConfigurer();
 	}
 

@@ -162,6 +162,7 @@ public class ServletWebServerApplicationContext extends GenericWebApplicationCon
 
 	@Override
 	protected void onRefresh() {
+		logger.info("[SPRING_BOOT] 自定义日志---实现AbstractApplicationContext.onRefresh：触发嵌入式Web服务器的创建和启动");
 		super.onRefresh();
 		try {
 			createWebServer();
@@ -184,6 +185,7 @@ public class ServletWebServerApplicationContext extends GenericWebApplicationCon
 	}
 
 	private void createWebServer() {
+		logger.info("[SPRING_BOOT] 自定义日志---触发嵌入式Web服务器的创建和启动");
 		WebServer webServer = this.webServer;
 		ServletContext servletContext = getServletContext();
 		if (webServer == null && servletContext == null) {

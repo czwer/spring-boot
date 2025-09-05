@@ -179,7 +179,7 @@ public class LoggingApplicationListener implements GenericApplicationListener {
 
 	private static final AtomicBoolean shutdownHookRegistered = new AtomicBoolean();
 
-	private final Log logger = LogFactory.getLog(getClass());
+	private final Log logger = LogFactory.getLog(LoggingApplicationListener.class);
 
 	private LoggingSystem loggingSystem;
 
@@ -217,23 +217,23 @@ public class LoggingApplicationListener implements GenericApplicationListener {
 	@Override
 	public void onApplicationEvent(ApplicationEvent event) {
 		if (event instanceof ApplicationStartingEvent startingEvent) {
-			this.logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationStartingEvent)，timestamp："+event.getTimestamp());
+			this.logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationStartingEvent)，timestamp："+event.getTimestamp());
 			onApplicationStartingEvent(startingEvent);
 		}
 		else if (event instanceof ApplicationEnvironmentPreparedEvent environmentPreparedEvent) {
-			this.logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationEnvironmentPreparedEvent)，timestamp："+event.getTimestamp());
+			this.logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationEnvironmentPreparedEvent)，timestamp："+event.getTimestamp());
 			onApplicationEnvironmentPreparedEvent(environmentPreparedEvent);
 		}
 		else if (event instanceof ApplicationPreparedEvent preparedEvent) {
-			this.logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp());
+			this.logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp());
 			onApplicationPreparedEvent(preparedEvent);
 		}
 		else if (event instanceof ContextClosedEvent contextClosedEvent) {
-			this.logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ContextClosedEvent)，timestamp："+event.getTimestamp());
+			this.logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ContextClosedEvent)，timestamp："+event.getTimestamp());
 			onContextClosedEvent(contextClosedEvent);
 		}
 		else if (event instanceof ApplicationFailedEvent) {
-			this.logger.info("[SPRING-BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationFailedEvent)，timestamp："+event.getTimestamp());
+			this.logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationFailedEvent)，timestamp："+event.getTimestamp());
 			onApplicationFailedEvent();
 		}
 	}

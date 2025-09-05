@@ -28,7 +28,8 @@ import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.jmx.export.MBeanExporter;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * Register a JMX component that allows to administer the current application. Intended
  * for internal use only.
@@ -41,7 +42,7 @@ import org.springframework.jmx.export.MBeanExporter;
 @AutoConfiguration(after = JmxAutoConfiguration.class)
 @ConditionalOnBooleanProperty("spring.application.admin.enabled")
 public class SpringApplicationAdminJmxAutoConfiguration {
-
+	private static final Log logger = LogFactory.getLog(SpringApplicationAdminJmxAutoConfiguration.class);
 	/**
 	 * The property to use to customize the {@code ObjectName} of the application admin
 	 * mbean.
@@ -63,6 +64,7 @@ public class SpringApplicationAdminJmxAutoConfiguration {
 				mbeanExporter.addExcludedBean(jmxName);
 			}
 		}
+		logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：SpringApplicationAdminMXBeanRegistrar（它将应用的关键管理接口通过 JMX 暴露出去，使得开发者或运维工具能够远程监控应用的健康状态（是否就绪）、获取配置信息（如运行端口）以及执行管理操作（如关闭））");
 		return new SpringApplicationAdminMXBeanRegistrar(jmxName);
 	}
 

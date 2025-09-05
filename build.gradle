@@ -30,9 +30,38 @@ tasks.withType(JavaCompile) {
 }
 
 // 直接排除不需要构建的模块
-def excludedProjects = [':spring-boot-docs', ':spring-boot-system-tests', ':spring-boot-tests','dokkatooGenerateModuleHtml','aggregatedJavadoc','dokkatooGeneratePublicationHtml']
+def excludedProjects = [':spring-boot-docs',
+						':spring-boot-system-tests',
+						':spring-boot-tests',
+						':dokkatooGenerateModuleHtml',
+						':aggregatedJavadoc',
+						':dokkatooGeneratePublicationHtml',
+						':javadoc',
+						':spring-boot-tests',
+						':checkstyleTest',
+						':buildSrc:test',
+						':documentationTest',
+						':spring-boot-project:spring-boot-docs:logLinkDokkatooGeneratePublicationHtml',
+						':spring-boot-project:spring-boot-docs:dokkatooGeneratePublicationHtml',
+						':spring-boot-project:spring-boot-test:dokkatooGenerateModuleHtml',
+						':spring-boot-project:spring-boot:dokkatooGenerateModuleHtml',
+						':spring-boot-project:spring-boot:javadoc',
+						':spring-boot-project:spring-boot-test:javadoc',
+						':spring-boot-project:spring-boot-autoconfigure:javadoc',
+						':spring-boot-project:spring-boot-actuator-autoconfigure:javadoc',
+						':spring-boot-project:spring-boot-test-autoconfigure:javadoc',
+						':spring-boot-project:spring-boot-docs:aggregatedJavadoc',
+						':spring-boot-project:spring-boot-actuator-autoconfigure:documentationTest']
+//gradle.projectsLoaded {
+//	subprojects.findAll { excludedProjects.forEach {excludedProject->it.name.contains(excludedProject)} }.each {
+//		it.tasks.all { task ->
+//			println ">>>   └─ 禁用任务: ${task.name} (项目: ${task.project.name})"
+//			task.enabled = false // 禁用该项目的所有任务
+//		}
+//	}
+//}
 gradle.projectsLoaded {
-	subprojects.findAll { excludedProjects.forEach {excludedProject->it.name.contains(excludedProject)} }.each {
+	subprojects.findAll { excludedProjects.contains(it.name) }.each {
 		it.tasks.all { task ->
 			task.enabled = false // 禁用该项目的所有任务
 		}

@@ -16,9 +16,13 @@
 
 package org.springframework.boot.autoconfigure.ssl;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.availability.ApplicationAvailabilityAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.io.ApplicationResourceLoader;
@@ -37,6 +41,8 @@ import org.springframework.core.io.ResourceLoader;
 @AutoConfiguration
 @EnableConfigurationProperties(SslProperties.class)
 public class SslAutoConfiguration {
+	private static final Log logger = LogFactory.getLog(SslAutoConfiguration.class);
+
 
 	private final ResourceLoader resourceLoader;
 
@@ -49,17 +55,20 @@ public class SslAutoConfiguration {
 
 	@Bean
 	FileWatcher fileWatcher() {
+		logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：FileWatcher（）");
 		return new FileWatcher(this.sslProperties.getBundle().getWatch().getFile().getQuietPeriod());
 	}
 
 	@Bean
 	SslPropertiesBundleRegistrar sslPropertiesSslBundleRegistrar(FileWatcher fileWatcher) {
+		logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：SslPropertiesBundleRegistrar（）");
 		return new SslPropertiesBundleRegistrar(this.sslProperties, fileWatcher, this.resourceLoader);
 	}
 
 	@Bean
 	@ConditionalOnMissingBean({ SslBundleRegistry.class, SslBundles.class })
 	DefaultSslBundleRegistry sslBundleRegistry(ObjectProvider<SslBundleRegistrar> sslBundleRegistrars) {
+		logger.info("[SPRING_BOOT] 自定义日志---@Bean方式声明Bean：DefaultSslBundleRegistry（）");
 		DefaultSslBundleRegistry registry = new DefaultSslBundleRegistry();
 		sslBundleRegistrars.orderedStream().forEach((registrar) -> registrar.registerBundles(registry));
 		return registry;

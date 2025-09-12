@@ -117,7 +117,7 @@ class SharedMetadataReaderFactoryContextInitializer implements
 				BeanDefinition definition = BeanDefinitionBuilder
 					.rootBeanDefinition(SharedMetadataReaderFactoryBean.class, SharedMetadataReaderFactoryBean::new)
 					.getBeanDefinition();
-				logger.info("[SPRING_BOOT] 自定义日志---注册Bean定义SharedMetadataReaderFactoryBean（作用：优化启动性能，避免在自动配置过程中重复扫描类路径（Classpath）下的组件。）");
+				logger.info("[SPRING_BOOT] 自定义日志---注册Bean定义：SharedMetadataReaderFactoryBean（作用：优化启动性能，避免在自动配置过程中重复扫描类路径（Classpath）下的组件。）："+BEAN_NAME);
 				registry.registerBeanDefinition(BEAN_NAME, definition);
 			}
 		}

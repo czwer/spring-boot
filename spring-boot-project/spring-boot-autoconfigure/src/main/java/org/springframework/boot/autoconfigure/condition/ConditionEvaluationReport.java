@@ -30,6 +30,9 @@ import java.util.TreeMap;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.annotation.Condition;
@@ -49,6 +52,7 @@ import org.springframework.util.ObjectUtils;
  * @since 1.0.0
  */
 public final class ConditionEvaluationReport {
+	private static final Log logger = LogFactory.getLog(ConditionEvaluationReport.class);
 
 	private static final String BEAN_NAME = "autoConfigurationReport";
 
@@ -69,6 +73,7 @@ public final class ConditionEvaluationReport {
 	 * @see #get(ConfigurableListableBeanFactory)
 	 */
 	private ConditionEvaluationReport() {
+		logger.info("[SPRING_BOOT] 自定义日志---执行自身构造方法，该类作用：在应用启动过程中，记录和报告所有自动配置类（@Configuration 类）的条件评估结果，即为什么某些自动配置类被应用或为什么被跳过");
 	}
 
 	/**

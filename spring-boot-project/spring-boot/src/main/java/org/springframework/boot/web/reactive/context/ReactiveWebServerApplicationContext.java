@@ -63,6 +63,7 @@ public class ReactiveWebServerApplicationContext extends GenericReactiveWebAppli
 
 	@Override
 	public final void refresh() throws BeansException, IllegalStateException {
+		logger.info("[SPRING] 自定义日志【重要】---调用ReactiveWebServerApplicationContext.refresh，再间接调用AbstractApplicationContext.refresh方法");
 		try {
 			super.refresh();
 		}

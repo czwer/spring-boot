@@ -29,7 +29,8 @@ import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.core.env.PropertySources;
 import org.springframework.util.Assert;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link BeanPostProcessor} to bind {@link PropertySources} to beans annotated with
  * {@link ConfigurationProperties @ConfigurationProperties}.
@@ -43,7 +44,7 @@ import org.springframework.util.Assert;
  */
 public class ConfigurationPropertiesBindingPostProcessor
 		implements BeanPostProcessor, PriorityOrdered, ApplicationContextAware, InitializingBean {
-
+	private static final Log logger = LogFactory.getLog(ConfigurationPropertiesBindingPostProcessor.class);
 	/**
 	 * The bean name that this post-processor is registered with.
 	 */
@@ -76,6 +77,7 @@ public class ConfigurationPropertiesBindingPostProcessor
 	@Override
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 		if (!hasBoundValueObject(beanName)) {
+			logger.info("[SPRING_BOOT] 自定义日志---实现BeanPostProcessor：主要负责处理 @ConfigurationProperties注解的绑定工作："+beanName);
 			bind(ConfigurationPropertiesBean.get(this.applicationContext, bean, beanName));
 		}
 		return bean;

@@ -318,6 +318,7 @@ public class SpringApplication {
 			ConfigurableEnvironment environment = prepareEnvironment(listeners, bootstrapContext, applicationArguments);
 			Banner printedBanner = printBanner(environment);
 			context = createApplicationContext();
+			logger.info("[SPRING_BOOT] 自定义日志【重要】---run：创建应用上下文，返回："+context.getClass().getName());
 			context.setApplicationStartup(this.applicationStartup);
 			prepareContext(bootstrapContext, context, environment, listeners, applicationArguments, printedBanner);
 			refreshContext(context);
@@ -402,6 +403,7 @@ public class SpringApplication {
 		}
 		// Add boot specific singleton beans
 		ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
+		logger.info("[SPRING_BOOT] 自定义日志---run，注册单例Bean：applicationArguments");
 		beanFactory.registerSingleton("springApplicationArguments", applicationArguments);
 		if (printedBanner != null) {
 			logger.info("[SPRING_BOOT] 自定义日志---run，注册单例Bean：printedBanner");
@@ -451,7 +453,7 @@ public class SpringApplication {
 	}
 
 	private void refreshContext(ConfigurableApplicationContext context) {
-		logger.info("[SPRING_BOOT] 自定义日志【重要】---run：刷新应用上下文");
+		logger.info("[SPRING_BOOT] 自定义日志【重要】---run：刷新应用上下文："+context.getClass().getName());
 		if (this.properties.isRegisterShutdownHook()) {
 			shutdownHook.registerApplicationContext(context);
 		}

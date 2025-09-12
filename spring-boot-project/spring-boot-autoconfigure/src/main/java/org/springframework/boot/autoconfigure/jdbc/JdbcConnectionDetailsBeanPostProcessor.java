@@ -21,7 +21,8 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * Abstract base class for DataSource bean post processors which apply values from
  * {@link JdbcConnectionDetails}. Property-based connection details
@@ -35,7 +36,7 @@ import org.springframework.core.PriorityOrdered;
  * @author Phillip Webb
  */
 abstract class JdbcConnectionDetailsBeanPostProcessor<T> implements BeanPostProcessor, PriorityOrdered {
-
+	private static final Log logger = LogFactory.getLog(JdbcConnectionDetailsBeanPostProcessor.class);
 	private final Class<T> dataSourceClass;
 
 	private final ObjectProvider<JdbcConnectionDetails> connectionDetailsProvider;
@@ -52,6 +53,7 @@ abstract class JdbcConnectionDetailsBeanPostProcessor<T> implements BeanPostProc
 		if (this.dataSourceClass.isAssignableFrom(bean.getClass()) && "dataSource".equals(beanName)) {
 			JdbcConnectionDetails connectionDetails = this.connectionDetailsProvider.getObject();
 			if (!(connectionDetails instanceof PropertiesJdbcConnectionDetails)) {
+				logger.info("[SPRING_BOOT] 自定义日志---实现BeanPostProcessor：在Bean初始化之前，确保与 JDBC 连接相关的详细信息（如 URL、用户名、密码）被正确地从JdbcConnectionDetailsBean提取并应用到目标数据源配置上："+beanName);
 				return processDataSource((T) bean, connectionDetails);
 			}
 		}

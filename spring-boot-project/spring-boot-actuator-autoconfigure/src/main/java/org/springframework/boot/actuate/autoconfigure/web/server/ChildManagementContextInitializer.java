@@ -150,6 +150,7 @@ class ChildManagementContextInitializer implements BeanRegistrationAotProcessor,
 		this.managementContextFactory.registerWebServerFactoryBeans(this.parentContext, managementContext, registry);
 		registry.register(EnableChildManagementContextConfiguration.class, PropertyPlaceholderAutoConfiguration.class);
 		if (isLazyInitialization()) {
+			logger.info("[SPRING_BOOT] 自定义日志---添加BeanFactoryPostProcessor：LazyInitializationBeanFactoryPostProcessor");
 			managementContext.addBeanFactoryPostProcessor(new LazyInitializationBeanFactoryPostProcessor());
 		}
 	}

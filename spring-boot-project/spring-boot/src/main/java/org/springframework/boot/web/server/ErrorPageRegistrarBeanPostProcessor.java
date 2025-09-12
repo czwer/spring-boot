@@ -28,7 +28,8 @@ import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 import org.springframework.util.Assert;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link BeanPostProcessor} that applies all {@link ErrorPageRegistrar}s from the bean
  * factory to {@link ErrorPageRegistry} beans.
@@ -38,6 +39,7 @@ import org.springframework.util.Assert;
  * @since 2.0.0
  */
 public class ErrorPageRegistrarBeanPostProcessor implements BeanPostProcessor, BeanFactoryAware {
+	private static final Log logger = LogFactory.getLog(ErrorPageRegistrarBeanPostProcessor.class);
 
 	private ListableBeanFactory beanFactory;
 
@@ -52,6 +54,7 @@ public class ErrorPageRegistrarBeanPostProcessor implements BeanPostProcessor, B
 	@Override
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 		if (bean instanceof ErrorPageRegistry errorPageRegistry) {
+			logger.info("[SPRING_BOOT] 自定义日志---实现BeanPostProcessor：将用户通过ErrorPageRegistrar接口自定义的错误页面配置注册到嵌入式的Servlet容器工厂："+beanName);
 			postProcessBeforeInitialization(errorPageRegistry);
 		}
 		return bean;
@@ -59,6 +62,7 @@ public class ErrorPageRegistrarBeanPostProcessor implements BeanPostProcessor, B
 
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+		logger.info("[SPRING_BOOT] 自定义日志---实现BeanPostProcessor：目前是空方法："+beanName);
 		return bean;
 	}
 

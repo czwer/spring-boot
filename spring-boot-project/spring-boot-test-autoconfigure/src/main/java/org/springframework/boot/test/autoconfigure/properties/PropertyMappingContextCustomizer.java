@@ -30,7 +30,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextCustomizer;
 import org.springframework.test.context.MergedContextConfiguration;
 import org.springframework.util.ClassUtils;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * {@link ContextCustomizer} to map annotation attributes to {@link Environment}
  * properties.
@@ -38,7 +39,7 @@ import org.springframework.util.ClassUtils;
  * @author Phillip Webb
  */
 class PropertyMappingContextCustomizer implements ContextCustomizer {
-
+	private static final Log logger = LogFactory.getLog(PropertyMappingContextCustomizer.class);
 	private final AnnotationsPropertySource propertySource;
 
 	PropertyMappingContextCustomizer(AnnotationsPropertySource propertySource) {
@@ -75,6 +76,7 @@ class PropertyMappingContextCustomizer implements ContextCustomizer {
 
 		@Override
 		public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+			logger.info("[SPRING_BOOT] 自定义日志---实现BeanPostProcessor：在测试环境中，对标记了@…Test注解（如 @DataJpaTest, @WebMvcTest等）的测试配置中，检查并确保属性映射（Property Mapping）的正确性，防止因属性配置错误导致的测试意外行为："+beanName);
 			Class<?> beanClass = bean.getClass();
 			MergedAnnotations annotations = MergedAnnotations.from(beanClass, SearchStrategy.SUPERCLASS);
 			Set<Class<?>> components = annotations.stream(Component.class)
@@ -109,6 +111,7 @@ class PropertyMappingContextCustomizer implements ContextCustomizer {
 
 		@Override
 		public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+			logger.info("[SPRING_BOOT] 自定义日志---实现BeanPostProcessor：目前是空方法："+beanName);
 			return bean;
 		}
 

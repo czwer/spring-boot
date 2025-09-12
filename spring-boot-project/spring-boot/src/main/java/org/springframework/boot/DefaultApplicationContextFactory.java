@@ -49,6 +49,7 @@ class DefaultApplicationContextFactory implements ApplicationContextFactory {
 
 	@Override
 	public ConfigurableApplicationContext create(WebApplicationType webApplicationType) {
+		logger.info("[SPRING_BOOT] 自定义日志【重要】---run：创建应用上下文（DefaultApplicationContextFactory）");
 		try {
 			return getFromSpringFactories(webApplicationType, ApplicationContextFactory::create,
 					this::createDefaultApplicationContext);
@@ -62,6 +63,7 @@ class DefaultApplicationContextFactory implements ApplicationContextFactory {
 	private ConfigurableApplicationContext createDefaultApplicationContext() {
 		if (!AotDetector.useGeneratedArtifacts()) {
 			logger.info("[SPRING_BOOT] 自定义日志---createContext ：AnnotationConfigApplicationContext");
+			logger.info("[SPRING_BOOT] 自定义日志---AnnotationConfigApplicationContext构造方法， 会调用父类GenericApplicationContext的构造方法");
 			return new AnnotationConfigApplicationContext();
 		}
 		logger.info("[SPRING_BOOT] 自定义日志---createContext ：GenericApplicationContext");

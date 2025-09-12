@@ -28,6 +28,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyValues;
@@ -439,6 +442,8 @@ public class MockitoPostProcessor implements InstantiationAwareBeanPostProcessor
 	 */
 	static class SpyPostProcessor implements SmartInstantiationAwareBeanPostProcessor, PriorityOrdered {
 
+		private static final Log logger = LogFactory.getLog(SpyPostProcessor.class);
+
 		private static final String BEAN_NAME = SpyPostProcessor.class.getName();
 
 		private final Map<String, Object> earlySpyReferences = new ConcurrentHashMap<>(16);
@@ -465,6 +470,7 @@ public class MockitoPostProcessor implements InstantiationAwareBeanPostProcessor
 
 		@Override
 		public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+			logger.info("[SPRING_BOOT] 自定义日志---实现BeanPostProcessor：在Bean初始化之后，为被@SpyBean注解标记的Bean创建并注入一个Mockitospy对象，从而允许你在测试中部分地模拟（mock）该Bean的行为，同时保留其原始实现的某些功能："+beanName);
 			if (bean instanceof FactoryBean) {
 				return bean;
 			}

@@ -23,6 +23,8 @@ import java.util.Set;
 import jakarta.validation.MessageInterpolator;
 import jakarta.validation.Validation;
 import jakarta.validation.ValidationException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
@@ -39,7 +41,7 @@ import org.springframework.util.ClassUtils;
  * @since 1.5.0
  */
 public class MessageInterpolatorFactory implements ObjectFactory<MessageInterpolator> {
-
+	private static final Log logger = LogFactory.getLog(MessageInterpolatorFactory.class);
 	private static final Set<String> FALLBACKS;
 
 	static {
@@ -67,6 +69,7 @@ public class MessageInterpolatorFactory implements ObjectFactory<MessageInterpol
 
 	@Override
 	public MessageInterpolator getObject() throws BeansException {
+		logger.info("[SPRING_BOOT] 自定义日志---getObject步骤：返回MessageInterpolator");
 		MessageInterpolator messageInterpolator = getMessageInterpolator();
 		if (this.messageSource != null) {
 			return new MessageSourceMessageInterpolator(this.messageSource, messageInterpolator);

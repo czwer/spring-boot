@@ -27,6 +27,8 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -53,11 +55,13 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 @ConditionalOnClass({ OAuth2Authorization.class, JWKSource.class })
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class OAuth2AuthorizationServerJwtAutoConfiguration {
+	private static final Log logger = LogFactory.getLog(OAuth2AuthorizationServerJwtAutoConfiguration.class);
 
 	@Bean
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	@ConditionalOnMissingBean
 	JWKSource<SecurityContext> jwkSource() {
+		logger.info("[SPRING] 自定义日志---标识ROLE_INFRASTRUCTURE，准备注册Bean定义：(JWKSource)");
 		RSAKey rsaKey = getRsaKey();
 		JWKSet jwkSet = new JWKSet(rsaKey);
 		return new ImmutableJWKSet<>(jwkSet);

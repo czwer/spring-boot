@@ -18,6 +18,8 @@ package org.springframework.boot.autoconfigure.validation;
 
 import jakarta.validation.Validator;
 import jakarta.validation.executable.ExecutableValidator;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -52,12 +54,14 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
 @ConditionalOnResource(resources = "classpath:META-INF/services/jakarta.validation.spi.ValidationProvider")
 @Import(PrimaryDefaultValidatorPostProcessor.class)
 public class ValidationAutoConfiguration {
+	private static final Log logger = LogFactory.getLog(ValidationAutoConfiguration.class);
 
 	@Bean
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	@ConditionalOnMissingBean(Validator.class)
 	public static LocalValidatorFactoryBean defaultValidator(ApplicationContext applicationContext,
 			ObjectProvider<ValidationConfigurationCustomizer> customizers) {
+		logger.info("[SPRING_BOOT] 自定义日志---标识ROLE_INFRASTRUCTURE，通过@Bean声明Bean：LocalValidatorFactoryBean");
 		LocalValidatorFactoryBean factoryBean = new LocalValidatorFactoryBean();
 		factoryBean.setConfigurationInitializer((configuration) -> customizers.orderedStream()
 			.forEach((customizer) -> customizer.customize(configuration)));

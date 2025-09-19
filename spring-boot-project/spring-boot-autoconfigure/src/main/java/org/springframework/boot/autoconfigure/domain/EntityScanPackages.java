@@ -24,6 +24,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -160,11 +163,13 @@ public class EntityScanPackages {
 	}
 
 	static class EntityScanPackagesBeanDefinition extends RootBeanDefinition {
+		private static final Log logger = LogFactory.getLog(EntityScanPackagesBeanDefinition.class);
 
 		private final Set<String> packageNames = new LinkedHashSet<>();
 
 		EntityScanPackagesBeanDefinition(Collection<String> packageNames) {
 			setBeanClass(EntityScanPackages.class);
+			logger.info("[SPRING] 自定义日志---标识ROLE_INFRASTRUCTURE");
 			setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
 			addPackageNames(packageNames);
 		}

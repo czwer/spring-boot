@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ObjectProvider;
@@ -85,6 +87,7 @@ import org.springframework.web.reactive.DispatcherHandler;
 @ConditionalOnBean(WebEndpointsSupplier.class)
 @EnableConfigurationProperties(CorsEndpointProperties.class)
 public class WebFluxEndpointManagementContextConfiguration {
+	private static final Log logger = LogFactory.getLog(WebFluxEndpointManagementContextConfiguration.class);
 
 	@Bean
 	@ConditionalOnMissingBean
@@ -144,6 +147,7 @@ public class WebFluxEndpointManagementContextConfiguration {
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	static ServerCodecConfigurerEndpointObjectMapperBeanPostProcessor serverCodecConfigurerEndpointObjectMapperBeanPostProcessor(
 			ObjectProvider<EndpointObjectMapper> endpointObjectMapper) {
+		logger.info("[SPRING_BOOT] 自定义日志---标识ROLE_INFRASTRUCTURE，通过@Bean声明Bean：ServerCodecConfigurerEndpointObjectMapperBeanPostProcessor");
 		return new ServerCodecConfigurerEndpointObjectMapperBeanPostProcessor(
 				SingletonSupplier.of(endpointObjectMapper::getObject));
 	}

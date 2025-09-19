@@ -22,6 +22,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.function.Supplier;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.RootBeanDefinition;
@@ -80,11 +83,13 @@ class ServletComponentScanRegistrar implements ImportBeanDefinitionRegistrar {
 	}
 
 	static final class ServletComponentRegisteringPostProcessorBeanDefinition extends RootBeanDefinition {
+		private static final Log logger = LogFactory.getLog(ServletComponentRegisteringPostProcessorBeanDefinition.class);
 
 		private final Set<String> packageNames = new LinkedHashSet<>();
 
 		ServletComponentRegisteringPostProcessorBeanDefinition(Collection<String> packageNames) {
 			setBeanClass(ServletComponentRegisteringPostProcessor.class);
+			logger.info("[SPRING_BOOT] 自定义日志---标识ROLE_INFRASTRUCTURE");
 			setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
 			addPackageNames(packageNames);
 		}

@@ -20,6 +20,9 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -37,6 +40,7 @@ import org.springframework.core.type.AnnotationMetadata;
  * @author Andy Wilkinson
  */
 class EnableConfigurationPropertiesRegistrar implements ImportBeanDefinitionRegistrar {
+	private static final Log logger = LogFactory.getLog(EnableConfigurationPropertiesRegistrar.class);
 
 	private static final String METHOD_VALIDATION_EXCLUDE_FILTER_BEAN_NAME = Conventions
 		.getQualifiedAttributeName(EnableConfigurationPropertiesRegistrar.class, "methodValidationExcludeFilter");
@@ -64,6 +68,7 @@ class EnableConfigurationPropertiesRegistrar implements ImportBeanDefinitionRegi
 
 	static void registerMethodValidationExcludeFilter(BeanDefinitionRegistry registry) {
 		if (!registry.containsBeanDefinition(METHOD_VALIDATION_EXCLUDE_FILTER_BEAN_NAME)) {
+			logger.info("[SPRING_BOOT] 自定义日志---标识ROLE_INFRASTRUCTURE");
 			BeanDefinition definition = BeanDefinitionBuilder
 				.rootBeanDefinition(MethodValidationExcludeFilter.class, "byAnnotation")
 				.addConstructorArgValue(ConfigurationProperties.class)

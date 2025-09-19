@@ -23,6 +23,8 @@ import java.util.Collections;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.actuate.autoconfigure.endpoint.condition.ConditionalOnAvailableEndpoint;
@@ -77,6 +79,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ConditionalOnBean({ DispatcherServlet.class, WebEndpointsSupplier.class })
 @EnableConfigurationProperties(CorsEndpointProperties.class)
 public class WebMvcEndpointManagementContextConfiguration {
+	private static final Log logger = LogFactory.getLog(WebMvcEndpointManagementContextConfiguration.class);
+
 
 	@Bean
 	@ConditionalOnMissingBean
@@ -143,6 +147,7 @@ public class WebMvcEndpointManagementContextConfiguration {
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	static EndpointObjectMapperWebMvcConfigurer endpointObjectMapperWebMvcConfigurer(
 			EndpointObjectMapper endpointObjectMapper) {
+		logger.info("[SPRING_BOOT] 自定义日志---标识ROLE_INFRASTRUCTURE，通过@Bean声明Bean：EndpointObjectMapperWebMvcConfigurer");
 		return new EndpointObjectMapperWebMvcConfigurer(endpointObjectMapper);
 	}
 

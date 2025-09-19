@@ -20,6 +20,9 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -36,6 +39,7 @@ import org.springframework.util.Assert;
  * @since 2.3.0
  */
 public class BoundConfigurationProperties {
+	private static final Log logger = LogFactory.getLog(BoundConfigurationProperties.class);
 
 	private final Map<ConfigurationPropertyName, ConfigurationProperty> properties = new LinkedHashMap<>();
 
@@ -82,6 +86,7 @@ public class BoundConfigurationProperties {
 			BeanDefinition definition = BeanDefinitionBuilder.rootBeanDefinition(BoundConfigurationProperties.class)
 				.setRole(BeanDefinition.ROLE_INFRASTRUCTURE)
 				.getBeanDefinition();
+			logger.info("[SPRING_BOOT] 自定义日志---标识ROLE_INFRASTRUCTURE，准备注册bean定义："+BEAN_NAME);
 			registry.registerBeanDefinition(BEAN_NAME, definition);
 		}
 	}

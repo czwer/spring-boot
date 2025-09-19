@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.factory.BeanFactory;
@@ -63,7 +66,7 @@ import org.springframework.validation.annotation.Validated;
  * @author Phillip Webb
  */
 class ConfigurationPropertiesBinder {
-
+	private static final Log logger = LogFactory.getLog(ConfigurationPropertiesBinder.class);
 	private static final String BEAN_NAME = "org.springframework.boot.context.internalConfigurationPropertiesBinder";
 
 	private static final String VALIDATOR_BEAN_NAME = EnableConfigurationProperties.VALIDATOR_BEAN_NAME;
@@ -211,6 +214,7 @@ class ConfigurationPropertiesBinder {
 				.rootBeanDefinition(ConfigurationPropertiesBinderFactory.class)
 				.getBeanDefinition();
 			definition.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
+			logger.info("[SPRING_BOOT] 自定义日志---标识ROLE_INFRASTRUCTURE，准备注册bean定义："+BEAN_NAME);
 			registry.registerBeanDefinition(BEAN_NAME, definition);
 		}
 	}

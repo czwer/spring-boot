@@ -16,6 +16,9 @@
 
 package org.springframework.boot.context.properties;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -29,8 +32,6 @@ import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.core.env.PropertySources;
 import org.springframework.util.Assert;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 /**
  * {@link BeanPostProcessor} to bind {@link PropertySources} to beans annotated with
  * {@link ConfigurationProperties @ConfigurationProperties}.
@@ -115,6 +116,7 @@ public class ConfigurationPropertiesBindingPostProcessor
 				.rootBeanDefinition(ConfigurationPropertiesBindingPostProcessor.class)
 				.getBeanDefinition();
 			definition.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
+			logger.info("[SPRING_BOOT] 自定义日志---标识ROLE_INFRASTRUCTURE，准备注册bean定义："+BEAN_NAME);
 			registry.registerBeanDefinition(BEAN_NAME, definition);
 		}
 		ConfigurationPropertiesBinder.register(registry);

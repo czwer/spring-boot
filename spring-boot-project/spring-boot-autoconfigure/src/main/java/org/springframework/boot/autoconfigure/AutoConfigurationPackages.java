@@ -98,6 +98,7 @@ public abstract class AutoConfigurationPackages {
 			RootBeanDefinition beanDefinition = new RootBeanDefinition(BasePackages.class);
 			beanDefinition.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
 			addBasePackages(beanDefinition, packageNames);
+			logger.info("[SPRING] 自定义日志---标识ROLE_INFRASTRUCTURE，准备注册Bean定义："+BEAN);
 			registry.registerBeanDefinition(BEAN, beanDefinition);
 		}
 	}

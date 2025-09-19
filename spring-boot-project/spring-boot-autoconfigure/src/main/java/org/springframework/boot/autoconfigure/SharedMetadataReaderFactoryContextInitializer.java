@@ -18,6 +18,9 @@ package org.springframework.boot.autoconfigure;
 
 import java.util.function.Supplier;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.aot.AotDetector;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.MutablePropertyValues;
@@ -46,8 +49,6 @@ import org.springframework.core.PriorityOrdered;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 /**
  * {@link ApplicationContextInitializer} to create a shared
  * {@link CachingMetadataReaderFactory} between the
@@ -117,7 +118,7 @@ class SharedMetadataReaderFactoryContextInitializer implements
 				BeanDefinition definition = BeanDefinitionBuilder
 					.rootBeanDefinition(SharedMetadataReaderFactoryBean.class, SharedMetadataReaderFactoryBean::new)
 					.getBeanDefinition();
-				logger.info("[SPRING_BOOT] 自定义日志---注册Bean定义：SharedMetadataReaderFactoryBean（作用：优化启动性能，避免在自动配置过程中重复扫描类路径（Classpath）下的组件。）："+BEAN_NAME);
+				logger.info("[SPRING_BOOT] 自定义日志---准备注册Bean定义：beanName："+BEAN_NAME);
 				registry.registerBeanDefinition(BEAN_NAME, definition);
 			}
 		}
@@ -151,6 +152,7 @@ class SharedMetadataReaderFactoryContextInitializer implements
 		}
 
 		private void configureConfigurationClassPostProcessor(MutablePropertyValues propertyValues) {
+			logger.info("[SPRING_BOOT] 自定义日志---internalConfigurationAnnotationProcessor 设置 metadataReaderFactory："+BEAN_NAME);
 			propertyValues.add("metadataReaderFactory", new RuntimeBeanReference(BEAN_NAME));
 		}
 
@@ -220,7 +222,7 @@ class SharedMetadataReaderFactoryContextInitializer implements
 
 		@Override
 		public void onApplicationEvent(ContextRefreshedEvent event) {
-			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ContextRefreshedEvent，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ContextRefreshedEvent，清除缓存，timestamp："+event.getTimestamp());
 			this.metadataReaderFactory.clearCache();
 		}
 

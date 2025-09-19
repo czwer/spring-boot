@@ -21,6 +21,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -65,6 +68,7 @@ import org.springframework.xml.xsd.SimpleXsdSchema;
 @ConditionalOnMissingBean(WsConfigurationSupport.class)
 @EnableConfigurationProperties(WebServicesProperties.class)
 public class WebServicesAutoConfiguration {
+	private static final Log logger = LogFactory.getLog(WebServicesAutoConfiguration.class);
 
 	@Bean
 	public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(
@@ -85,6 +89,7 @@ public class WebServicesAutoConfiguration {
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	@Conditional(OnWsdlLocationsCondition.class)
 	public static WsdlDefinitionBeanFactoryPostProcessor wsdlDefinitionBeanFactoryPostProcessor() {
+		logger.info("[SPRING_BOOT] 自定义日志---标识ROLE_INFRASTRUCTURE，通过@Bean声明Bean：WsdlDefinitionBeanFactoryPostProcessor");
 		return new WsdlDefinitionBeanFactoryPostProcessor();
 	}
 
@@ -96,6 +101,7 @@ public class WebServicesAutoConfiguration {
 
 	static class WsdlDefinitionBeanFactoryPostProcessor
 			implements BeanDefinitionRegistryPostProcessor, ApplicationContextAware {
+		private static final Log logger = LogFactory.getLog(WsdlDefinitionBeanFactoryPostProcessor.class);
 
 		private ApplicationContext applicationContext;
 
@@ -110,8 +116,10 @@ public class WebServicesAutoConfiguration {
 			List<String> wsdlLocations = binder.bind("spring.webservices.wsdl-locations", Bindable.listOf(String.class))
 				.orElse(Collections.emptyList());
 			for (String wsdlLocation : wsdlLocations) {
+				logger.info("[SPRING_BOOT] 自定义日志---注册Bean定义：SimpleWsdl11Definition");
 				registerBeans(wsdlLocation, "*.wsdl", SimpleWsdl11Definition.class, SimpleWsdl11Definition::new,
 						registry);
+				logger.info("[SPRING_BOOT] 自定义日志---注册Bean定义：SimpleXsdSchema");
 				registerBeans(wsdlLocation, "*.xsd", SimpleXsdSchema.class, SimpleXsdSchema::new, registry);
 			}
 		}

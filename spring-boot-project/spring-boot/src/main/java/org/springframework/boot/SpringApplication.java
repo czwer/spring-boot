@@ -307,6 +307,7 @@ public class SpringApplication {
 		if (this.properties.isRegisterShutdownHook()) {
 			SpringApplication.shutdownHook.enableShutdownHookAddition();
 		}
+		logger.info("[SPRING_BOOT] 自定义日志【重要】---run：创建createBootstrapContext");
 		DefaultBootstrapContext bootstrapContext = createBootstrapContext();
 		ConfigurableApplicationContext context = null;
 		configureHeadlessProperty();
@@ -403,10 +404,10 @@ public class SpringApplication {
 		}
 		// Add boot specific singleton beans
 		ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
-		logger.info("[SPRING_BOOT] 自定义日志---run，注册单例Bean：applicationArguments");
+		logger.info("[SPRING_BOOT] 自定义日志---run，【注册单例Bean】：applicationArguments");
 		beanFactory.registerSingleton("springApplicationArguments", applicationArguments);
 		if (printedBanner != null) {
-			logger.info("[SPRING_BOOT] 自定义日志---run，注册单例Bean：printedBanner");
+			logger.info("[SPRING_BOOT] 自定义日志---run，【注册单例Bean】：printedBanner");
 			beanFactory.registerSingleton("springBootBanner", printedBanner);
 		}
 		if (beanFactory instanceof AbstractAutowireCapableBeanFactory autowireCapableBeanFactory) {
@@ -453,11 +454,12 @@ public class SpringApplication {
 	}
 
 	private void refreshContext(ConfigurableApplicationContext context) {
-		logger.info("[SPRING_BOOT] 自定义日志【重要】---run：刷新应用上下文："+context.getClass().getName());
+		logger.info("[SPRING_BOOT] 自定义日志【重要】---run：刷新应用上下文：开始，"+context.getClass().getName());
 		if (this.properties.isRegisterShutdownHook()) {
 			shutdownHook.registerApplicationContext(context);
 		}
 		refresh(context);
+		logger.info("[SPRING_BOOT] 自定义日志【重要】---run：刷新应用上下文：结束，"+context.getClass().getName());
 	}
 
 	private void configureHeadlessProperty() {
@@ -605,6 +607,7 @@ public class SpringApplication {
 	 */
 	protected void postProcessApplicationContext(ConfigurableApplicationContext context) {
 		if (this.beanNameGenerator != null) {
+			logger.info("[SPRING_BOOT] 自定义日志---run，【注册单例Bean】："+AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR);
 			context.getBeanFactory()
 				.registerSingleton(AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR, this.beanNameGenerator);
 		}
@@ -1616,7 +1619,7 @@ public class SpringApplication {
 	 * {@code @PropertySource} items added by the {@link ConfigurationClassPostProcessor}.
 	 */
 	private static class PropertySourceOrderingBeanFactoryPostProcessor implements BeanFactoryPostProcessor, Ordered {
-
+		private static final Log logger = LogFactory.getLog(PropertySourceOrderingBeanFactoryPostProcessor.class);
 		private final ConfigurableApplicationContext context;
 
 		PropertySourceOrderingBeanFactoryPostProcessor(ConfigurableApplicationContext context) {
@@ -1630,6 +1633,7 @@ public class SpringApplication {
 
 		@Override
 		public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+			logger.info("自定义日志---PropertySourceOrderingBeanFactoryPostProcessor实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：核心作用是调整 Environment中属性源的顺序，以确保配置的优先级符合Spring Boot的预期");
 			DefaultPropertiesPropertySource.moveToEnd(this.context.getEnvironment());
 		}
 

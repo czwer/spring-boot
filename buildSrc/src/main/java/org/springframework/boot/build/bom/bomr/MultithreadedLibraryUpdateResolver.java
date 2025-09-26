@@ -56,6 +56,7 @@ class MultithreadedLibraryUpdateResolver implements LibraryUpdateResolver {
 	public List<LibraryWithVersionOptions> findLibraryUpdates(Collection<Library> librariesToUpgrade,
 			Map<String, Library> librariesByName) {
 		logger.info("Looking for updates using {} threads", this.threads);
+		logger.info("[SPRINGBOOT] 自定义日志---创建线程池：(Executors.newFixedThreadPool())");
 		ExecutorService executorService = Executors.newFixedThreadPool(this.threads);
 		try {
 			return librariesToUpgrade.stream().map((library) -> {

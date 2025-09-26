@@ -18,6 +18,8 @@ package org.springframework.boot.test.autoconfigure.web.servlet;
 
 import java.util.concurrent.Executors;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.htmlunit.BrowserVersion;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -45,6 +47,7 @@ import org.springframework.util.ClassUtils;
 @ConditionalOnClass(HtmlUnitDriver.class)
 @ConditionalOnBooleanProperty(name = "spring.test.mockmvc.webdriver.enabled", matchIfMissing = true)
 public class MockMvcWebDriverAutoConfiguration {
+	private static final Log logger = LogFactory.getLog(MockMvcWebDriverAutoConfiguration.class);
 
 	private static final String SECURITY_CONTEXT_EXECUTOR = "org.springframework.security.concurrent.DelegatingSecurityContextExecutor";
 
@@ -62,6 +65,7 @@ public class MockMvcWebDriverAutoConfiguration {
 	public HtmlUnitDriver htmlUnitDriver(MockMvcHtmlUnitDriverBuilder builder) {
 		HtmlUnitDriver driver = builder.build();
 		if (ClassUtils.isPresent(SECURITY_CONTEXT_EXECUTOR, getClass().getClassLoader())) {
+			logger.info("[SPRINGBOOT] 自定义日志---创建线程池：(Executors.newSingleThreadExecutor())");
 			driver.setExecutor(new DelegatingSecurityContextExecutor(Executors.newSingleThreadExecutor()));
 		}
 		return driver;

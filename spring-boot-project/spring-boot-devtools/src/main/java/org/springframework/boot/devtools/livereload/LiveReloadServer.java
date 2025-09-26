@@ -53,6 +53,7 @@ public class LiveReloadServer {
 
 	private static final int READ_TIMEOUT = (int) TimeUnit.SECONDS.toMillis(4);
 
+	//创建线程池
 	private final ExecutorService executor = Executors.newCachedThreadPool(new WorkerThreadFactory());
 
 	private final List<Connection> connections = new ArrayList<>();

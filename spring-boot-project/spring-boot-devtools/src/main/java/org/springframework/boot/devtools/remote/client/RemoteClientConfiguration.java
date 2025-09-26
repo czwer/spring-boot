@@ -138,7 +138,7 @@ public class RemoteClientConfiguration implements InitializingBean {
 		private final ClientHttpRequestFactory clientHttpRequestFactory;
 
 		private final String remoteUrl;
-
+		//创建线程池
 		private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
 		LiveReloadConfiguration(DevToolsProperties properties, ClientHttpRequestFactory clientHttpRequestFactory,

@@ -19,6 +19,9 @@ package org.springframework.boot;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.SmartInitializingSingleton;
@@ -50,9 +53,10 @@ import org.springframework.core.Ordered;
  * @see LazyInitializationExcludeFilter
  */
 public final class LazyInitializationBeanFactoryPostProcessor implements BeanFactoryPostProcessor, Ordered {
-
+	private static final Log logger = LogFactory.getLog(LazyInitializationBeanFactoryPostProcessor.class);
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+		logger.info("自定义日志---LazyInitializationBeanFactoryPostProcessor实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：主要作用是启用全局的延迟初始化（Lazy Initialization）模式，通过配置Bean工厂来延迟所有单例Bean的创建，直到它们第一次被实际使用时才进行初始化");
 		Collection<LazyInitializationExcludeFilter> filters = getFilters(beanFactory);
 		for (String beanName : beanFactory.getBeanDefinitionNames()) {
 			BeanDefinition beanDefinition = beanFactory.getBeanDefinition(beanName);

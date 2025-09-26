@@ -16,6 +16,9 @@
 
 package org.springframework.boot.web.reactive.context;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.WebApplicationType;
@@ -30,8 +33,6 @@ import org.springframework.context.ApplicationContextException;
 import org.springframework.core.metrics.StartupStep;
 import org.springframework.http.server.reactive.HttpHandler;
 import org.springframework.util.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 /**
  * A {@link GenericReactiveWebApplicationContext} that can be used to bootstrap itself
  * from a contained {@link ReactiveWebServerFactory} bean.
@@ -103,8 +104,10 @@ public class ReactiveWebServerApplicationContext extends GenericReactiveWebAppli
 			createWebServer.tag("factory", webServerFactory.getClass().toString());
 			boolean lazyInit = getBeanFactory().getBeanDefinition(webServerFactoryBeanName).isLazyInit();
 			this.serverManager = new WebServerManager(this, webServerFactory, this::getHttpHandler, lazyInit);
+			logger.info("[SPRING_BOOT] 自定义日志---【注册单例Bean】：webServerGracefulShutdown");
 			getBeanFactory().registerSingleton("webServerGracefulShutdown",
 					new WebServerGracefulShutdownLifecycle(this.serverManager.getWebServer()));
+			logger.info("[SPRING_BOOT] 自定义日志---【注册单例Bean】：webServerStartStop");
 			getBeanFactory().registerSingleton("webServerStartStop",
 					new WebServerStartStopLifecycle(this.serverManager));
 			createWebServer.end();

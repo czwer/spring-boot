@@ -19,6 +19,9 @@ package smoketest.bootstrapregistry.external.svn;
 import java.io.IOException;
 import java.util.Collections;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.boot.BootstrapContext;
 import org.springframework.boot.BootstrapContextClosedEvent;
 import org.springframework.boot.BootstrapRegistry;
@@ -37,7 +40,7 @@ import org.springframework.core.env.PropertySource;
  * @author Phillip Webb
  */
 class SubversionConfigDataLoader implements ConfigDataLoader<SubversionConfigDataResource> {
-
+	private static final Logger logger = LoggerFactory.getLogger(SubversionConfigDataLoader.class);
 	private static final ApplicationListener<BootstrapContextClosedEvent> closeListener = SubversionConfigDataLoader::onBootstrapContextClosed;
 
 	SubversionConfigDataLoader(BootstrapRegistry bootstrapRegistry) {
@@ -61,6 +64,7 @@ class SubversionConfigDataLoader implements ConfigDataLoader<SubversionConfigDat
 	}
 
 	private static void onBootstrapContextClosed(BootstrapContextClosedEvent event) {
+		logger.info("[SPRING_BOOT] 自定义日志---【注册单例Bean】：subversionClient");
 		event.getApplicationContext()
 			.getBeanFactory()
 			.registerSingleton("subversionClient", event.getBootstrapContext().get(SubversionClient.class));

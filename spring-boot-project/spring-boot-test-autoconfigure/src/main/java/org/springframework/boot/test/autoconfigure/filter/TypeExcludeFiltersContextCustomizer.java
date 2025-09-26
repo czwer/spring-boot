@@ -22,6 +22,9 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.boot.context.TypeExcludeFilter;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.type.classreading.MetadataReader;
@@ -37,7 +40,7 @@ import org.springframework.util.ReflectionUtils;
  * @see TypeExcludeFilters
  */
 class TypeExcludeFiltersContextCustomizer implements ContextCustomizer {
-
+	private static final Log logger = LogFactory.getLog(TypeExcludeFiltersContextCustomizer.class);
 	private static final String EXCLUDE_FILTER_BEAN_NAME = TypeExcludeFilters.class.getName();
 
 	private final Set<TypeExcludeFilter> filters;
@@ -84,6 +87,7 @@ class TypeExcludeFiltersContextCustomizer implements ContextCustomizer {
 	public void customizeContext(ConfigurableApplicationContext context,
 			MergedContextConfiguration mergedContextConfiguration) {
 		if (!this.filters.isEmpty()) {
+			logger.info("[SPRING_BOOT] 自定义日志---【注册单例Bean】："+EXCLUDE_FILTER_BEAN_NAME);
 			context.getBeanFactory().registerSingleton(EXCLUDE_FILTER_BEAN_NAME, createDelegatingTypeExcludeFilter());
 		}
 	}

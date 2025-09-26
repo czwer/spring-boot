@@ -22,6 +22,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.aot.hint.MemberCategory;
 import org.springframework.aot.hint.TypeReference;
 import org.springframework.beans.BeansException;
@@ -49,6 +52,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 class ServletComponentRegisteringPostProcessor
 		implements BeanFactoryPostProcessor, ApplicationContextAware, BeanFactoryInitializationAotProcessor {
+	private static final Log logger = LogFactory.getLog(ServletComponentRegisteringPostProcessor.class);
 
 	private static final boolean MOCK_SERVLET_CONTEXT_AVAILABLE = ClassUtils
 		.isPresent("org.springframework.mock.web.MockServletContext", null);
@@ -73,6 +77,7 @@ class ServletComponentRegisteringPostProcessor
 
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+		logger.info("自定义日志---ServletComponentRegisteringPostProcessor实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：负责扫描并注册使用Servlet注解（如@WebServlet、@WebFilter、@WebListener）的组件到内嵌的Servlet容器中。");
 		if (eligibleForServletComponentScanning()) {
 			ClassPathScanningCandidateComponentProvider componentProvider = createComponentProvider();
 			for (String packageToScan : this.packagesToScan) {

@@ -18,6 +18,9 @@ package org.springframework.boot.context;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -37,7 +40,7 @@ import org.springframework.util.StringUtils;
  */
 public class ContextIdApplicationContextInitializer
 		implements ApplicationContextInitializer<ConfigurableApplicationContext>, Ordered {
-
+	private static final Log logger = LogFactory.getLog(ContextIdApplicationContextInitializer.class);
 	private int order = Ordered.LOWEST_PRECEDENCE - 10;
 
 	public void setOrder(int order) {
@@ -53,6 +56,7 @@ public class ContextIdApplicationContextInitializer
 	public void initialize(ConfigurableApplicationContext applicationContext) {
 		ContextId contextId = getContextId(applicationContext);
 		applicationContext.setId(contextId.getId());
+		logger.info("[SPRING_BOOT] 自定义日志---【注册单例Bean】："+ ContextId.class.getName());
 		applicationContext.getBeanFactory().registerSingleton(ContextId.class.getName(), contextId);
 	}
 

@@ -18,6 +18,9 @@ package org.springframework.boot.autoconfigure.task;
 
 import java.util.concurrent.Executor;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -167,9 +170,11 @@ class TaskExecutorConfigurations {
 
 	@Configuration(proxyBeanMethods = false)
 	static class BootstrapExecutorConfiguration {
+		private static final Log logger = LogFactory.getLog(BootstrapExecutorConfiguration.class);
 
 		@Bean
 		static BeanFactoryPostProcessor bootstrapExecutorAliasPostProcessor() {
+			logger.info("自定义日志---通过@Bean声明BeanFactoryPostProcessor：bootstrapExecutorAliasPostProcessor");
 			return (beanFactory) -> {
 				boolean hasBootstrapExecutor = beanFactory
 					.containsBean(ConfigurableApplicationContext.BOOTSTRAP_EXECUTOR_BEAN_NAME);

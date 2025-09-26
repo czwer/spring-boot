@@ -88,7 +88,7 @@ import org.springframework.util.StringUtils;
 @Deprecated(since = "3.4.0")
 public class MockitoPostProcessor implements InstantiationAwareBeanPostProcessor, BeanClassLoaderAware,
 		BeanFactoryAware, BeanFactoryPostProcessor, Ordered {
-
+	private static final Log logger = LogFactory.getLog(MockitoPostProcessor.class);
 	private static final String BEAN_NAME = MockitoPostProcessor.class.getName();
 
 	private static final String CONFIGURATION_CLASS_ATTRIBUTE = Conventions
@@ -138,6 +138,7 @@ public class MockitoPostProcessor implements InstantiationAwareBeanPostProcessor
 	}
 
 	private void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory, BeanDefinitionRegistry registry) {
+		logger.info("[SPRING_BOOT] 自定义日志---【注册单例Bean】：MockitoBeans");
 		beanFactory.registerSingleton(MockitoBeans.class.getName(), this.mockitoBeans);
 		DefinitionsParser parser = new DefinitionsParser(this.definitions);
 		for (Class<?> configurationClass : getConfigurationClasses(beanFactory)) {
@@ -191,6 +192,7 @@ public class MockitoPostProcessor implements InstantiationAwareBeanPostProcessor
 		}
 		registry.registerBeanDefinition(transformedBeanName, beanDefinition);
 		Object mock = definition.createMock(beanName + " bean");
+		logger.info("[SPRING_BOOT] 自定义日志---【注册单例Bean】："+ transformedBeanName);
 		beanFactory.registerSingleton(transformedBeanName, mock);
 		this.mockitoBeans.add(mock);
 		this.beanNameRegistry.put(definition, beanName);

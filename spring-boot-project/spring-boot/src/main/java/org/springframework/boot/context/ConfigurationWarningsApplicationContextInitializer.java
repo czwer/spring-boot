@@ -73,6 +73,7 @@ public class ConfigurationWarningsApplicationContextInitializer
 	 */
 	protected static final class ConfigurationWarningsPostProcessor
 			implements PriorityOrdered, BeanDefinitionRegistryPostProcessor {
+		private static final Log logger = LogFactory.getLog(ConfigurationWarningsPostProcessor.class);
 
 		private final Check[] checks;
 
@@ -87,6 +88,7 @@ public class ConfigurationWarningsApplicationContextInitializer
 
 		@Override
 		public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+			logger.info("自定义日志---ConfigurationWarningsPostProcessor实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：空方法");
 		}
 
 		@Override

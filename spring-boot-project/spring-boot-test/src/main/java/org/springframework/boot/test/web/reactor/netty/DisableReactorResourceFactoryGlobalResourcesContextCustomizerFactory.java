@@ -18,6 +18,9 @@ package org.springframework.boot.test.web.reactor.netty;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.client.ReactorResourceFactory;
 import org.springframework.test.context.ContextConfigurationAttributes;
@@ -33,7 +36,7 @@ import org.springframework.util.ClassUtils;
  * @author Phillip Webb
  */
 class DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory implements ContextCustomizerFactory {
-
+	private static final Logger logger = LoggerFactory.getLogger(DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory.class);
 	String REACTOR_RESOURCE_FACTORY_CLASS = "org.springframework.http.client.ReactorResourceFactory";
 
 	@Override
@@ -54,6 +57,7 @@ class DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory imple
 
 		@Override
 		public void customizeContext(ConfigurableApplicationContext context, MergedContextConfiguration mergedConfig) {
+			logger.info("[SPRING_BOOT] 自定义日志---【注册单例Bean】：DisableReactorResourceFactoryGlobalResourcesBeanPostProcessor");
 			context.getBeanFactory()
 				.registerSingleton(DisableReactorResourceFactoryGlobalResourcesBeanPostProcessor.class.getName(),
 						new DisableReactorResourceFactoryGlobalResourcesBeanPostProcessor());

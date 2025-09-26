@@ -26,6 +26,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.aot.AotDetector;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -64,7 +67,7 @@ import org.springframework.util.StringUtils;
  * @see DependsOnDatabaseInitialization
  */
 public class DatabaseInitializationDependencyConfigurer implements ImportBeanDefinitionRegistrar {
-
+	private static final Log logger = LogFactory.getLog(DatabaseInitializationDependencyConfigurer.class);
 	@Override
 	public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
 		String name = DependsOnDatabaseInitializationPostProcessor.class.getName();
@@ -96,6 +99,7 @@ public class DatabaseInitializationDependencyConfigurer implements ImportBeanDef
 
 		@Override
 		public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+			logger.info("自定义日志---DatabaseInitializationDependencyConfigurer实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：主要作用是确保数据库相关的Bean在数据库初始化完成之后才被创建和初始化。");
 			if (AotDetector.useGeneratedArtifacts()) {
 				return;
 			}

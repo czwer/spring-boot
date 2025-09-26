@@ -24,6 +24,8 @@ import java.util.concurrent.ScheduledFuture;
 import io.prometheus.metrics.exporter.pushgateway.PushGateway;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
@@ -151,7 +153,7 @@ public class PrometheusPushGatewayManager {
 	 * {@link TaskScheduler} used when the user doesn't specify one.
 	 */
 	static class PushGatewayTaskScheduler extends ThreadPoolTaskScheduler {
-
+		private static final Logger logger = LoggerFactory.getLogger(PushGatewayTaskScheduler.class);
 		PushGatewayTaskScheduler() {
 			setPoolSize(1);
 			setDaemon(true);
@@ -160,6 +162,7 @@ public class PrometheusPushGatewayManager {
 
 		@Override
 		public ScheduledExecutorService getScheduledExecutor() throws IllegalStateException {
+			logger.info("[SPRINGBOOT] 自定义日志---创建线程池：(Executors.newSingleThreadScheduledExecutor())");
 			return Executors.newSingleThreadScheduledExecutor(this::newThread);
 		}
 

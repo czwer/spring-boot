@@ -195,8 +195,10 @@ public class ServletWebServerApplicationContext extends GenericWebApplicationCon
 			createWebServer.tag("factory", factory.getClass().toString());
 			this.webServer = factory.getWebServer(getSelfInitializer());
 			createWebServer.end();
+			logger.info("[SPRING_BOOT] 自定义日志---【注册单例Bean】：webServerGracefulShutdown");
 			getBeanFactory().registerSingleton("webServerGracefulShutdown",
 					new WebServerGracefulShutdownLifecycle(this.webServer));
+			logger.info("[SPRING_BOOT] 自定义日志---【注册单例Bean】：webServerStartStop");
 			getBeanFactory().registerSingleton("webServerStartStop",
 					new WebServerStartStopLifecycle(this, this.webServer));
 		}

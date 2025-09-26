@@ -16,6 +16,8 @@
 
 package org.springframework.boot.autoconfigure.aop;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.aspectj.weaver.Advice;
 
 import org.springframework.aop.config.AopConfigUtils;
@@ -71,9 +73,10 @@ public class AopAutoConfiguration {
 	@ConditionalOnMissingClass("org.aspectj.weaver.Advice")
 	@ConditionalOnBooleanProperty(name = "spring.aop.proxy-target-class", matchIfMissing = true)
 	static class ClassProxyingConfiguration {
-
+		private static final Log logger = LogFactory.getLog(ClassProxyingConfiguration.class);
 		@Bean
 		static BeanFactoryPostProcessor forceAutoProxyCreatorToUseClassProxying() {
+			logger.info("自定义日志---通过@Bean声明BeanFactoryPostProcessor：forceAutoProxyCreatorToUseClassProxying");
 			return (beanFactory) -> {
 				if (beanFactory instanceof BeanDefinitionRegistry registry) {
 					AopConfigUtils.registerAutoProxyCreatorIfNecessary(registry);

@@ -56,7 +56,7 @@ import org.springframework.web.context.WebApplicationContext;
  * @since 1.4.0
  */
 public class SpringBootMockMvcBuilderCustomizer implements MockMvcBuilderCustomizer {
-
+	private static final Log logger = LogFactory.getLog(SpringBootMockMvcBuilderCustomizer.class);
 	private final WebApplicationContext context;
 
 	private boolean addFilters = true;
@@ -232,6 +232,7 @@ public class SpringBootMockMvcBuilderCustomizer implements MockMvcBuilderCustomi
 		DeferredLinesWriter(WebApplicationContext context, LinesWriter delegate) {
 			Assert.state(context instanceof ConfigurableApplicationContext,
 					"A ConfigurableApplicationContext is required for printOnlyOnFailure");
+			logger.info("[SPRING_BOOT] 自定义日志---【注册单例Bean】："+BEAN_NAME);
 			((ConfigurableApplicationContext) context).getBeanFactory().registerSingleton(BEAN_NAME, this);
 			this.delegate = delegate;
 		}

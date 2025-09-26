@@ -19,6 +19,9 @@ package org.springframework.boot.test.autoconfigure.properties;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -30,8 +33,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextCustomizer;
 import org.springframework.test.context.MergedContextConfiguration;
 import org.springframework.util.ClassUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 /**
  * {@link ContextCustomizer} to map annotation attributes to {@link Environment}
  * properties.
@@ -52,6 +53,7 @@ class PropertyMappingContextCustomizer implements ContextCustomizer {
 		if (!this.propertySource.isEmpty()) {
 			context.getEnvironment().getPropertySources().addFirst(this.propertySource);
 		}
+		logger.info("[SPRING_BOOT] 自定义日志---【注册单例Bean】：PropertyMappingCheckBeanPostProcessor");
 		context.getBeanFactory()
 			.registerSingleton(PropertyMappingCheckBeanPostProcessor.class.getName(),
 					new PropertyMappingCheckBeanPostProcessor());

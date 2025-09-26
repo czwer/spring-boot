@@ -21,6 +21,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.function.Supplier;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.config.BeanDefinitionCustomizer;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanNameGenerator;
@@ -58,7 +61,7 @@ import org.springframework.web.context.support.GenericWebApplicationContext;
  */
 public class AnnotationConfigServletWebApplicationContext extends GenericWebApplicationContext
 		implements AnnotationConfigRegistry {
-
+	private static final Log logger = LogFactory.getLog(AnnotationConfigServletWebApplicationContext.class);
 	private final AnnotatedBeanDefinitionReader reader;
 
 	private final ClassPathBeanDefinitionScanner scanner;
@@ -143,6 +146,7 @@ public class AnnotationConfigServletWebApplicationContext extends GenericWebAppl
 	public void setBeanNameGenerator(BeanNameGenerator beanNameGenerator) {
 		this.reader.setBeanNameGenerator(beanNameGenerator);
 		this.scanner.setBeanNameGenerator(beanNameGenerator);
+		logger.info("[SPRING_BOOT] 自定义日志---【注册单例Bean】："+ AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR);
 		getBeanFactory().registerSingleton(AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR, beanNameGenerator);
 	}
 

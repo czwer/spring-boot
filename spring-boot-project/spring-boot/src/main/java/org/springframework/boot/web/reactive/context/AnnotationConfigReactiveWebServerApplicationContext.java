@@ -20,6 +20,9 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanNameGenerator;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -58,7 +61,7 @@ import org.springframework.util.ObjectUtils;
  */
 public class AnnotationConfigReactiveWebServerApplicationContext extends ReactiveWebServerApplicationContext
 		implements AnnotationConfigRegistry {
-
+	private static final Log logger = LogFactory.getLog(AnnotationConfigReactiveWebServerApplicationContext.class);
 	private final AnnotatedBeanDefinitionReader reader;
 
 	private final ClassPathBeanDefinitionScanner scanner;
@@ -144,6 +147,7 @@ public class AnnotationConfigReactiveWebServerApplicationContext extends Reactiv
 	public void setBeanNameGenerator(BeanNameGenerator beanNameGenerator) {
 		this.reader.setBeanNameGenerator(beanNameGenerator);
 		this.scanner.setBeanNameGenerator(beanNameGenerator);
+		logger.info("[SPRING_BOOT] 自定义日志---【注册单例Bean】："+AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR);
 		getBeanFactory().registerSingleton(AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR, beanNameGenerator);
 	}
 

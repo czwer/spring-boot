@@ -23,6 +23,8 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import groovy.lang.Closure;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
@@ -59,7 +61,7 @@ import org.springframework.util.StringUtils;
  * @see #setBeanNameGenerator(BeanNameGenerator)
  */
 class BeanDefinitionLoader {
-
+	private static final Log logger = LogFactory.getLog(BeanDefinitionLoader.class);
 	private static final Pattern GROOVY_CLOSURE_PATTERN = Pattern.compile(".*\\$_.*closure.*");
 
 	private final Object[] sources;
@@ -125,26 +127,32 @@ class BeanDefinitionLoader {
 	 * Load the sources into the reader.
 	 */
 	void load() {
+		logger.info("[SPRING_BOOT] 自定义日志---【加载】：开始");
 		for (Object source : this.sources) {
 			load(source);
 		}
+		logger.info("[SPRING_BOOT] 自定义日志---【加载】：结束");
 	}
 
 	private void load(Object source) {
 		Assert.notNull(source, "'source' must not be null");
 		if (source instanceof Class<?> type) {
+			logger.info("[SPRING_BOOT] 自定义日志---【加载】Class："+type.getName());
 			load(type);
 			return;
 		}
 		if (source instanceof Resource resource) {
+			logger.info("[SPRING_BOOT] 自定义日志---【加载】Resource");
 			load(resource);
 			return;
 		}
 		if (source instanceof Package pack) {
+			logger.info("[SPRING_BOOT] 自定义日志---【加载】Package："+pack.getName());
 			load(pack);
 			return;
 		}
 		if (source instanceof CharSequence sequence) {
+			logger.info("[SPRING_BOOT] 自定义日志---【加载】CharSequence");
 			load(sequence);
 			return;
 		}

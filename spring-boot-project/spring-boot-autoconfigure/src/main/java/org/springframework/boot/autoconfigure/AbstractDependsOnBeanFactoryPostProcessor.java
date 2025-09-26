@@ -22,6 +22,9 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.beans.factory.FactoryBean;
@@ -47,6 +50,7 @@ import org.springframework.util.StringUtils;
  * @see BeanDefinition#setDependsOn(String[])
  */
 public abstract class AbstractDependsOnBeanFactoryPostProcessor implements BeanFactoryPostProcessor, Ordered {
+	private static final Log logger = LogFactory.getLog(AbstractDependsOnBeanFactoryPostProcessor.class);
 
 	private final Class<?> beanClass;
 
@@ -105,6 +109,8 @@ public abstract class AbstractDependsOnBeanFactoryPostProcessor implements BeanF
 
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+		logger.info("自定义日志---AbstractDependsOnBeanFactoryPostProcessor实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：主要用于管理Bean之间的依赖关系，确保特定Bean在初始化之前，其依赖的Bean已经正确初始化");
+
 		for (String beanName : getBeanNames(beanFactory)) {
 			BeanDefinition definition = getBeanDefinition(beanName, beanFactory);
 			String[] dependencies = definition.getDependsOn();

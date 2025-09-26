@@ -189,6 +189,7 @@ public final class ConditionEvaluationReport {
 			}
 			else {
 				report = new ConditionEvaluationReport();
+				logger.info("[SPRING_BOOT] 自定义日志---【注册单例Bean】："+ BEAN_NAME);
 				beanFactory.registerSingleton(BEAN_NAME, report);
 			}
 			locateParent(beanFactory.getParentBeanFactory(), report);

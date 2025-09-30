@@ -227,6 +227,7 @@ public class ServletContextInitializerBeans extends AbstractCollection<ServletCo
 		Map<String, T> map = new LinkedHashMap<>();
 		for (String name : names) {
 			if (!seen.contains(type, name) && !ScopedProxyUtils.isScopedTarget(name)) {
+				logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ name);
 				T bean = beanFactory.getBean(name, type);
 				if (!seen.contains(type, bean)) {
 					map.put(name, bean);

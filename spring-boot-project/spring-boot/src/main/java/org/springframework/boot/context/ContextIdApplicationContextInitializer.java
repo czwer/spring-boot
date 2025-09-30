@@ -63,6 +63,7 @@ public class ContextIdApplicationContextInitializer
 	private ContextId getContextId(ConfigurableApplicationContext applicationContext) {
 		ApplicationContext parent = applicationContext.getParent();
 		if (parent != null && parent.containsBean(ContextId.class.getName())) {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean：ContextId");
 			return parent.getBean(ContextId.class).createChildId();
 		}
 		return new ContextId(getApplicationId(applicationContext.getEnvironment()));

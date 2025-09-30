@@ -16,6 +16,8 @@
 
 package org.springframework.boot.autoconfigure.jooq;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jooq.DSLContext;
 
 import org.springframework.beans.factory.BeanFactory;
@@ -27,6 +29,7 @@ import org.springframework.core.Ordered;
 
 class NoDslContextBeanFailureAnalyzer extends AbstractFailureAnalyzer<NoSuchBeanDefinitionException>
 		implements Ordered {
+	private static final Log logger = LogFactory.getLog(NoDslContextBeanFailureAnalyzer.class);
 
 	private final BeanFactory beanFactory;
 
@@ -49,6 +52,7 @@ class NoDslContextBeanFailureAnalyzer extends AbstractFailureAnalyzer<NoSuchBean
 
 	private boolean hasR2dbcAutoConfiguration() {
 		try {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean：R2dbcAutoConfiguration");
 			this.beanFactory.getBean(R2dbcAutoConfiguration.class);
 			return true;
 		}

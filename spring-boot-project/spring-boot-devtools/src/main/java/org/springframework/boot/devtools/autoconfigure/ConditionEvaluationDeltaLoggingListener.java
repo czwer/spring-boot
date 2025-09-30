@@ -49,6 +49,7 @@ class ConditionEvaluationDeltaLoggingListener
 		if (!event.getApplicationContext().equals(this.context)) {
 			return;
 		}
+		logger.info("[SPRINGBOOT] 自定义日志---调用getBean：ConditionEvaluationReport");
 		ConditionEvaluationReport report = event.getApplicationContext().getBean(ConditionEvaluationReport.class);
 		ConditionEvaluationReport previousReport = previousReports.get(event.getApplicationContext().getId());
 		if (previousReport != null) {

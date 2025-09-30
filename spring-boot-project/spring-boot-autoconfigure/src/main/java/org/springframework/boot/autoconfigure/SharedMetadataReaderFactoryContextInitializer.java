@@ -185,6 +185,7 @@ class SharedMetadataReaderFactoryContextInitializer implements
 		}
 
 		private void configureConfigurationClassPostProcessor(ConfigurationClassPostProcessor instance) {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ BEAN_NAME);
 			instance.setMetadataReaderFactory(this.context.getBean(BEAN_NAME, MetadataReaderFactory.class));
 		}
 

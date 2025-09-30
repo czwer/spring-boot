@@ -106,6 +106,7 @@ class ConfigurationPropertiesBinder {
 
 	private Validator getConfigurationPropertiesValidator(ApplicationContext applicationContext) {
 		if (applicationContext.containsBean(VALIDATOR_BEAN_NAME)) {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ VALIDATOR_BEAN_NAME);
 			return applicationContext.getBean(VALIDATOR_BEAN_NAME, Validator.class);
 		}
 		return null;
@@ -220,6 +221,7 @@ class ConfigurationPropertiesBinder {
 	}
 
 	static ConfigurationPropertiesBinder get(BeanFactory beanFactory) {
+		logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+BEAN_NAME);
 		return beanFactory.getBean(BEAN_NAME, ConfigurationPropertiesBinder.class);
 	}
 

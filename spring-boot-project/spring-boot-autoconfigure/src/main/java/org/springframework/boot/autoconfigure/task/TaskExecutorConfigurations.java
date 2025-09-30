@@ -153,6 +153,7 @@ class TaskExecutorConfigurations {
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnMissingBean(AsyncConfigurer.class)
 	static class AsyncConfigurerConfiguration {
+		private static final Log logger = LogFactory.getLog(AsyncConfigurerConfiguration.class);
 
 		@Bean
 		@ConditionalOnMissingBean
@@ -160,6 +161,7 @@ class TaskExecutorConfigurations {
 			return new AsyncConfigurer() {
 				@Override
 				public Executor getAsyncExecutor() {
+					logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ TaskExecutionAutoConfiguration.APPLICATION_TASK_EXECUTOR_BEAN_NAME);
 					return beanFactory.getBean(TaskExecutionAutoConfiguration.APPLICATION_TASK_EXECUTOR_BEAN_NAME,
 							Executor.class);
 				}

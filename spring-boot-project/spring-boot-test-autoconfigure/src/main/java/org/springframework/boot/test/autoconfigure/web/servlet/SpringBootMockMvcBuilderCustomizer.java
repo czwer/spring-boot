@@ -248,6 +248,7 @@ public class SpringBootMockMvcBuilderCustomizer implements MockMvcBuilderCustomi
 
 		static DeferredLinesWriter get(ApplicationContext applicationContext) {
 			try {
+				logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ BEAN_NAME);
 				return applicationContext.getBean(BEAN_NAME, DeferredLinesWriter.class);
 			}
 			catch (NoSuchBeanDefinitionException ex) {

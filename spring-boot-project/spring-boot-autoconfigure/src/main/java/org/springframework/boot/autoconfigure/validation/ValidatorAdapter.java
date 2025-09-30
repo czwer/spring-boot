@@ -17,6 +17,8 @@
 package org.springframework.boot.autoconfigure.validation;
 
 import jakarta.validation.ValidationException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
@@ -43,6 +45,7 @@ import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
  * @since 2.0.0
  */
 public class ValidatorAdapter implements SmartValidator, ApplicationContextAware, InitializingBean, DisposableBean {
+	private static final Log logger = LogFactory.getLog(ValidatorAdapter.class);
 
 	private final SmartValidator target;
 
@@ -121,6 +124,7 @@ public class ValidatorAdapter implements SmartValidator, ApplicationContextAware
 
 	private static Validator getExisting(ApplicationContext applicationContext) {
 		try {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean：Validator");
 			jakarta.validation.Validator validatorBean = applicationContext.getBean(jakarta.validation.Validator.class);
 			if (validatorBean instanceof Validator validator) {
 				return validator;

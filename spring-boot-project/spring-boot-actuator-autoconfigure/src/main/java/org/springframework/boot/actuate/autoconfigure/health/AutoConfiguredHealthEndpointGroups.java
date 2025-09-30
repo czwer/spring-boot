@@ -27,6 +27,9 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -58,6 +61,7 @@ import org.springframework.util.ObjectUtils;
  * @author Madhura Bhave
  */
 class AutoConfiguredHealthEndpointGroups implements HealthEndpointGroups, AdditionalPathsMapper {
+	private static final Log logger = LogFactory.getLog(AutoConfiguredHealthEndpointGroups.class);
 
 	private static final Predicate<String> ALL = (name) -> true;
 
@@ -136,6 +140,7 @@ class AutoConfiguredHealthEndpointGroups implements HealthEndpointGroups, Additi
 			return null;
 		}
 		if (candidates.size() == 1) {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+candidates.get(0));
 			return beanFactory.getBean(candidates.get(0), type);
 		}
 		return beanFactory.getBean(type);

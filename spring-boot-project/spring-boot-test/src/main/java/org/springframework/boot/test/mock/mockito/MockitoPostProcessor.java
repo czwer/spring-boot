@@ -369,6 +369,7 @@ public class MockitoPostProcessor implements InstantiationAwareBeanPostProcessor
 		try {
 			field.setAccessible(true);
 			Object existingValue = ReflectionUtils.getField(field, target);
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+beanName);
 			Object bean = this.beanFactory.getBean(beanName, field.getType());
 			if (existingValue == bean) {
 				return;

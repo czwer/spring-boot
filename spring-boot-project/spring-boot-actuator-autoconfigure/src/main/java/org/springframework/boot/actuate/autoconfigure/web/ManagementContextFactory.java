@@ -18,6 +18,9 @@ package org.springframework.boot.actuate.autoconfigure.web;
 
 import java.lang.reflect.Modifier;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.FatalBeanException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -42,6 +45,7 @@ import org.springframework.core.env.Environment;
  * @since 3.0.0
  */
 public final class ManagementContextFactory {
+	private static final Log logger = LogFactory.getLog(ManagementContextFactory.class);
 
 	private final WebApplicationType webApplicationType;
 
@@ -90,6 +94,7 @@ public final class ManagementContextFactory {
 	}
 
 	private Class<?> determineWebServerFactoryClass(ApplicationContext parent) throws NoSuchBeanDefinitionException {
+		logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+this.webServerFactoryClass.getName());
 		Class<?> factoryClass = parent.getBean(this.webServerFactoryClass).getClass();
 		if (cannotBeInstantiated(factoryClass)) {
 			throw new FatalBeanException("ManagementContextWebServerFactory implementation " + factoryClass.getName()

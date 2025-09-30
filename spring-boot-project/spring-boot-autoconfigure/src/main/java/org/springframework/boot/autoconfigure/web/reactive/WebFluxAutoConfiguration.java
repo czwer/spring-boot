@@ -197,6 +197,7 @@ public class WebFluxAutoConfiguration {
 		public void configureBlockingExecution(BlockingExecutionConfigurer configurer) {
 			if (Threading.VIRTUAL.isActive(this.environment) && this.beanFactory
 				.containsBean(TaskExecutionAutoConfiguration.APPLICATION_TASK_EXECUTOR_BEAN_NAME)) {
+				logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+TaskExecutionAutoConfiguration.APPLICATION_TASK_EXECUTOR_BEAN_NAME);
 				Object taskExecutor = this.beanFactory
 					.getBean(TaskExecutionAutoConfiguration.APPLICATION_TASK_EXECUTOR_BEAN_NAME);
 				if (taskExecutor instanceof AsyncTaskExecutor asyncTaskExecutor) {

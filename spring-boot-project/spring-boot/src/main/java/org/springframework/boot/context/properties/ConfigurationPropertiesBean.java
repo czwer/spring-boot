@@ -24,6 +24,9 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -57,7 +60,7 @@ import org.springframework.validation.annotation.Validated;
  * @see #get(ApplicationContext, Object, String)
  */
 public final class ConfigurationPropertiesBean {
-
+	private static final Log logger = LogFactory.getLog(ConfigurationPropertiesBean.class);
 	private static final org.springframework.boot.context.properties.bind.BindMethod JAVA_BEAN_BIND_METHOD = //
 			org.springframework.boot.context.properties.bind.BindMethod.JAVA_BEAN;
 
@@ -150,6 +153,7 @@ public final class ConfigurationPropertiesBean {
 			String beanName = beanNames.next();
 			if (isConfigurationPropertiesBean(beanFactory, beanName)) {
 				try {
+					logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+beanName);
 					Object bean = beanFactory.getBean(beanName);
 					ConfigurationPropertiesBean propertiesBean = get(applicationContext, bean, beanName);
 					if (propertiesBean != null) {

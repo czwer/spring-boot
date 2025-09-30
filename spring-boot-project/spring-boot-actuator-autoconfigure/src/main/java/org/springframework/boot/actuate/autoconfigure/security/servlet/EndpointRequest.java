@@ -28,6 +28,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
@@ -157,6 +159,7 @@ public final class EndpointRequest {
 	 */
 	private abstract static class AbstractRequestMatcher
 			extends ApplicationContextRequestMatcher<WebApplicationContext> {
+		private static final Log logger = LogFactory.getLog(AbstractRequestMatcher.class);
 
 		private volatile RequestMatcher delegate;
 
@@ -243,6 +246,7 @@ public final class EndpointRequest {
 
 		private RequestMatcherProvider getRequestMatcherProviderBean(WebApplicationContext context) {
 			try {
+				logger.info("[SPRINGBOOT] 自定义日志---调用getBean：RequestMatcherProvider");
 				return context.getBean(RequestMatcherProvider.class);
 			}
 			catch (NoSuchBeanDefinitionException ex) {
@@ -252,6 +256,7 @@ public final class EndpointRequest {
 
 		@SuppressWarnings("removal")
 		private RequestMatcherProvider getAndAdaptDeprecatedRequestMatcherProviderBean(WebApplicationContext context) {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean：RequestMatcherProvider");
 			org.springframework.boot.autoconfigure.security.servlet.RequestMatcherProvider bean = context
 				.getBean(org.springframework.boot.autoconfigure.security.servlet.RequestMatcherProvider.class);
 			return (pattern, method) -> bean.getRequestMatcher(pattern);
@@ -289,6 +294,7 @@ public final class EndpointRequest {
 	 * The request matcher used to match against {@link Endpoint actuator endpoints}.
 	 */
 	public static final class EndpointRequestMatcher extends AbstractRequestMatcher {
+		private static final Log logger = LogFactory.getLog(EndpointRequestMatcher.class);
 
 		private final List<Object> includes;
 
@@ -348,6 +354,7 @@ public final class EndpointRequest {
 		@Override
 		protected RequestMatcher createDelegate(WebApplicationContext context,
 				RequestMatcherFactory requestMatcherFactory) {
+
 			PathMappedEndpoints endpoints = context.getBean(PathMappedEndpoints.class);
 			RequestMatcherProvider matcherProvider = getRequestMatcherProvider(context);
 			Set<String> paths = new LinkedHashSet<>();
@@ -388,10 +395,12 @@ public final class EndpointRequest {
 	 * The request matcher used to match against the links endpoint.
 	 */
 	public static final class LinksRequestMatcher extends AbstractRequestMatcher {
+		private static final Log logger = LogFactory.getLog(LinksRequestMatcher.class);
 
 		@Override
 		protected RequestMatcher createDelegate(WebApplicationContext context,
 				RequestMatcherFactory requestMatcherFactory) {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean：WebEndpointProperties");
 			WebEndpointProperties properties = context.getBean(WebEndpointProperties.class);
 			String basePath = properties.getBasePath();
 			if (StringUtils.hasText(basePath)) {
@@ -413,7 +422,7 @@ public final class EndpointRequest {
 	 * actuator endpoints}.
 	 */
 	public static class AdditionalPathsEndpointRequestMatcher extends AbstractRequestMatcher {
-
+		private static final Log logger = LogFactory.getLog(AdditionalPathsEndpointRequestMatcher.class);
 		private final WebServerNamespace webServerNamespace;
 
 		private final List<Object> endpoints;
@@ -458,6 +467,7 @@ public final class EndpointRequest {
 		@Override
 		protected RequestMatcher createDelegate(WebApplicationContext context,
 				RequestMatcherFactory requestMatcherFactory) {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean：PathMappedEndpoints");
 			PathMappedEndpoints endpoints = context.getBean(PathMappedEndpoints.class);
 			RequestMatcherProvider matcherProvider = getRequestMatcherProvider(context);
 			Set<String> paths = this.endpoints.stream()

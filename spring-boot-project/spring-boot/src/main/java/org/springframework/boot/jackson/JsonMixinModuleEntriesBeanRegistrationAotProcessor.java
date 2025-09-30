@@ -21,6 +21,9 @@ import java.util.Set;
 
 import javax.lang.model.element.Modifier;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.aot.generate.AccessControl;
 import org.springframework.aot.generate.GeneratedMethod;
 import org.springframework.aot.generate.GenerationContext;
@@ -42,7 +45,7 @@ import org.springframework.javapoet.CodeBlock;
  * @author Stephane Nicoll
  */
 class JsonMixinModuleEntriesBeanRegistrationAotProcessor implements BeanRegistrationAotProcessor {
-
+	private static final Log logger = LogFactory.getLog(JsonMixinModuleEntriesBeanRegistrationAotProcessor.class);
 	@Override
 	public BeanRegistrationAotContribution processAheadOfTime(RegisteredBean registeredBean) {
 		if (registeredBean.getBeanClass().equals(JsonMixinModuleEntries.class)) {
@@ -74,6 +77,7 @@ class JsonMixinModuleEntriesBeanRegistrationAotProcessor implements BeanRegistra
 		@Override
 		public CodeBlock generateInstanceSupplierCode(GenerationContext generationContext,
 				BeanRegistrationCode beanRegistrationCode, boolean allowDirectSupplierShortcut) {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ this.registeredBean.getBeanName());
 			JsonMixinModuleEntries entries = this.registeredBean.getBeanFactory()
 				.getBean(this.registeredBean.getBeanName(), JsonMixinModuleEntries.class);
 			contributeHints(generationContext.getRuntimeHints(), entries);

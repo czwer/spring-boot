@@ -18,6 +18,9 @@ package org.springframework.boot.logging.structured;
 
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.aot.generate.GenerationContext;
 import org.springframework.aot.hint.MemberCategory;
 import org.springframework.aot.hint.ReflectionHints;
@@ -39,11 +42,12 @@ import org.springframework.core.env.Environment;
  */
 class StructuredLoggingJsonPropertiesBeanFactoryInitializationAotProcessor
 		implements BeanFactoryInitializationAotProcessor {
-
+	private static final Log logger = LogFactory.getLog(StructuredLoggingJsonPropertiesBeanFactoryInitializationAotProcessor.class);
 	private static final String ENVIRONMENT_BEAN_NAME = "environment";
 
 	@Override
 	public BeanFactoryInitializationAotContribution processAheadOfTime(ConfigurableListableBeanFactory beanFactory) {
+		logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ ENVIRONMENT_BEAN_NAME);
 		Environment environment = beanFactory.getBean(ENVIRONMENT_BEAN_NAME, Environment.class);
 		StructuredLoggingJsonProperties properties = StructuredLoggingJsonProperties.get(environment);
 		if (properties != null) {

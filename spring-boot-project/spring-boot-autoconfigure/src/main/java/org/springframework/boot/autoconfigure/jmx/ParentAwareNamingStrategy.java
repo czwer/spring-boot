@@ -21,6 +21,9 @@ import java.util.Hashtable;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -38,7 +41,7 @@ import org.springframework.util.ObjectUtils;
  * @since 1.1.1
  */
 public class ParentAwareNamingStrategy extends MetadataNamingStrategy implements ApplicationContextAware {
-
+	private static final Log logger = LogFactory.getLog(ParentAwareNamingStrategy.class);
 	private ApplicationContext applicationContext;
 
 	private boolean ensureUniqueRuntimeObjectNames;
@@ -78,6 +81,7 @@ public class ParentAwareNamingStrategy extends MetadataNamingStrategy implements
 			return false;
 		}
 		try {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+beanKey);
 			this.applicationContext.getParent().getBean(beanKey);
 			return true;
 		}

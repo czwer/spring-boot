@@ -18,6 +18,8 @@ package org.springframework.boot.security.reactive;
 
 import java.util.function.Supplier;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import reactor.core.publisher.Mono;
 
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -39,6 +41,7 @@ import org.springframework.web.server.ServerWebExchange;
  * @since 2.0.0
  */
 public abstract class ApplicationContextServerWebExchangeMatcher<C> implements ServerWebExchangeMatcher {
+	private static final Log logger = LogFactory.getLog(ApplicationContextServerWebExchangeMatcher.class);
 
 	private final Class<? extends C> contextClass;
 
@@ -106,6 +109,7 @@ public abstract class ApplicationContextServerWebExchangeMatcher<C> implements S
 		if (this.contextClass.isInstance(context)) {
 			return () -> (C) context;
 		}
+		logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+this.contextClass);
 		return () -> context.getBean(this.contextClass);
 	}
 

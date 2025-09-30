@@ -794,6 +794,7 @@ public class SpringApplication {
 		String[] beanNames = beanFactory.getBeanNamesForType(Runner.class);
 		Map<Runner, String> instancesToBeanNames = new IdentityHashMap<>();
 		for (String beanName : beanNames) {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ beanName);
 			instancesToBeanNames.put(beanFactory.getBean(beanName, Runner.class), beanName);
 		}
 		Comparator<Object> comparator = getOrderComparator(beanFactory)

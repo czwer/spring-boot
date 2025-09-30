@@ -19,6 +19,8 @@ package org.springframework.boot.testcontainers.service.connection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.testcontainers.containers.Container;
 
 import org.springframework.beans.factory.BeanFactory;
@@ -41,7 +43,7 @@ import org.springframework.core.type.AnnotationMetadata;
  * @author Phillip Webb
  */
 class ServiceConnectionAutoConfigurationRegistrar implements ImportBeanDefinitionRegistrar {
-
+	private static final Log logger = LogFactory.getLog(ServiceConnectionAutoConfigurationRegistrar.class);
 	private final BeanFactory beanFactory;
 
 	ServiceConnectionAutoConfigurationRegistrar(BeanFactory beanFactory) {
@@ -100,6 +102,7 @@ class ServiceConnectionAutoConfigurationRegistrar implements ImportBeanDefinitio
 		Class<C> containerType = (Class<C>) beanFactory.getType(beanName, false);
 		String containerImageName = (beanDefinition instanceof TestcontainerBeanDefinition testcontainerBeanDefinition)
 				? testcontainerBeanDefinition.getContainerImageName() : null;
+		logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ beanName);
 		return new ContainerConnectionSource<>(beanName, origin, containerType, containerImageName, serviceConnection,
 				() -> beanFactory.getBean(beanName, containerType),
 				SslBundleSource.get(beanFactory, beanName, annotations), annotations);

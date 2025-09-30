@@ -28,7 +28,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProp
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.SearchStrategy;
-import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableMBeanExport;
@@ -75,6 +74,7 @@ public class JmxAutoConfiguration {
 		exporter.setNamingStrategy(namingStrategy);
 		String serverBean = this.properties.getServer();
 		if (StringUtils.hasLength(serverBean)) {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ serverBean);
 			exporter.setServer(beanFactory.getBean(serverBean, MBeanServer.class));
 		}
 		exporter.setEnsureUniqueRuntimeObjectNames(this.properties.isUniqueNames());

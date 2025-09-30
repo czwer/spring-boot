@@ -230,6 +230,7 @@ public class ServletWebServerApplicationContext extends GenericWebApplicationCon
 			throw new ApplicationContextException("Unable to start ServletWebServerApplicationContext due to multiple "
 					+ "ServletWebServerFactory beans : " + StringUtils.arrayToCommaDelimitedString(beanNames));
 		}
+		logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ beanNames[0]);
 		return getBeanFactory().getBean(beanNames[0], ServletWebServerFactory.class);
 	}
 

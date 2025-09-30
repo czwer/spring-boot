@@ -20,6 +20,8 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.MetricsCollector;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.amqp.rabbit.connection.AbstractConnectionFactory;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -36,6 +38,7 @@ import org.springframework.util.StringUtils;
  * @author Stephane Nicoll
  */
 class RabbitConnectionFactoryMetricsPostProcessor implements BeanPostProcessor, Ordered {
+	private static final Log logger = LogFactory.getLog(RabbitConnectionFactoryMetricsPostProcessor.class);
 
 	private static final String CONNECTION_FACTORY_SUFFIX = "connectionFactory";
 
@@ -77,6 +80,7 @@ class RabbitConnectionFactoryMetricsPostProcessor implements BeanPostProcessor, 
 
 	private MeterRegistry getMeterRegistry() {
 		if (this.meterRegistry == null) {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean：MeterRegistry");
 			this.meterRegistry = this.context.getBean(MeterRegistry.class);
 		}
 		return this.meterRegistry;

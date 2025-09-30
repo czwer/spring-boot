@@ -22,6 +22,8 @@ import javax.management.MBeanServer;
 import javax.sql.DataSource;
 
 import io.rsocket.transport.netty.server.TcpServerTransport;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -211,18 +213,20 @@ public class IntegrationAutoConfiguration {
 	@ConditionalOnBean(MBeanServer.class)
 	@ConditionalOnBooleanProperty("spring.jmx.enabled")
 	protected static class IntegrationJmxConfiguration {
-
+		private static final Log logger = LogFactory.getLog(IntegrationJmxConfiguration.class);
 		@Bean
 		public static IntegrationMBeanExporter integrationMbeanExporter(ApplicationContext applicationContext) {
 			return new IntegrationMBeanExporter() {
 
 				@Override
 				public void afterSingletonsInstantiated() {
+					this.logger.info("[SPRINGBOOT] 自定义日志---调用getBean：JmxProperties");
 					JmxProperties properties = applicationContext.getBean(JmxProperties.class);
 					String defaultDomain = properties.getDefaultDomain();
 					if (StringUtils.hasLength(defaultDomain)) {
 						setDefaultDomain(defaultDomain);
 					}
+					this.logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ properties.getServer());
 					setServer(applicationContext.getBean(properties.getServer(), MBeanServer.class));
 					super.afterSingletonsInstantiated();
 				}

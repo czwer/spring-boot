@@ -22,6 +22,8 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.AbstractObjectArrayAssert;
 import org.assertj.core.api.AbstractObjectAssert;
@@ -54,6 +56,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ApplicationContextAssert<C extends ApplicationContext>
 		extends AbstractAssert<ApplicationContextAssert<C>, C> {
 
+	private static final Log logger = LogFactory.getLog(ApplicationContextAssert.class);
 	private final Throwable startupFailure;
 
 	/**
@@ -197,6 +200,7 @@ public class ApplicationContextAssert<C extends ApplicationContext>
 			throwAssertionError(contextFailedToStartWhenExpecting("not to have any beans of name:%n <%s>", name));
 		}
 		try {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+name);
 			Object bean = getApplicationContext().getBean(name);
 			throwAssertionError(new BasicErrorMessageFactory(
 					"%nExpecting:%n <%s>%nnot to have a bean of name:%n <%s>%nbut found:%n <%s>",
@@ -276,6 +280,7 @@ public class ApplicationContextAssert<C extends ApplicationContext>
 					new BasicErrorMessageFactory("%nExpecting:%n <%s>%nsingle bean of type:%n <%s>%nbut found:%n <%s>",
 							getApplicationContext(), type, names));
 		}
+		logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ name);
 		T bean = (name != null) ? getApplicationContext().getBean(name, type) : null;
 		return Assertions.assertThat(bean).as("Bean of type <%s> from <%s>", type, getApplicationContext());
 	}
@@ -366,6 +371,7 @@ public class ApplicationContextAssert<C extends ApplicationContext>
 
 	private Object findBean(String name) {
 		try {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+name);
 			return getApplicationContext().getBean(name);
 		}
 		catch (NoSuchBeanDefinitionException ex) {

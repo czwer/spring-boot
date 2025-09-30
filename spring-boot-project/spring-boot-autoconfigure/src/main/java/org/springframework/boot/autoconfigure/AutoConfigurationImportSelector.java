@@ -40,7 +40,6 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.boot.context.ConfigurationWarningsApplicationContextInitializer;
 import org.springframework.boot.context.annotation.ImportCandidates;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.EnvironmentAware;
@@ -511,6 +510,7 @@ public class AutoConfigurationImportSelector implements DeferredImportSelector, 
 
 		private MetadataReaderFactory getMetadataReaderFactory() {
 			try {
+				logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ SharedMetadataReaderFactoryContextInitializer.BEAN_NAME);
 				return this.beanFactory.getBean(SharedMetadataReaderFactoryContextInitializer.BEAN_NAME,
 						MetadataReaderFactory.class);
 			}

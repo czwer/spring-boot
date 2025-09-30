@@ -21,6 +21,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.boot.convert.ApplicationConversionService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -35,7 +38,7 @@ import org.springframework.format.support.FormattingConversionService;
  * @author Phillip Webb
  */
 class ConversionServiceDeducer {
-
+	private static final Log logger = LogFactory.getLog(ConversionServiceDeducer.class);
 	private final ApplicationContext applicationContext;
 
 	ConversionServiceDeducer(ApplicationContext applicationContext) {
@@ -44,6 +47,7 @@ class ConversionServiceDeducer {
 
 	List<ConversionService> getConversionServices() {
 		if (hasUserDefinedConfigurationServiceBean()) {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ ConfigurableApplicationContext.CONVERSION_SERVICE_BEAN_NAME);
 			return Collections.singletonList(this.applicationContext
 				.getBean(ConfigurableApplicationContext.CONVERSION_SERVICE_BEAN_NAME, ConversionService.class));
 		}

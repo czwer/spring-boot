@@ -185,6 +185,7 @@ public final class ConditionEvaluationReport {
 		synchronized (beanFactory) {
 			ConditionEvaluationReport report;
 			if (beanFactory.containsSingleton(BEAN_NAME)) {
+				logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ BEAN_NAME);
 				report = beanFactory.getBean(BEAN_NAME, ConditionEvaluationReport.class);
 			}
 			else {
@@ -199,6 +200,7 @@ public final class ConditionEvaluationReport {
 
 	private static void locateParent(BeanFactory beanFactory, ConditionEvaluationReport report) {
 		if (beanFactory != null && report.parent == null && beanFactory.containsBean(BEAN_NAME)) {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+BEAN_NAME);
 			report.parent = beanFactory.getBean(BEAN_NAME, ConditionEvaluationReport.class);
 		}
 	}

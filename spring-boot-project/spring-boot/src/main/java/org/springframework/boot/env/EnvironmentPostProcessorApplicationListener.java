@@ -22,6 +22,9 @@ import java.util.function.Function;
 
 import javax.lang.model.element.Modifier;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.aot.AotDetector;
 import org.springframework.aot.generate.GeneratedClass;
 import org.springframework.aot.generate.GenerationContext;
@@ -48,8 +51,6 @@ import org.springframework.javapoet.CodeBlock;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ObjectUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 /**
  * {@link SmartApplicationListener} used to trigger {@link EnvironmentPostProcessor
  * EnvironmentPostProcessors} registered in the {@code spring.factories} file.
@@ -200,6 +201,7 @@ public class EnvironmentPostProcessorApplicationListener implements SmartApplica
 		@Override
 		public BeanFactoryInitializationAotContribution processAheadOfTime(
 				ConfigurableListableBeanFactory beanFactory) {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ ConfigurableApplicationContext.ENVIRONMENT_BEAN_NAME);
 			Environment environment = beanFactory.getBean(ConfigurableApplicationContext.ENVIRONMENT_BEAN_NAME,
 					Environment.class);
 			String[] activeProfiles = environment.getActiveProfiles();

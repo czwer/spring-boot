@@ -76,6 +76,7 @@ public class BoundConfigurationProperties {
 	 * @return a {@link BoundConfigurationProperties} or {@code null}
 	 */
 	public static BoundConfigurationProperties get(ApplicationContext context) {
+		logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ BEAN_NAME);
 		return (!context.containsBeanDefinition(BEAN_NAME)) ? null
 				: context.getBean(BEAN_NAME, BoundConfigurationProperties.class);
 	}

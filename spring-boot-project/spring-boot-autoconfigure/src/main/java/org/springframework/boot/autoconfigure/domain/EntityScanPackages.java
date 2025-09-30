@@ -51,6 +51,7 @@ import org.springframework.util.StringUtils;
  * @see EntityScanner
  */
 public class EntityScanPackages {
+	private static final Log logger = LogFactory.getLog(EntityScanPackages.class);
 
 	private static final String BEAN = EntityScanPackages.class.getName();
 
@@ -86,6 +87,7 @@ public class EntityScanPackages {
 		// Currently we only store a single base package, but we return a list to
 		// allow this to change in the future if needed
 		try {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ BEAN);
 			return beanFactory.getBean(BEAN, EntityScanPackages.class);
 		}
 		catch (NoSuchBeanDefinitionException ex) {

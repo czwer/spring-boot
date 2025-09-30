@@ -30,6 +30,9 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.BeanFactoryUtils;
@@ -71,7 +74,7 @@ import org.springframework.util.StringUtils;
  */
 public abstract class EndpointDiscoverer<E extends ExposableEndpoint<O>, O extends Operation>
 		implements EndpointsSupplier<E> {
-
+	private static final Log logger = LogFactory.getLog(EndpointDiscoverer.class);
 	private final ApplicationContext applicationContext;
 
 	private final Collection<EndpointFilter<E>> endpointFilters;
@@ -171,6 +174,7 @@ public abstract class EndpointDiscoverer<E extends ExposableEndpoint<O>, O exten
 
 	private EndpointBean createEndpointBean(String beanName) {
 		Class<?> beanType = ClassUtils.getUserClass(this.applicationContext.getType(beanName, false));
+		logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+beanName);
 		Supplier<Object> beanSupplier = () -> this.applicationContext.getBean(beanName);
 		return new EndpointBean(this.applicationContext.getEnvironment(), beanName, beanType, beanSupplier);
 	}
@@ -191,6 +195,7 @@ public abstract class EndpointDiscoverer<E extends ExposableEndpoint<O>, O exten
 
 	private ExtensionBean createExtensionBean(String beanName) {
 		Class<?> beanType = ClassUtils.getUserClass(this.applicationContext.getType(beanName));
+		logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+beanName);
 		Supplier<Object> beanSupplier = () -> this.applicationContext.getBean(beanName);
 		return new ExtensionBean(this.applicationContext.getEnvironment(), beanName, beanType, beanSupplier);
 	}

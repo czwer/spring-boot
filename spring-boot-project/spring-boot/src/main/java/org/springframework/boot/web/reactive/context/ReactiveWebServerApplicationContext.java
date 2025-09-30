@@ -130,6 +130,7 @@ public class ReactiveWebServerApplicationContext extends GenericReactiveWebAppli
 	}
 
 	protected ReactiveWebServerFactory getWebServerFactory(String factoryBeanName) {
+		logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ factoryBeanName);
 		return getBeanFactory().getBean(factoryBeanName, ReactiveWebServerFactory.class);
 	}
 
@@ -150,6 +151,7 @@ public class ReactiveWebServerApplicationContext extends GenericReactiveWebAppli
 					"Unable to start ReactiveWebApplicationContext due to multiple HttpHandler beans : "
 							+ StringUtils.arrayToCommaDelimitedString(beanNames));
 		}
+		logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ beanNames[0]);
 		return getBeanFactory().getBean(beanNames[0], HttpHandler.class);
 	}
 

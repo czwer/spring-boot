@@ -72,6 +72,7 @@ public abstract class AutoConfigurationPackages {
 	 */
 	public static List<String> get(BeanFactory beanFactory) {
 		try {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+ BEAN);
 			return beanFactory.getBean(BEAN, BasePackages.class).get();
 		}
 		catch (NoSuchBeanDefinitionException ex) {

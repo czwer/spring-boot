@@ -25,6 +25,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.beans.factory.InjectionPoint;
@@ -57,7 +60,7 @@ import org.springframework.util.ClassUtils;
  * @author Scott Frederick
  */
 class NoSuchBeanDefinitionFailureAnalyzer extends AbstractInjectionFailureAnalyzer<NoSuchBeanDefinitionException> {
-
+	private static final Log logger = LogFactory.getLog(NoSuchBeanDefinitionFailureAnalyzer.class);
 	private final ConfigurableListableBeanFactory beanFactory;
 
 	private final MetadataReaderFactory metadataReaderFactory;
@@ -134,6 +137,8 @@ class NoSuchBeanDefinitionFailureAnalyzer extends AbstractInjectionFailureAnalyz
 			return Collections.emptyList();
 		}
 		String[] beanNames = BeanFactoryUtils.beanNamesForTypeIncludingAncestors(this.beanFactory, type);
+		Arrays.stream(beanNames).forEach(beanName ->{logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+beanName);});
+
 		return Arrays.stream(beanNames)
 			.map((beanName) -> new UserConfigurationResult(getFactoryMethodMetadata(beanName),
 					this.beanFactory.getBean(beanName).equals(null)))

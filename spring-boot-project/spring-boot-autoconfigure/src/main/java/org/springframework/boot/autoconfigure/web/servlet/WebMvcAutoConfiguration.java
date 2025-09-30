@@ -184,7 +184,7 @@ public class WebMvcAutoConfiguration {
 	@Order(0)
 	public static class WebMvcAutoConfigurationAdapter implements WebMvcConfigurer, ServletContextAware {
 
-		private static final Log logger = LogFactory.getLog(WebMvcConfigurer.class);
+		private static final Log logger = LogFactory.getLog(WebMvcAutoConfigurationAdapter.class);
 
 		private final Resources resourceProperties;
 
@@ -230,6 +230,7 @@ public class WebMvcAutoConfiguration {
 		@Override
 		public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
 			if (this.beanFactory.containsBean(TaskExecutionAutoConfiguration.APPLICATION_TASK_EXECUTOR_BEAN_NAME)) {
+				logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+TaskExecutionAutoConfiguration.APPLICATION_TASK_EXECUTOR_BEAN_NAME);
 				Object taskExecutor = this.beanFactory
 					.getBean(TaskExecutionAutoConfiguration.APPLICATION_TASK_EXECUTOR_BEAN_NAME);
 				if (taskExecutor instanceof AsyncTaskExecutor asyncTaskExecutor) {
@@ -303,6 +304,7 @@ public class WebMvcAutoConfiguration {
 		@ConditionalOnMissingBean(name = "viewResolver", value = ContentNegotiatingViewResolver.class)
 		public ContentNegotiatingViewResolver viewResolver(BeanFactory beanFactory) {
 			ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean：ContentNegotiationManager");
 			resolver.setContentNegotiationManager(beanFactory.getBean(ContentNegotiationManager.class));
 			// ContentNegotiatingViewResolver uses all the other view resolvers to locate
 			// a view so it should have a high precedence

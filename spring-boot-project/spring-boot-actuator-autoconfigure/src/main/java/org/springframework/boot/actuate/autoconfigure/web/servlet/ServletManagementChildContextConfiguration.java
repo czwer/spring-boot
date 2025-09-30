@@ -21,6 +21,8 @@ import java.io.File;
 import jakarta.servlet.Filter;
 import org.apache.catalina.Valve;
 import org.apache.catalina.valves.AccessLogValve;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.server.CustomRequestLog;
 import org.eclipse.jetty.server.RequestLog;
 import org.eclipse.jetty.server.RequestLogWriter;
@@ -69,6 +71,8 @@ import org.springframework.util.StringUtils;
 @ConditionalOnWebApplication(type = Type.SERVLET)
 @EnableConfigurationProperties(ManagementServerProperties.class)
 class ServletManagementChildContextConfiguration {
+	private static final Log logger = LogFactory.getLog(ServletManagementChildContextConfiguration.class);
+
 
 	@Bean
 	ServletManagementWebServerFactoryCustomizer servletManagementWebServerFactoryCustomizer(
@@ -102,12 +106,14 @@ class ServletManagementChildContextConfiguration {
 		@Bean
 		Filter springSecurityFilterChain(HierarchicalBeanFactory beanFactory) {
 			BeanFactory parent = beanFactory.getParentBeanFactory();
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean："+BeanIds.SPRING_SECURITY_FILTER_CHAIN);
 			return parent.getBean(BeanIds.SPRING_SECURITY_FILTER_CHAIN, Filter.class);
 		}
 
 		@Bean
 		@ConditionalOnBean(name = "securityFilterChainRegistration", search = SearchStrategy.ANCESTORS)
 		DelegatingFilterProxyRegistrationBean securityFilterChainRegistration(HierarchicalBeanFactory beanFactory) {
+			logger.info("[SPRINGBOOT] 自定义日志---调用getBean：securityFilterChainRegistration");
 			return beanFactory.getParentBeanFactory()
 				.getBean("securityFilterChainRegistration", DelegatingFilterProxyRegistrationBean.class);
 		}

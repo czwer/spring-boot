@@ -186,7 +186,7 @@ public class LocalDevToolsAutoConfiguration {
 		public void onApplicationEvent(ApplicationEvent event) {
 			if (event instanceof ContextRefreshedEvent || (event instanceof ClassPathChangedEvent classPathChangedEvent
 					&& !classPathChangedEvent.isRestartRequired())) {
-				logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ContextRefreshedEvent or ClassPathChangedEvent)，timestamp："+event.getTimestamp());
+				logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ContextRefreshedEvent or ClassPathChangedEvent)，timestamp："+event.getTimestamp());
 				this.liveReloadServer.triggerReload();
 			}
 		}
@@ -210,7 +210,7 @@ public class LocalDevToolsAutoConfiguration {
 
 		@Override
 		public void onApplicationEvent(ClassPathChangedEvent event) {
-			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ClassPathChangedEvent，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ClassPathChangedEvent，timestamp："+event.getTimestamp());
 			if (event.isRestartRequired()) {
 				logger.info(LogMessage.format("Restarting due to %s", event.overview()));
 				logger.debug(LogMessage.format("Change set: %s", event.getChangeSet()));

@@ -73,21 +73,21 @@ class EventPublishingRunListener implements SpringApplicationRunListener, Ordere
 
 	@Override
 	public void starting(ConfigurableBootstrapContext bootstrapContext) {
-		logger.info("[SPRING_BOOT] 自定义日志---发布事件（广播）：ApplicationStartingEvent");
+		logger.info("[SPRING_BOOT] 自定义日志---【发布事件】（广播）：ApplicationStartingEvent");
 		multicastInitialEvent(new ApplicationStartingEvent(bootstrapContext, this.application, this.args));
 	}
 
 	@Override
 	public void environmentPrepared(ConfigurableBootstrapContext bootstrapContext,
 			ConfigurableEnvironment environment) {
-		logger.info("[SPRING_BOOT] 自定义日志---发布事件（广播）：ApplicationEnvironmentPreparedEvent");
+		logger.info("[SPRING_BOOT] 自定义日志---【发布事件】（广播）：ApplicationEnvironmentPreparedEvent");
 		multicastInitialEvent(
 				new ApplicationEnvironmentPreparedEvent(bootstrapContext, this.application, this.args, environment));
 	}
 
 	@Override
 	public void contextPrepared(ConfigurableApplicationContext context) {
-		logger.info("[SPRING_BOOT] 自定义日志---发布事件（广播）：ApplicationContextInitializedEvent");
+		logger.info("[SPRING_BOOT] 自定义日志---【发布事件】（广播）：ApplicationContextInitializedEvent");
 		multicastInitialEvent(new ApplicationContextInitializedEvent(this.application, this.args, context));
 	}
 
@@ -99,20 +99,20 @@ class EventPublishingRunListener implements SpringApplicationRunListener, Ordere
 			}
 			context.addApplicationListener(listener);
 		}
-		logger.info("[SPRING_BOOT] 自定义日志---发布事件（广播）：ApplicationPreparedEvent");
+		logger.info("[SPRING_BOOT] 自定义日志---【发布事件】（广播）：ApplicationPreparedEvent");
 		multicastInitialEvent(new ApplicationPreparedEvent(this.application, this.args, context));
 	}
 
 	@Override
 	public void started(ConfigurableApplicationContext context, Duration timeTaken) {
-		logger.info("[SPRING_BOOT] 自定义日志---发布事件：ApplicationStartedEvent");
+		logger.info("[SPRING_BOOT] 自定义日志---【发布事件】：ApplicationStartedEvent");
 		context.publishEvent(new ApplicationStartedEvent(this.application, this.args, context, timeTaken));
 		AvailabilityChangeEvent.publish(context, LivenessState.CORRECT);
 	}
 
 	@Override
 	public void ready(ConfigurableApplicationContext context, Duration timeTaken) {
-		logger.info("[SPRING_BOOT] 自定义日志---发布事件：ApplicationReadyEvent");
+		logger.info("[SPRING_BOOT] 自定义日志---【发布事件】：ApplicationReadyEvent");
 		context.publishEvent(new ApplicationReadyEvent(this.application, this.args, context, timeTaken));
 		AvailabilityChangeEvent.publish(context, ReadinessState.ACCEPTING_TRAFFIC);
 	}
@@ -123,7 +123,7 @@ class EventPublishingRunListener implements SpringApplicationRunListener, Ordere
 		if (context != null && context.isActive()) {
 			// Listeners have been registered to the application context so we should
 			// use it at this point if we can
-			logger.info("[SPRING_BOOT] 自定义日志---发布事件：ApplicationFailedEvent");
+			logger.info("[SPRING_BOOT] 自定义日志---【发布事件】：ApplicationFailedEvent");
 			context.publishEvent(event);
 		}
 		else {
@@ -135,13 +135,13 @@ class EventPublishingRunListener implements SpringApplicationRunListener, Ordere
 				}
 			}
 			this.initialMulticaster.setErrorHandler(new LoggingErrorHandler());
-			logger.info("[SPRING_BOOT] 自定义日志---发布事件（广播）：ApplicationFailedEvent");
+			logger.info("[SPRING_BOOT] 自定义日志---【发布事件广播】：ApplicationFailedEvent");
 			this.initialMulticaster.multicastEvent(event);
 		}
 	}
 
 	private void multicastInitialEvent(ApplicationEvent event) {
-		logger.info("[SPRING_BOOT] 自定义日志---发布事件中（广播）："+event.getClass().getName()+"，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---【发布事件广播】："+event.getClass().getName()+"，timestamp："+event.getTimestamp());
 		refreshApplicationListeners();
 		this.initialMulticaster.multicastEvent(event);
 	}

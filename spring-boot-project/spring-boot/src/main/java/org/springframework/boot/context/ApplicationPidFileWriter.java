@@ -134,7 +134,7 @@ public class ApplicationPidFileWriter implements ApplicationListener<SpringAppli
 
 	@Override
 	public void onApplicationEvent(SpringApplicationEvent event) {
-		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：SpringApplicationEvent，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：SpringApplicationEvent，timestamp："+event.getTimestamp());
 		if (this.triggerEventType.isInstance(event) && created.compareAndSet(false, true)) {
 			try {
 				writePidFile(event);

@@ -135,14 +135,14 @@ public class ConditionEvaluationReportLoggingListener
 		@Override
 		public void onApplicationEvent(ApplicationEvent event) {
 			if (event instanceof ContextRefreshedEvent contextRefreshedEvent) {
-				logger2.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ContextRefreshedEvent)，timestamp："+event.getTimestamp());
+				logger2.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ContextRefreshedEvent)，timestamp："+event.getTimestamp());
 				if (contextRefreshedEvent.getApplicationContext() == this.context) {
 					this.logger.logReport(false);
 				}
 			}
 			else if (event instanceof ApplicationFailedEvent applicationFailedEvent
 					&& applicationFailedEvent.getApplicationContext() == this.context) {
-				logger2.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationFailedEvent)，timestamp："+event.getTimestamp());
+				logger2.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ApplicationFailedEvent)，timestamp："+event.getTimestamp());
 				this.logger.logReport(true);
 			}
 		}

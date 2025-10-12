@@ -48,7 +48,7 @@ class DockerComposeListener implements ApplicationListener<ApplicationPreparedEv
 
 	@Override
 	public void onApplicationEvent(ApplicationPreparedEvent event) {
-		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationPreparedEvent，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationPreparedEvent，timestamp："+event.getTimestamp());
 		ConfigurableApplicationContext applicationContext = event.getApplicationContext();
 		Binder binder = Binder.get(applicationContext.getEnvironment());
 		DockerComposeProperties properties = DockerComposeProperties.get(binder);

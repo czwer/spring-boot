@@ -62,7 +62,7 @@ public final class DevToolsLogFactory {
 
 		@Override
 		public void onApplicationEvent(ApplicationPreparedEvent event) {
-			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationPreparedEvent，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationPreparedEvent，timestamp："+event.getTimestamp());
 			synchronized (logs) {
 				logs.forEach((log, source) -> {
 					if (log instanceof DeferredLog deferredLog) {

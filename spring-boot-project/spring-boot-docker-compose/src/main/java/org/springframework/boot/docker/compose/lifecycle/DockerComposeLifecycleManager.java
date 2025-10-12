@@ -176,7 +176,7 @@ class DockerComposeLifecycleManager {
 	 * @param event the event to publish
 	 */
 	private void publishEvent(DockerComposeServicesReadyEvent event) {
-		logger.info("[SPRING_BOOT] 自定义日志---发布事件：DockerComposeServicesReadyEvent");
+		logger.info("[SPRING_BOOT] 自定义日志---【发布事件】：DockerComposeServicesReadyEvent");
 		SimpleApplicationEventMulticaster multicaster = new SimpleApplicationEventMulticaster();
 		this.eventListeners.forEach(multicaster::addApplicationListener);
 		multicaster.multicastEvent(event);

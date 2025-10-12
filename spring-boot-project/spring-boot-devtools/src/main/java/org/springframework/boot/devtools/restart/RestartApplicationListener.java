@@ -48,19 +48,19 @@ public class RestartApplicationListener implements ApplicationListener<Applicati
 	@Override
 	public void onApplicationEvent(ApplicationEvent event) {
 		if (event instanceof ApplicationStartingEvent startingEvent) {
-			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationStartingEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ApplicationStartingEvent)，timestamp："+event.getTimestamp());
 			onApplicationStartingEvent(startingEvent);
 		}
 		if (event instanceof ApplicationPreparedEvent preparedEvent) {
-			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp());
 			onApplicationPreparedEvent(preparedEvent);
 		}
 		if (event instanceof ApplicationReadyEvent || event instanceof ApplicationFailedEvent) {
-			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationReadyEvent or ApplicationFailedEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ApplicationReadyEvent or ApplicationFailedEvent)，timestamp："+event.getTimestamp());
 			Restarter.getInstance().finish();
 		}
 		if (event instanceof ApplicationFailedEvent failedEvent) {
-			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationFailedEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ApplicationFailedEvent)，timestamp："+event.getTimestamp());
 			onApplicationFailedEvent(failedEvent);
 		}
 	}

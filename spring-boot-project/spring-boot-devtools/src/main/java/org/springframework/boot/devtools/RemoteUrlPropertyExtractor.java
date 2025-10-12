@@ -46,7 +46,7 @@ class RemoteUrlPropertyExtractor implements ApplicationListener<ApplicationEnvir
 
 	@Override
 	public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
-		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEnvironmentPreparedEvent，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEnvironmentPreparedEvent，timestamp："+event.getTimestamp());
 		ConfigurableEnvironment environment = event.getEnvironment();
 		String url = cleanRemoteUrl(environment.getProperty(NON_OPTION_ARGS));
 		Assert.state(StringUtils.hasLength(url), "No remote URL specified");

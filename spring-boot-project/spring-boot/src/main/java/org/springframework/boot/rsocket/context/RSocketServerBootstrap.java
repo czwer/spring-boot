@@ -51,7 +51,7 @@ public class RSocketServerBootstrap implements ApplicationEventPublisherAware, S
 	@Override
 	public void start() {
 		this.server.start();
-		logger.info("[SPRING_BOOT] 自定义日志---发布事件：RSocketServerInitializedEvent");
+		logger.info("[SPRING_BOOT] 自定义日志---【发布事件】：RSocketServerInitializedEvent");
 		this.eventPublisher.publishEvent(new RSocketServerInitializedEvent(this.server));
 	}
 

@@ -42,7 +42,7 @@ public class AuthorizationAuditListener extends AbstractAuthorizationAuditListen
 
 	@Override
 	public void onApplicationEvent(AuthorizationEvent event) {
-		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：AuthorizationEvent，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：AuthorizationEvent，timestamp："+event.getTimestamp());
 		if (event instanceof AuthorizationDeniedEvent<?> authorizationDeniedEvent) {
 			onAuthorizationDeniedEvent(authorizationDeniedEvent);
 		}

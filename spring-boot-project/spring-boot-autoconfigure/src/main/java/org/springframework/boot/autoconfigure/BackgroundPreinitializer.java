@@ -83,13 +83,13 @@ public class BackgroundPreinitializer implements ApplicationListener<SpringAppli
 		}
 		if (event instanceof ApplicationEnvironmentPreparedEvent
 				&& preinitializationStarted.compareAndSet(false, true)) {
-			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：SpringApplicationEvent(ApplicationEnvironmentPreparedEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：SpringApplicationEvent(ApplicationEnvironmentPreparedEvent)，timestamp："+event.getTimestamp());
 			performPreinitialization();
 		}
 		if ((event instanceof ApplicationReadyEvent || event instanceof ApplicationFailedEvent)
 				&& preinitializationStarted.get()) {
 			try {
-				logger.info("[SPRING_BOOT] 自定义日志---监听到事件：SpringApplicationEvent(ApplicationReadyEvent or ApplicationFailedEvent)，timestamp："+event.getTimestamp());
+				logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：SpringApplicationEvent(ApplicationReadyEvent or ApplicationFailedEvent)，timestamp："+event.getTimestamp());
 				preinitializationComplete.await();
 			}
 			catch (InterruptedException ex) {

@@ -495,7 +495,7 @@ public class SpringBootContextLoader extends AbstractContextLoader implements Ao
 
 		@Override
 		public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
-			logger2.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEnvironmentPreparedEvent，timestamp："+event.getTimestamp());
+			logger2.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEnvironmentPreparedEvent，timestamp："+event.getTimestamp());
 			prepareEnvironment(this.mergedConfig, event.getSpringApplication(), event.getEnvironment(), true);
 		}
 

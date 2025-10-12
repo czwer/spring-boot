@@ -23,6 +23,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import com.google.gson.Gson;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -209,8 +210,9 @@ public class JobLauncherApplicationRunner
 		JobParameters parameters = getNextJobParameters(job, jobParameters);
 		JobExecution execution = this.jobLauncher.run(job, parameters);
 		if (this.publisher != null) {
-			logger.info("[SPRING_BOOT] 自定义日志---发布事件：JobExecutionEvent");
-			this.publisher.publishEvent(new JobExecutionEvent(execution));
+			JobExecutionEvent jobExecutionEvent = new JobExecutionEvent(execution);
+			logger.info("[SPRING_BOOT] 自定义日志---【发布事件】jobExecutionEvent："+ new Gson().toJson(jobExecutionEvent));
+			this.publisher.publishEvent(jobExecutionEvent);
 		}
 	}
 

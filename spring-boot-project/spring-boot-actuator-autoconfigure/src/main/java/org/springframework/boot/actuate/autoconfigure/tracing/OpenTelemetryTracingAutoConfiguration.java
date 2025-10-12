@@ -18,6 +18,8 @@ package org.springframework.boot.actuate.autoconfigure.tracing;
 
 import java.util.List;
 
+import com.google.api.client.json.Json;
+import com.google.gson.Gson;
 import io.micrometer.tracing.SpanCustomizer;
 import io.micrometer.tracing.exporter.SpanExportingPredicate;
 import io.micrometer.tracing.exporter.SpanFilter;
@@ -195,7 +197,7 @@ public class OpenTelemetryTracingAutoConfiguration {
 
 		@Override
 		public void publishEvent(Object event) {
-			logger.info("[SPRING_BOOT] 自定义日志---发布事件："+event.getClass().getName());
+			logger.info("[SPRING_BOOT] 自定义日志---【发布事件】："+ new Gson().toJson(event));
 			for (EventListener listener : this.listeners) {
 				listener.onEvent(event);
 			}

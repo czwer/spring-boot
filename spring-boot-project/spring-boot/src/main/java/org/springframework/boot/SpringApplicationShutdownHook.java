@@ -243,7 +243,7 @@ class SpringApplicationShutdownHook implements Runnable {
 
 		@Override
 		public void onApplicationEvent(ContextClosedEvent event) {
-			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ContextClosedEvent，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ContextClosedEvent，timestamp："+event.getTimestamp());
 			// The ContextClosedEvent is fired at the start of a call to {@code close()}
 			// and if that happens in a different thread then the context may still be
 			// active. Rather than just removing the context, we add it to a {@code

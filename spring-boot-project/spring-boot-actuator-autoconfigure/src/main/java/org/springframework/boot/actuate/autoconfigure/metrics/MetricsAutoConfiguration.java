@@ -91,7 +91,7 @@ public class MetricsAutoConfiguration {
 
 		@Override
 		public void onApplicationEvent(ContextClosedEvent event) {
-			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ContextClosedEvent，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ContextClosedEvent，timestamp："+event.getTimestamp());
 			for (MeterRegistry meterRegistry : this.meterRegistries) {
 				if (!meterRegistry.isClosed()) {
 					meterRegistry.close();

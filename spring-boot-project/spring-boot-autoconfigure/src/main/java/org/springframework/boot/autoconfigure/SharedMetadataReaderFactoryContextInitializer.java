@@ -224,7 +224,7 @@ class SharedMetadataReaderFactoryContextInitializer implements
 
 		@Override
 		public void onApplicationEvent(ContextRefreshedEvent event) {
-			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ContextRefreshedEvent，清除缓存，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ContextRefreshedEvent，清除缓存，timestamp："+event.getTimestamp());
 			this.metadataReaderFactory.clearCache();
 		}
 

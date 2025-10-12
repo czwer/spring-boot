@@ -217,23 +217,23 @@ public class LoggingApplicationListener implements GenericApplicationListener {
 	@Override
 	public void onApplicationEvent(ApplicationEvent event) {
 		if (event instanceof ApplicationStartingEvent startingEvent) {
-			this.logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationStartingEvent)，timestamp："+event.getTimestamp());
+			this.logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ApplicationStartingEvent)，timestamp："+event.getTimestamp());
 			onApplicationStartingEvent(startingEvent);
 		}
 		else if (event instanceof ApplicationEnvironmentPreparedEvent environmentPreparedEvent) {
-			this.logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationEnvironmentPreparedEvent)，timestamp："+event.getTimestamp());
+			this.logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ApplicationEnvironmentPreparedEvent)，timestamp："+event.getTimestamp());
 			onApplicationEnvironmentPreparedEvent(environmentPreparedEvent);
 		}
 		else if (event instanceof ApplicationPreparedEvent preparedEvent) {
-			this.logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp());
+			this.logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp());
 			onApplicationPreparedEvent(preparedEvent);
 		}
 		else if (event instanceof ContextClosedEvent contextClosedEvent) {
-			this.logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ContextClosedEvent)，timestamp："+event.getTimestamp());
+			this.logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ContextClosedEvent)，timestamp："+event.getTimestamp());
 			onContextClosedEvent(contextClosedEvent);
 		}
 		else if (event instanceof ApplicationFailedEvent) {
-			this.logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationFailedEvent)，timestamp："+event.getTimestamp());
+			this.logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ApplicationFailedEvent)，timestamp："+event.getTimestamp());
 			onApplicationFailedEvent();
 		}
 	}
@@ -255,19 +255,19 @@ public class LoggingApplicationListener implements GenericApplicationListener {
 		ConfigurableApplicationContext applicationContext = event.getApplicationContext();
 		ConfigurableListableBeanFactory beanFactory = applicationContext.getBeanFactory();
 		if (!beanFactory.containsBean(LOGGING_SYSTEM_BEAN_NAME)) {
-			this.logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp()+",【注册单例Bean】："+LOGGING_SYSTEM_BEAN_NAME);
+			this.logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp()+",【注册单例Bean】："+LOGGING_SYSTEM_BEAN_NAME);
 			beanFactory.registerSingleton(LOGGING_SYSTEM_BEAN_NAME, this.loggingSystem);
 		}
 		if (this.logFile != null && !beanFactory.containsBean(LOG_FILE_BEAN_NAME)) {
-			this.logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp()+",【注册单例Bean】："+LOG_FILE_BEAN_NAME);
+			this.logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp()+",【注册单例Bean】："+LOG_FILE_BEAN_NAME);
 			beanFactory.registerSingleton(LOG_FILE_BEAN_NAME, this.logFile);
 		}
 		if (this.loggerGroups != null && !beanFactory.containsBean(LOGGER_GROUPS_BEAN_NAME)) {
-			this.logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp()+",【注册单例Bean】："+LOGGER_GROUPS_BEAN_NAME);
+			this.logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp()+",【注册单例Bean】："+LOGGER_GROUPS_BEAN_NAME);
 			beanFactory.registerSingleton(LOGGER_GROUPS_BEAN_NAME, this.loggerGroups);
 		}
 		if (!beanFactory.containsBean(LOGGING_LIFECYCLE_BEAN_NAME) && applicationContext.getParent() == null) {
-			this.logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp()+",【注册单例Bean】："+LOGGING_LIFECYCLE_BEAN_NAME);
+			this.logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ApplicationPreparedEvent)，timestamp："+event.getTimestamp()+",【注册单例Bean】："+LOGGING_LIFECYCLE_BEAN_NAME);
 			beanFactory.registerSingleton(LOGGING_LIFECYCLE_BEAN_NAME, new Lifecycle());
 		}
 	}

@@ -84,11 +84,11 @@ public class OpenTelemetryEventPublisherBeansApplicationListener implements Gene
 			return;
 		}
 		if (event instanceof ApplicationStartingEvent) {
-			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationStartingEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ApplicationStartingEvent)，timestamp："+event.getTimestamp());
 			addWrapper();
 		}
 		if (event instanceof ContextRefreshedEvent contextRefreshedEvent) {
-			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ContextRefreshedEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ContextRefreshedEvent)，timestamp："+event.getTimestamp());
 			ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();
 			List<EventPublishingContextWrapper> publishers = applicationContext
 				.getBeansOfType(EventPublisher.class, true, false)
@@ -99,7 +99,7 @@ public class OpenTelemetryEventPublisherBeansApplicationListener implements Gene
 			Wrapper.instance.put(applicationContext, publishers);
 		}
 		if (event instanceof ContextClosedEvent contextClosedEvent) {
-			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ContextClosedEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ContextClosedEvent)，timestamp："+event.getTimestamp());
 			Wrapper.instance.remove(contextClosedEvent.getApplicationContext());
 		}
 	}

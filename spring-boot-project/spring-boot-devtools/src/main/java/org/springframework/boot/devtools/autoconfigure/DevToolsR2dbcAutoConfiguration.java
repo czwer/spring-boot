@@ -79,7 +79,7 @@ public class DevToolsR2dbcAutoConfiguration {
 				Mono.usingWhen(this.connectionFactory.create(), this::executeShutdown, this::closeConnection,
 						this::closeConnection, this::closeConnection)
 					.block();
-				logger.info("[SPRING_BOOT] 自定义日志---发布事件：R2dbcDatabaseShutdownEvent");
+				logger.info("[SPRING_BOOT] 自定义日志---【发布事件】：R2dbcDatabaseShutdownEvent");
 				this.eventPublisher.publishEvent(new R2dbcDatabaseShutdownEvent(this.connectionFactory));
 			}
 		}

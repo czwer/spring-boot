@@ -69,7 +69,7 @@ public class RSocketPortInfoApplicationContextInitializer
 
 		@Override
 		public void onApplicationEvent(RSocketServerInitializedEvent event) {
-			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：RSocketServerInitializedEvent，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：RSocketServerInitializedEvent，timestamp："+event.getTimestamp());
 			if (event.getServer().address() != null) {
 				setPortProperty(this.applicationContext, event.getServer().address().getPort());
 			}

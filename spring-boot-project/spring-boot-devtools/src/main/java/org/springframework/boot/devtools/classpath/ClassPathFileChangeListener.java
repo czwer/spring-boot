@@ -65,7 +65,7 @@ class ClassPathFileChangeListener implements FileChangeListener {
 	}
 
 	private void publishEvent(ClassPathChangedEvent event) {
-		logger.info("[SPRING_BOOT] 自定义日志---发布事件：ClassPathChangedEvent");
+		logger.info("[SPRING_BOOT] 自定义日志---【发布事件】：ClassPathChangedEvent");
 		this.eventPublisher.publishEvent(event);
 		if (event.isRestartRequired() && this.fileSystemWatcherToStop != null) {
 			this.fileSystemWatcherToStop.stop();

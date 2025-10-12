@@ -59,7 +59,7 @@ public class TomcatMetricsBinder implements ApplicationListener<ApplicationStart
 
 	@Override
 	public void onApplicationEvent(ApplicationStartedEvent event) {
-		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationStartedEvent，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationStartedEvent，timestamp："+event.getTimestamp());
 		ApplicationContext applicationContext = event.getApplicationContext();
 		Manager manager = findManager(applicationContext);
 		this.tomcatMetrics = new TomcatMetrics(manager, this.tags);

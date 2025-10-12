@@ -41,7 +41,7 @@ public class AnsiOutputApplicationListener
 
 	@Override
 	public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
-		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEnvironmentPreparedEvent，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEnvironmentPreparedEvent，timestamp："+event.getTimestamp());
 		ConfigurableEnvironment environment = event.getEnvironment();
 		Binder.get(environment)
 			.bind("spring.output.ansi.enabled", AnsiOutput.Enabled.class)

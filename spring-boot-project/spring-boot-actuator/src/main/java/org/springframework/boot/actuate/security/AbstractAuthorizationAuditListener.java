@@ -24,6 +24,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.security.authorization.event.AuthorizationDeniedEvent;
 import org.springframework.security.authorization.event.AuthorizationEvent;
 import org.springframework.security.authorization.event.AuthorizationGrantedEvent;
+
+import com.couchbase.client.core.deps.com.google.gson.Gson;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 /**
@@ -52,8 +54,9 @@ public abstract class AbstractAuthorizationAuditListener
 
 	protected void publish(AuditEvent event) {
 		if (getPublisher() != null) {
-			logger.info("[SPRING_BOOT] 自定义日志---发布事件：AuditApplicationEvent");
-			getPublisher().publishEvent(new AuditApplicationEvent(event));
+			AuditApplicationEvent auditApplicationEvent = new AuditApplicationEvent(event);
+			logger.info("[SPRING_BOOT] 自定义日志---【发布事件】AuditApplicationEvent："+ new Gson().toJson(auditApplicationEvent));
+			getPublisher().publishEvent(auditApplicationEvent);
 		}
 	}
 

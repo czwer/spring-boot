@@ -99,11 +99,11 @@ public class SpringApplicationAdminMXBeanRegistrar implements ApplicationContext
 	@Override
 	public void onApplicationEvent(ApplicationEvent event) {
 		if (event instanceof ApplicationReadyEvent readyEvent) {
-			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(ApplicationReadyEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(ApplicationReadyEvent)，timestamp："+event.getTimestamp());
 			onApplicationReadyEvent(readyEvent);
 		}
 		if (event instanceof WebServerInitializedEvent initializedEvent) {
-			logger.info("[SPRING_BOOT] 自定义日志---监听到事件：ApplicationEvent(WebServerInitializedEvent)，timestamp："+event.getTimestamp());
+			logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：ApplicationEvent(WebServerInitializedEvent)，timestamp："+event.getTimestamp());
 			onWebServerInitializedEvent(initializedEvent);
 		}
 	}

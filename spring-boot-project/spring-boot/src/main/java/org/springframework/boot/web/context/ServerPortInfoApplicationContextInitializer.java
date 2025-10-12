@@ -63,7 +63,7 @@ public class ServerPortInfoApplicationContextInitializer implements
 
 	@Override
 	public void onApplicationEvent(WebServerInitializedEvent event) {
-		logger.info("[SPRING_BOOT] 自定义日志---监听到事件：WebServerInitializedEvent，timestamp："+event.getTimestamp());
+		logger.info("[SPRING_BOOT] 自定义日志---【监听事件】：WebServerInitializedEvent，timestamp："+event.getTimestamp());
 		String propertyName = "local." + getName(event.getApplicationContext()) + ".port";
 		setPortProperty(event.getApplicationContext(), propertyName, event.getWebServer().getPort());
 	}

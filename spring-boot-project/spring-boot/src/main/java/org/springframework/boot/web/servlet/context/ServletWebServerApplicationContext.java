@@ -142,7 +142,7 @@ public class ServletWebServerApplicationContext extends GenericWebApplicationCon
 
 	@Override
 	public final void refresh() throws BeansException, IllegalStateException {
-		logger.info("[SPRING] 自定义日志【重要】---调用ServletWebServerApplicationContext.refresh，再间接调用AbstractApplicationContext.refresh方法");
+		logger.info("[SPRING] 自定义日志---调用ServletWebServerApplicationContext.refresh，再间接调用AbstractApplicationContext.refresh方法");
 		try {
 			super.refresh();
 		}

@@ -302,24 +302,24 @@ public class SpringApplication {
 	 * @return a running {@link ApplicationContext}
 	 */
 	public ConfigurableApplicationContext run(String... args) {
-		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】：开始");
+		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】开始");
 		Startup startup = Startup.create();
 		if (this.properties.isRegisterShutdownHook()) {
 			SpringApplication.shutdownHook.enableShutdownHookAddition();
 		}
-		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】：创建createBootstrapContext");
+		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】创建createBootstrapContext");
 		DefaultBootstrapContext bootstrapContext = createBootstrapContext();
 		ConfigurableApplicationContext context = null;
 		configureHeadlessProperty();
 		SpringApplicationRunListeners listeners = getRunListeners(args);
-		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】：发布应用启动事件（ApplicationStartingEvent），可用于初始化不依赖Spring环境的组件");
+		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】发布应用启动事件（ApplicationStartingEvent），可用于初始化不依赖Spring环境的组件");
 		listeners.starting(bootstrapContext, this.mainApplicationClass);
 		try {
 			ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
 			ConfigurableEnvironment environment = prepareEnvironment(listeners, bootstrapContext, applicationArguments);
 			Banner printedBanner = printBanner(environment);
 			context = createApplicationContext();
-			logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】：创建应用上下文，返回："+context.getClass().getName());
+			logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】创建应用上下文，返回："+context.getClass().getName());
 			context.setApplicationStartup(this.applicationStartup);
 			prepareContext(bootstrapContext, context, environment, listeners, applicationArguments, printedBanner);
 			refreshContext(context);
@@ -328,7 +328,7 @@ public class SpringApplication {
 			if (this.properties.isLogStartupInfo()) {
 				new StartupInfoLogger(this.mainApplicationClass, environment).logStarted(getApplicationLog(), startup);
 			}
-			logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】：发布应用启动完成事件：ApplicationStartedEvent");
+			logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】发布应用启动完成事件：ApplicationStartedEvent");
 			listeners.started(context, startup.timeTakenToStarted());
 			callRunners(context, applicationArguments);
 		}
@@ -337,14 +337,14 @@ public class SpringApplication {
 		}
 		try {
 			if (context.isRunning()) {
-				logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】：发布应用就绪事件：ApplicationReadyEvent");
+				logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】发布应用就绪事件：ApplicationReadyEvent");
 				listeners.ready(context, startup.ready());
 			}
 		}
 		catch (Throwable ex) {
 			throw handleRunFailure(context, ex, null);
 		}
-		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】：完成");
+		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】完成");
 		return context;
 	}
 
@@ -356,12 +356,12 @@ public class SpringApplication {
 
 	private ConfigurableEnvironment prepareEnvironment(SpringApplicationRunListeners listeners,
 			DefaultBootstrapContext bootstrapContext, ApplicationArguments applicationArguments) {
-		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】：准备环境");
+		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】准备环境");
 		// Create and configure the environment
 		ConfigurableEnvironment environment = getOrCreateEnvironment();
 		configureEnvironment(environment, applicationArguments.getSourceArgs());
 		ConfigurationPropertySources.attach(environment);
-		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】：发布环境准备就绪事件（ApplicationEnvironmentPreparedEvent）");
+		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】发布环境准备就绪事件（ApplicationEnvironmentPreparedEvent）");
 		listeners.environmentPrepared(bootstrapContext, environment);
 		ApplicationInfoPropertySource.moveToEnd(environment);
 		DefaultPropertiesPropertySource.moveToEnd(environment);
@@ -389,12 +389,12 @@ public class SpringApplication {
 	private void prepareContext(DefaultBootstrapContext bootstrapContext, ConfigurableApplicationContext context,
 			ConfigurableEnvironment environment, SpringApplicationRunListeners listeners,
 			ApplicationArguments applicationArguments, Banner printedBanner) {
-		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】：准备应用上下文");
+		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】准备应用上下文");
 		context.setEnvironment(environment);
 		postProcessApplicationContext(context);
 		addAotGeneratedInitializerIfNecessary(this.initializers);
 		applyInitializers(context);
-		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】：发布上下文准备就绪事件（ApplicationContextInitializedEvent）");
+		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】发布上下文准备就绪事件（ApplicationContextInitializedEvent）");
 		listeners.contextPrepared(context);
 		bootstrapContext.close(context);
 		if (this.properties.isLogStartupInfo()) {
@@ -404,10 +404,10 @@ public class SpringApplication {
 		}
 		// Add boot specific singleton beans
 		ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
-		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】，【注册单例Bean】：applicationArguments");
+		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】【注册单例Bean】：applicationArguments");
 		beanFactory.registerSingleton("springApplicationArguments", applicationArguments);
 		if (printedBanner != null) {
-			logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】，【注册单例Bean】：printedBanner");
+			logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】【注册单例Bean】：printedBanner");
 			beanFactory.registerSingleton("springBootBanner", printedBanner);
 		}
 		if (beanFactory instanceof AbstractAutowireCapableBeanFactory autowireCapableBeanFactory) {
@@ -417,23 +417,23 @@ public class SpringApplication {
 			}
 		}
 		if (this.properties.isLazyInitialization()) {
-			logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】，添加BeanFactoryPostProcessor：LazyInitializationBeanFactoryPostProcessor");
+			logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】添加BeanFactoryPostProcessor：LazyInitializationBeanFactoryPostProcessor");
 			context.addBeanFactoryPostProcessor(new LazyInitializationBeanFactoryPostProcessor());
 		}
 		if (this.properties.isKeepAlive()) {
-			logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】，添加ApplicationListener：KeepAlive");
+			logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】添加ApplicationListener：KeepAlive");
 			context.addApplicationListener(new KeepAlive());
 		}
-		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】，添加BeanFactoryPostProcessor：PropertySourceOrderingBeanFactoryPostProcessor");
+		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】添加BeanFactoryPostProcessor：PropertySourceOrderingBeanFactoryPostProcessor");
 		context.addBeanFactoryPostProcessor(new PropertySourceOrderingBeanFactoryPostProcessor(context));
 		if (!AotDetector.useGeneratedArtifacts()) {
 			// Load the sources
 			Set<Object> sources = getAllSources();
 			Assert.state(!ObjectUtils.isEmpty(sources), "No sources defined");
 			load(context, sources.toArray(new Object[0]));
-			sources.forEach(s -> {logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】，项目启动类注册到Bean定义："+s.toString());});
+			sources.forEach(s -> {logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】项目启动类注册到Bean定义："+s.toString());});
 		}
-		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】：Spring应用上下文已准备就绪（ApplicationPreparedEvent）");
+		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】Spring应用上下文已准备就绪（ApplicationPreparedEvent）");
 		listeners.contextLoaded(context);
 	}
 
@@ -454,12 +454,12 @@ public class SpringApplication {
 	}
 
 	private void refreshContext(ConfigurableApplicationContext context) {
-		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】：刷新应用上下文：开始，"+context.getClass().getName());
+		logger.info("[SPRING_BOOT] 自定义日志【非常重要】---【SpringApplication】刷新应用上下文：开始，"+context.getClass().getName());
 		if (this.properties.isRegisterShutdownHook()) {
 			shutdownHook.registerApplicationContext(context);
 		}
 		refresh(context);
-		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】：刷新应用上下文：结束，"+context.getClass().getName());
+		logger.info("[SPRING_BOOT] 自定义日志【非常重要】---【SpringApplication】【非常重要】刷新应用上下文：结束，"+context.getClass().getName());
 	}
 
 	private void configureHeadlessProperty() {
@@ -479,7 +479,7 @@ public class SpringApplication {
 			listeners = new ArrayList<>(listeners);
 			listeners.add(hookListener);
 		}
-		listeners.forEach( s ->logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】：初始化运行监听器，所有SpringApplicationRunListener实例，从META-INF/spring.factories中加载，已加载SpringApplicationRunListener实例："+s.getClass().getName()));
+		listeners.forEach( s ->logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】初始化运行监听器，所有SpringApplicationRunListener实例，从META-INF/spring.factories中加载，已加载SpringApplicationRunListener实例："+s.getClass().getName()));
 		return new SpringApplicationRunListeners(logger, listeners, this.applicationStartup);
 	}
 
@@ -596,7 +596,7 @@ public class SpringApplication {
 	 * @see #setApplicationContextFactory(ApplicationContextFactory)
 	 */
 	protected ConfigurableApplicationContext createApplicationContext() {
-		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】：创建应用上下文，：this.applicationContextFactory："+this.applicationContextFactory.getClass().getName());
+		logger.info("[SPRING_BOOT] 自定义日志【非常重要】---【SpringApplication】创建应用上下文，：this.applicationContextFactory："+this.applicationContextFactory.getClass().getName());
 		return this.applicationContextFactory.create(this.properties.getWebApplicationType());
 	}
 
@@ -607,7 +607,7 @@ public class SpringApplication {
 	 */
 	protected void postProcessApplicationContext(ConfigurableApplicationContext context) {
 		if (this.beanNameGenerator != null) {
-			logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】，【注册单例Bean】："+AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR);
+			logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】【注册单例Bean】："+AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR);
 			context.getBeanFactory()
 				.registerSingleton(AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR, this.beanNameGenerator);
 		}
@@ -636,7 +636,7 @@ public class SpringApplication {
 			Class<?> requiredType = GenericTypeResolver.resolveTypeArgument(initializer.getClass(),
 					ApplicationContextInitializer.class);
 			Assert.state(requiredType.isInstance(context), "Unable to call initializer");
-			logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】：调用所有ApplicationContextInitializer的initialize方法："+initializer.getClass().getName());
+			logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】调用所有ApplicationContextInitializer的initialize方法："+initializer.getClass().getName());
 			initializer.initialize(context);
 		}
 	}
@@ -1709,11 +1709,11 @@ public class SpringApplication {
 		@Override
 		public void onApplicationEvent(ApplicationContextEvent event) {
 			if (event instanceof ContextRefreshedEvent) {
-				logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】【监听事件】：ApplicationContextEvent(ContextRefreshedEvent)，timestamp："+event.getTimestamp());
+				logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】【监听事件】ApplicationContextEvent(ContextRefreshedEvent)，timestamp："+event.getTimestamp());
 				startKeepAliveThread();
 			}
 			else if (event instanceof ContextClosedEvent) {
-				logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】【监听事件】：ApplicationContextEvent(ContextClosedEvent)，timestamp："+event.getTimestamp());
+				logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】【监听事件】ApplicationContextEvent(ContextClosedEvent)，timestamp："+event.getTimestamp());
 				stopKeepAliveThread();
 			}
 		}

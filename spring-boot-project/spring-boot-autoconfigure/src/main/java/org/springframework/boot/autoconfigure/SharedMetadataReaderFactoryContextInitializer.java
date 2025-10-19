@@ -153,7 +153,7 @@ class SharedMetadataReaderFactoryContextInitializer implements
 		}
 
 		private void configureConfigurationClassPostProcessor(MutablePropertyValues propertyValues) {
-			logger.info("[SPRING_BOOT] 自定义日志---internalConfigurationAnnotationProcessor 设置 metadataReaderFactory："+BEAN_NAME);
+			logger.info("[SPRING_BOOT] 自定义日志---internalConfigurationAnnotationProcessor设置metadataReaderFactory："+BEAN_NAME);
 			propertyValues.add("metadataReaderFactory", new RuntimeBeanReference(BEAN_NAME));
 		}
 

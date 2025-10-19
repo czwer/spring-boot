@@ -63,7 +63,7 @@ class DefaultApplicationContextFactory implements ApplicationContextFactory {
 		logger.info("[SPRING_BOOT] 自定义日志---创建应用上下文（DefaultApplicationContextFactory）");
 		if (!AotDetector.useGeneratedArtifacts()) {
 			logger.info("[SPRING_BOOT] 自定义日志---createContext ：AnnotationConfigApplicationContext");
-			logger.info("[SPRING_BOOT] 自定义日志---AnnotationConfigApplicationContext，构造方法， 会调用父类GenericApplicationContext的构造方法");
+			logger.info("[SPRING_BOOT] 自定义日志---AnnotationConfigApplicationContext，构造方法，会调用父类GenericApplicationContext的构造方法");
 			return new AnnotationConfigApplicationContext();
 		}
 		logger.info("[SPRING_BOOT] 自定义日志---createContext ：GenericApplicationContext");

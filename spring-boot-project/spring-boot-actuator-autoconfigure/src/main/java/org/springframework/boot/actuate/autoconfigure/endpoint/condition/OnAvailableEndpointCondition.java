@@ -25,6 +25,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.boot.actuate.autoconfigure.endpoint.PropertiesEndpointAccessResolver;
 import org.springframework.boot.actuate.autoconfigure.endpoint.expose.EndpointExposure;
 import org.springframework.boot.actuate.autoconfigure.endpoint.expose.IncludeExcludeEndpointFilter;
@@ -62,7 +65,7 @@ import org.springframework.util.ConcurrentReferenceHashMap;
  * @see ConditionalOnAvailableEndpoint
  */
 class OnAvailableEndpointCondition extends SpringBootCondition {
-
+	private static final Log logger = LogFactory.getLog(OnAvailableEndpointCondition.class);
 	private static final String JMX_ENABLED_KEY = "spring.jmx.enabled";
 
 	private static final Map<Environment, EndpointAccessResolver> accessResolversCache = new ConcurrentReferenceHashMap<>();
@@ -182,8 +185,10 @@ class OnAvailableEndpointCondition extends SpringBootCondition {
 
 	private List<EndpointExposureOutcomeContributor> loadExposureOutcomeContributors(Environment environment) {
 		ArgumentResolver argumentResolver = ArgumentResolver.of(Environment.class, environment);
-		return SpringFactoriesLoader.forDefaultResourceLocation()
-			.load(EndpointExposureOutcomeContributor.class, argumentResolver);
+		List<EndpointExposureOutcomeContributor> load = SpringFactoriesLoader.forDefaultResourceLocation()
+				.load(EndpointExposureOutcomeContributor.class, argumentResolver);
+		load.forEach(r -> {logger.info("[SPRING_BOOT] 自定义日志---加载到 EndpointExposureOutcomeContributor:"+r.getClass());});
+		return load;
 	}
 
 	/**

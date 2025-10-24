@@ -20,6 +20,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.boot.env.PropertySourceLoader;
 import org.springframework.core.io.support.SpringFactoriesLoader;
 
@@ -31,7 +34,7 @@ import org.springframework.core.io.support.SpringFactoriesLoader;
  */
 class SystemEnvironmentConfigDataLocationResolver
 		implements ConfigDataLocationResolver<SystemEnvironmentConfigDataResource> {
-
+	private static final Log logger = LogFactory.getLog(SystemEnvironmentConfigDataLocationResolver.class);
 	private static final String PREFIX = "env:";
 
 	private static final String DEFAULT_EXTENSION = ".properties";
@@ -42,6 +45,7 @@ class SystemEnvironmentConfigDataLocationResolver
 
 	SystemEnvironmentConfigDataLocationResolver() {
 		this.loaders = SpringFactoriesLoader.loadFactories(PropertySourceLoader.class, getClass().getClassLoader());
+		this.loaders.forEach(e ->{logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】加载到的PropertySourceLoader："+e.getClass().getName());});
 		this.environment = System::getenv;
 	}
 

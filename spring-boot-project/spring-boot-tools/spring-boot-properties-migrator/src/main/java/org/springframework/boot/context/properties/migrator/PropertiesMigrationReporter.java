@@ -26,6 +26,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.boot.configurationmetadata.ConfigurationMetadataProperty;
 import org.springframework.boot.configurationmetadata.ConfigurationMetadataRepository;
 import org.springframework.boot.context.properties.source.ConfigurationProperty;
@@ -49,7 +52,7 @@ import org.springframework.util.StringUtils;
  * @author Moritz Halbritter
  */
 class PropertiesMigrationReporter {
-
+	private static final Log logger = LogFactory.getLog(PropertiesMigrationReporter.class);
 	private final Map<String, ConfigurationMetadataProperty> allProperties;
 
 	private final ConfigurableEnvironment environment;
@@ -200,6 +203,7 @@ class PropertiesMigrationReporter {
 						candidate.getProperty().getOrigin());
 				content.put(newPropertyName, originTrackedValue);
 			}
+			logger.info("[SPRINGBOOT] 自定义日志---:new OriginTrackedMapPropertySource()");
 			return new OriginTrackedMapPropertySource(target, content);
 		}
 		finally {

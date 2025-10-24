@@ -354,6 +354,7 @@ class ConfigDataEnvironment {
 				else {
 					this.logger
 						.trace(LogMessage.format("Adding imported property source '%s'", propertySource.getName()));
+					this.logger.info("[SPRINGBOOT] 自定义日志---解析到的配置放到environment.getPropertySources()");
 					propertySources.addLast(propertySource);
 					this.environmentUpdateListener.onPropertySourceAdded(propertySource, contributor.getLocation(),
 							contributor.getResource());

@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.boot.BootstrapContext;
 import org.springframework.boot.BootstrapRegistry;
@@ -42,7 +43,7 @@ import org.springframework.util.Assert;
  */
 class ConfigDataLoaders {
 
-	private final Log logger;
+	private static final Log logger = LogFactory.getLog(ConfigDataLoaders.class);
 
 	@SuppressWarnings("rawtypes")
 	private final List<ConfigDataLoader> loaders;
@@ -57,7 +58,6 @@ class ConfigDataLoaders {
 	 */
 	ConfigDataLoaders(DeferredLogFactory logFactory, ConfigurableBootstrapContext bootstrapContext,
 			SpringFactoriesLoader springFactoriesLoader) {
-		this.logger = logFactory.getLog(getClass());
 		ArgumentResolver argumentResolver = ArgumentResolver.of(DeferredLogFactory.class, logFactory);
 		argumentResolver = argumentResolver.and(ConfigurableBootstrapContext.class, bootstrapContext);
 		argumentResolver = argumentResolver.and(BootstrapContext.class, bootstrapContext);
@@ -66,6 +66,7 @@ class ConfigDataLoaders {
 			throw new IllegalArgumentException("Log types cannot be injected, please use DeferredLogFactory");
 		});
 		this.loaders = springFactoriesLoader.load(ConfigDataLoader.class, argumentResolver);
+		this.loaders.forEach(r -> {logger.info("[SPRING_BOOT] 自定义日志---加载到ConfigDataLoader："+r.getClass());});
 		this.resourceTypes = getResourceTypes(this.loaders);
 	}
 
@@ -91,6 +92,7 @@ class ConfigDataLoaders {
 	 * @throws IOException on IO error
 	 */
 	<R extends ConfigDataResource> ConfigData load(ConfigDataLoaderContext context, R resource) throws IOException {
+		logger.info("[SPRINGBOOT] 自定义日志【关键流程-加载配置文件】---:"+resource);
 		ConfigDataLoader<R> loader = getLoader(context, resource);
 		this.logger.trace(LogMessage.of(() -> "Loading " + resource + " using loader " + loader.getClass().getName()));
 		return loader.load(context, resource);

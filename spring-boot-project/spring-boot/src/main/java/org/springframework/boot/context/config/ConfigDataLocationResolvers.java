@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.boot.BootstrapContext;
 import org.springframework.boot.BootstrapRegistry;
@@ -41,7 +42,7 @@ import org.springframework.core.io.support.SpringFactoriesLoader.ArgumentResolve
  * @author Madhura Bhave
  */
 class ConfigDataLocationResolvers {
-
+	private static final Log logger = LogFactory.getLog(ConfigDataLocationResolvers.class);
 	private final List<ConfigDataLocationResolver<?>> resolvers;
 
 	/**
@@ -64,10 +65,12 @@ class ConfigDataLocationResolvers {
 			throw new IllegalArgumentException("Log types cannot be injected, please use DeferredLogFactory");
 		});
 		this.resolvers = reorder(springFactoriesLoader.load(ConfigDataLocationResolver.class, argumentResolver));
+		this.resolvers.forEach(r -> {logger.info("[SPRING_BOOT] 自定义日志---加载到ConfigDataLocationResolver："+r.getClass());});
 	}
 
 	@SuppressWarnings("rawtypes")
 	private List<ConfigDataLocationResolver<?>> reorder(List<ConfigDataLocationResolver> resolvers) {
+		resolvers.forEach(r -> {logger.info("[SPRING_BOOT] 自定义日志---加载到ConfigDataLocationResolver："+r.getClass());});
 		List<ConfigDataLocationResolver<?>> reordered = new ArrayList<>(resolvers.size());
 		ConfigDataLocationResolver<?> standardConfigDataLocationResolver = null;
 		for (ConfigDataLocationResolver<?> resolver : resolvers) {

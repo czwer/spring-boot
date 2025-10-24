@@ -479,7 +479,7 @@ public class SpringApplication {
 			listeners = new ArrayList<>(listeners);
 			listeners.add(hookListener);
 		}
-		listeners.forEach( s ->logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】初始化运行监听器，所有SpringApplicationRunListener实例，从META-INF/spring.factories中加载，已加载SpringApplicationRunListener实例："+s.getClass().getName()));
+		listeners.forEach( s ->logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】初始化运行监听器，加载的SpringApplicationRunListener实例："+s.getClass().getName()));
 		return new SpringApplicationRunListeners(logger, listeners, this.applicationStartup);
 	}
 
@@ -488,7 +488,9 @@ public class SpringApplication {
 	}
 
 	private <T> List<T> getSpringFactoriesInstances(Class<T> type, ArgumentResolver argumentResolver) {
-		return SpringFactoriesLoader.forDefaultResourceLocation(getClassLoader(null)).load(type, argumentResolver);
+		List<T> load = SpringFactoriesLoader.forDefaultResourceLocation(getClassLoader(null)).load(type, argumentResolver);
+		load.forEach(r -> {logger.info("[SPRING_BOOT] 自定义日志---加载到"+type.getName()+":"+r.getClass());});
+		return load;
 	}
 
 	private ConfigurableEnvironment getOrCreateEnvironment() {

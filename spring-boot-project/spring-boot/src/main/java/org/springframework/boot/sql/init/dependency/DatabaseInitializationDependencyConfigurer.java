@@ -160,8 +160,10 @@ public class DatabaseInitializationDependencyConfigurer implements ImportBeanDef
 
 		private <T> List<T> getDetectors(ConfigurableListableBeanFactory beanFactory, Class<T> type) {
 			ArgumentResolver argumentResolver = ArgumentResolver.of(Environment.class, this.environment);
-			return SpringFactoriesLoader.forDefaultResourceLocation(beanFactory.getBeanClassLoader())
-				.load(type, argumentResolver);
+			List<T> load = SpringFactoriesLoader.forDefaultResourceLocation(beanFactory.getBeanClassLoader())
+					.load(type, argumentResolver);
+			load.forEach(r -> {logger.info("[SPRING_BOOT] 自定义日志---加载到"+type.getName()+":"+r.getClass());});
+			return load;
 		}
 
 		private static BeanDefinition getBeanDefinition(String beanName, ConfigurableListableBeanFactory beanFactory) {

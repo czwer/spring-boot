@@ -19,13 +19,16 @@ package org.springframework.boot.logging;
 import java.util.List;
 import java.util.function.Function;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * {@link LoggingSystemFactory} that delegates to other factories.
  *
  * @author Phillip Webb
  */
 class DelegatingLoggingSystemFactory implements LoggingSystemFactory {
-
+	private static final Logger logger = LoggerFactory.getLogger(DelegatingLoggingSystemFactory.class);
 	private final Function<ClassLoader, List<LoggingSystemFactory>> delegates;
 
 	/**
@@ -40,9 +43,11 @@ class DelegatingLoggingSystemFactory implements LoggingSystemFactory {
 	public LoggingSystem getLoggingSystem(ClassLoader classLoader) {
 		List<LoggingSystemFactory> delegates = (this.delegates != null) ? this.delegates.apply(classLoader) : null;
 		if (delegates != null) {
+			delegates.forEach( s ->logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】加载的到的LoggingSystemFactory："+s.getClass().getName()));
 			for (LoggingSystemFactory delegate : delegates) {
 				LoggingSystem loggingSystem = delegate.getLoggingSystem(classLoader);
 				if (loggingSystem != null) {
+					logger.info("[SPRINGBOOT] 自定义日志---使用的日志系统："+loggingSystem.getClass().getName());
 					return loggingSystem;
 				}
 			}

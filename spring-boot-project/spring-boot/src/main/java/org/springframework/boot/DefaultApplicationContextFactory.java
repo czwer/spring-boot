@@ -74,10 +74,17 @@ class DefaultApplicationContextFactory implements ApplicationContextFactory {
 			BiFunction<ApplicationContextFactory, WebApplicationType, T> action, Supplier<T> defaultResult) {
 		for (ApplicationContextFactory candidate : SpringFactoriesLoader.loadFactories(ApplicationContextFactory.class,
 				getClass().getClassLoader())) {
+			logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】getFromSpringFactories：加载到的ApplicationContextFactory："+candidate.getClass().getName());
 			T result = action.apply(candidate, webApplicationType);
 			if (result != null) {
+				logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】getFromSpringFactories：使用加载到的ApplicationContextFactory："+candidate.getClass().getName());
 				return result;
 			}
+		}
+		if (defaultResult != null){
+			logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】getFromSpringFactories：使用的是："+defaultResult.getClass().getName());
+		}else {
+			logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】getFromSpringFactories：返回null");
 		}
 		return (defaultResult != null) ? defaultResult.get() : null;
 	}

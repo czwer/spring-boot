@@ -22,6 +22,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.ClassUtils;
@@ -35,7 +38,7 @@ import org.springframework.util.ClassUtils;
  * @since 1.0.0
  */
 public class YamlPropertySourceLoader implements PropertySourceLoader {
-
+	private static final Log logger = LogFactory.getLog(YamlPropertySourceLoader.class);
 	@Override
 	public String[] getFileExtensions() {
 		return new String[] { "yml", "yaml" };
@@ -54,6 +57,7 @@ public class YamlPropertySourceLoader implements PropertySourceLoader {
 		List<PropertySource<?>> propertySources = new ArrayList<>(loaded.size());
 		for (int i = 0; i < loaded.size(); i++) {
 			String documentNumber = (loaded.size() != 1) ? " (document #" + i + ")" : "";
+			logger.info("[SPRINGBOOT] 自定义日志---:new OriginTrackedMapPropertySource()");
 			propertySources.add(new OriginTrackedMapPropertySource(name + documentNumber,
 					Collections.unmodifiableMap(loaded.get(i)), true));
 		}

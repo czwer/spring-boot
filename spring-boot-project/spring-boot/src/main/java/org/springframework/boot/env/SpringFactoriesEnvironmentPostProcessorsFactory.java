@@ -18,6 +18,9 @@ package org.springframework.boot.env;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.boot.BootstrapContext;
 import org.springframework.boot.BootstrapRegistry;
 import org.springframework.boot.ConfigurableBootstrapContext;
@@ -31,6 +34,7 @@ import org.springframework.core.io.support.SpringFactoriesLoader.ArgumentResolve
  * @author Andy Wilkinson
  */
 class SpringFactoriesEnvironmentPostProcessorsFactory implements EnvironmentPostProcessorsFactory {
+	private static final Log logger = LogFactory.getLog(SpringFactoriesEnvironmentPostProcessorsFactory.class);
 
 	private final SpringFactoriesLoader loader;
 
@@ -45,7 +49,9 @@ class SpringFactoriesEnvironmentPostProcessorsFactory implements EnvironmentPost
 		argumentResolver = argumentResolver.and(ConfigurableBootstrapContext.class, bootstrapContext);
 		argumentResolver = argumentResolver.and(BootstrapContext.class, bootstrapContext);
 		argumentResolver = argumentResolver.and(BootstrapRegistry.class, bootstrapContext);
-		return this.loader.load(EnvironmentPostProcessor.class, argumentResolver);
+		List<EnvironmentPostProcessor> environmentPostProcessorList = this.loader.load(EnvironmentPostProcessor.class, argumentResolver);
+		environmentPostProcessorList.forEach(e ->{logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】加载到的EnvironmentPostProcessor："+e.getClass().getName());});
+		return environmentPostProcessorList;
 	}
 
 }

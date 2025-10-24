@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.boot.context.config.LocationResourceLoader.ResourceType;
 import org.springframework.boot.context.properties.bind.Binder;
@@ -58,7 +59,7 @@ import org.springframework.util.StringUtils;
  */
 public class StandardConfigDataLocationResolver
 		implements ConfigDataLocationResolver<StandardConfigDataResource>, Ordered {
-
+	private static final Log logger = LogFactory.getLog(StandardConfigDataLocationResolver.class);
 	private static final String PREFIX = "resource:";
 
 	static final String CONFIG_NAME_PROPERTY = "spring.config.name";
@@ -68,8 +69,6 @@ public class StandardConfigDataLocationResolver
 	private static final Pattern URL_PREFIX = Pattern.compile("^([a-zA-Z][a-zA-Z0-9*]*?:)(.*$)");
 
 	private static final String NO_PROFILE = null;
-
-	private final Log logger;
 
 	private final List<PropertySourceLoader> propertySourceLoaders;
 
@@ -85,9 +84,9 @@ public class StandardConfigDataLocationResolver
 	 */
 	public StandardConfigDataLocationResolver(DeferredLogFactory logFactory, Binder binder,
 			ResourceLoader resourceLoader) {
-		this.logger = logFactory.getLog(StandardConfigDataLocationResolver.class);
 		this.propertySourceLoaders = SpringFactoriesLoader.loadFactories(PropertySourceLoader.class,
 				resourceLoader.getClassLoader());
+		this.propertySourceLoaders.forEach(e ->{logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】加载到的PropertySourceLoader："+e.getClass().getName());});
 		this.configNames = getConfigNames(binder);
 		this.resourceLoader = new LocationResourceLoader(resourceLoader);
 	}

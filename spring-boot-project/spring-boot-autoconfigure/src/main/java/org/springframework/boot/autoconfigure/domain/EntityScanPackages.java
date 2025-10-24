@@ -171,7 +171,7 @@ public class EntityScanPackages {
 
 		EntityScanPackagesBeanDefinition(Collection<String> packageNames) {
 			setBeanClass(EntityScanPackages.class);
-			logger.info("[SPRING] 自定义日志---标识ROLE_INFRASTRUCTURE");
+			logger.info("[SPRINGBOOT] 自定义日志---标识ROLE_INFRASTRUCTURE");
 			setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
 			addPackageNames(packageNames);
 		}

@@ -134,6 +134,7 @@ public class EnvironmentPostProcessorApplicationListener implements SmartApplica
 				event.getBootstrapContext());
 		addAotGeneratedEnvironmentPostProcessorIfNecessary(postProcessors, application);
 		for (EnvironmentPostProcessor postProcessor : postProcessors) {
+			logger.info("[SPRING_BOOT] 自定义日志---EnvironmentPostProcessor.postProcessEnvironment()："+postProcessor.getClass());
 			postProcessor.postProcessEnvironment(environment, application);
 		}
 	}

@@ -22,6 +22,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.boot.env.OriginTrackedPropertiesLoader.Document;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
@@ -36,7 +39,7 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
  * @since 1.0.0
  */
 public class PropertiesPropertySourceLoader implements PropertySourceLoader {
-
+	private static final Log logger = LogFactory.getLog(PropertiesPropertySourceLoader.class);
 	private static final String XML_FILE_EXTENSION = ".xml";
 
 	@Override
@@ -53,6 +56,7 @@ public class PropertiesPropertySourceLoader implements PropertySourceLoader {
 		List<PropertySource<?>> propertySources = new ArrayList<>(properties.size());
 		for (int i = 0; i < properties.size(); i++) {
 			String documentNumber = (properties.size() != 1) ? " (document #" + i + ")" : "";
+			logger.info("[SPRINGBOOT] 自定义日志---:new OriginTrackedMapPropertySource()");
 			propertySources.add(new OriginTrackedMapPropertySource(name + documentNumber,
 					Collections.unmodifiableMap(properties.get(i)), true));
 		}

@@ -61,7 +61,7 @@ public class OAuth2AuthorizationServerJwtAutoConfiguration {
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	@ConditionalOnMissingBean
 	JWKSource<SecurityContext> jwkSource() {
-		logger.info("[SPRING] 自定义日志---标识ROLE_INFRASTRUCTURE，准备注册Bean定义：(JWKSource)");
+		logger.info("[SPRINGBOOT] 自定义日志---标识ROLE_INFRASTRUCTURE，准备注册Bean定义：(JWKSource)");
 		RSAKey rsaKey = getRsaKey();
 		JWKSet jwkSet = new JWKSet(rsaKey);
 		return new ImmutableJWKSet<>(jwkSet);

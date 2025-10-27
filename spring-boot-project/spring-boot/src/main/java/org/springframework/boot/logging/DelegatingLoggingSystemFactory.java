@@ -43,7 +43,7 @@ class DelegatingLoggingSystemFactory implements LoggingSystemFactory {
 	public LoggingSystem getLoggingSystem(ClassLoader classLoader) {
 		List<LoggingSystemFactory> delegates = (this.delegates != null) ? this.delegates.apply(classLoader) : null;
 		if (delegates != null) {
-			delegates.forEach( s ->logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】加载的到的LoggingSystemFactory："+s.getClass().getName()));
+			delegates.forEach( s ->logger.info("[SPRING_BOOT] 自定义日志---加载的到的LoggingSystemFactory："+s.getClass().getName()));
 			for (LoggingSystemFactory delegate : delegates) {
 				LoggingSystem loggingSystem = delegate.getLoggingSystem(classLoader);
 				if (loggingSystem != null) {

@@ -394,7 +394,7 @@ public class SpringApplication {
 		postProcessApplicationContext(context);
 		addAotGeneratedInitializerIfNecessary(this.initializers);
 		applyInitializers(context);
-		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】发布上下文准备就绪事件（ApplicationContextInitializedEvent）");
+		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】发布上下文已初始化事件（ApplicationContextInitializedEvent）");
 		listeners.contextPrepared(context);
 		bootstrapContext.close(context);
 		if (this.properties.isLogStartupInfo()) {
@@ -433,7 +433,7 @@ public class SpringApplication {
 			load(context, sources.toArray(new Object[0]));
 			sources.forEach(s -> {logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】项目启动类注册到Bean定义："+s.toString());});
 		}
-		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】Spring应用上下文已准备就绪（ApplicationPreparedEvent）");
+		logger.info("[SPRING_BOOT] 自定义日志---【SpringApplication】发布上下文已准备事件（ApplicationPreparedEvent）");
 		listeners.contextLoaded(context);
 	}
 

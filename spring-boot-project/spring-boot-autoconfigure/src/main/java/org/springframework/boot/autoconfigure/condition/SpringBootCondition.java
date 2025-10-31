@@ -47,7 +47,9 @@ public abstract class SpringBootCondition implements Condition {
 			ConditionOutcome outcome = getMatchOutcome(context, metadata);
 			logOutcome(classOrMethodName, outcome);
 			recordEvaluation(context, classOrMethodName, outcome);
-			return outcome.isMatch();
+			boolean match = outcome.isMatch();
+			this.logger.info("[SPRINGBOOT] 自定义日志---"+this.getName(metadata)+"：条件配置匹配结果："+match);
+			return match;
 		}
 		catch (NoClassDefFoundError ex) {
 			throw new IllegalStateException("Could not evaluate condition on " + classOrMethodName + " due to "

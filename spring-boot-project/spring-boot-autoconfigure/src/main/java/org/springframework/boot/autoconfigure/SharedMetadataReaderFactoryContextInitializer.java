@@ -105,7 +105,7 @@ class SharedMetadataReaderFactoryContextInitializer implements
 
 		@Override
 		public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-			logger.info("自定义日志---SharedMetadataReaderFactoryContextInitializer实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：空方法");
+			logger.info("[SPRINGBOOT] 自定义日志---SharedMetadataReaderFactoryContextInitializer实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：空方法");
 		}
 
 		@Override

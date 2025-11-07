@@ -77,7 +77,7 @@ class ServletComponentRegisteringPostProcessor
 
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-		logger.info("自定义日志---ServletComponentRegisteringPostProcessor实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：负责扫描并注册使用Servlet注解（如@WebServlet、@WebFilter、@WebListener）的组件到内嵌的Servlet容器中。");
+		logger.info("[SPRINGBOOT] 自定义日志---ServletComponentRegisteringPostProcessor实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：负责扫描并注册使用Servlet注解（如@WebServlet、@WebFilter、@WebListener）的组件到内嵌的Servlet容器中。");
 		if (eligibleForServletComponentScanning()) {
 			ClassPathScanningCandidateComponentProvider componentProvider = createComponentProvider();
 			for (String packageToScan : this.packagesToScan) {

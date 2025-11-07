@@ -126,7 +126,7 @@ public class WebServicesAutoConfiguration {
 
 		@Override
 		public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-			logger.info("自定义日志---ServletComponentRegisteringPostProcessor实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：空方法");
+			logger.info("[SPRINGBOOT] 自定义日志---ServletComponentRegisteringPostProcessor实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：空方法");
 		}
 
 		private <T> void registerBeans(String location, String pattern, Class<T> type,

@@ -176,7 +176,7 @@ class TaskExecutorConfigurations {
 
 		@Bean
 		static BeanFactoryPostProcessor bootstrapExecutorAliasPostProcessor() {
-			logger.info("自定义日志---通过@Bean声明BeanFactoryPostProcessor：bootstrapExecutorAliasPostProcessor");
+			logger.info("[SPRINGBOOT] 自定义日志---通过@Bean声明BeanFactoryPostProcessor：bootstrapExecutorAliasPostProcessor");
 			return (beanFactory) -> {
 				boolean hasBootstrapExecutor = beanFactory
 					.containsBean(ConfigurableApplicationContext.BOOTSTRAP_EXECUTOR_BEAN_NAME);

@@ -99,7 +99,7 @@ public class DatabaseInitializationDependencyConfigurer implements ImportBeanDef
 
 		@Override
 		public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
-			logger.info("自定义日志---DatabaseInitializationDependencyConfigurer实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：主要作用是确保数据库相关的Bean在数据库初始化完成之后才被创建和初始化。");
+			logger.info("[SPRINGBOOT] 自定义日志---DatabaseInitializationDependencyConfigurer实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：主要作用是确保数据库相关的Bean在数据库初始化完成之后才被创建和初始化。");
 			if (AotDetector.useGeneratedArtifacts()) {
 				return;
 			}

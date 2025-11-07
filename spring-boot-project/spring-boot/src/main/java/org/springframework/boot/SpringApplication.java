@@ -1636,7 +1636,7 @@ public class SpringApplication {
 
 		@Override
 		public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-			logger.info("自定义日志---【SpringApplication】PropertySourceOrderingBeanFactoryPostProcessor实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：核心作用是调整 Environment中属性源的顺序，以确保配置的优先级符合Spring Boot的预期");
+			logger.info("[SPRINGBOOT] 自定义日志---【SpringApplication】PropertySourceOrderingBeanFactoryPostProcessor实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：核心作用是调整 Environment中属性源的顺序，以确保配置的优先级符合Spring Boot的预期");
 			DefaultPropertiesPropertySource.moveToEnd(this.context.getEnvironment());
 		}
 

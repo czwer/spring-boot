@@ -76,7 +76,7 @@ public class AopAutoConfiguration {
 		private static final Log logger = LogFactory.getLog(ClassProxyingConfiguration.class);
 		@Bean
 		static BeanFactoryPostProcessor forceAutoProxyCreatorToUseClassProxying() {
-			logger.info("自定义日志---通过@Bean声明BeanFactoryPostProcessor：forceAutoProxyCreatorToUseClassProxying");
+			logger.info("[SPRINGBOOT] 自定义日志---通过@Bean声明BeanFactoryPostProcessor：forceAutoProxyCreatorToUseClassProxying");
 			return (beanFactory) -> {
 				if (beanFactory instanceof BeanDefinitionRegistry registry) {
 					AopConfigUtils.registerAutoProxyCreatorIfNecessary(registry);

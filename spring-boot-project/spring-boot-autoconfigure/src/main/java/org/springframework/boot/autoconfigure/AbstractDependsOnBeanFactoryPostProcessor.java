@@ -109,7 +109,7 @@ public abstract class AbstractDependsOnBeanFactoryPostProcessor implements BeanF
 
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
-		logger.info("自定义日志---AbstractDependsOnBeanFactoryPostProcessor实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：主要用于管理Bean之间的依赖关系，确保特定Bean在初始化之前，其依赖的Bean已经正确初始化");
+		logger.info("[SPRINGBOOT] 自定义日志---AbstractDependsOnBeanFactoryPostProcessor实现BeanFactoryPostProcessor接口，执行方法postProcessBeanFactory：主要用于管理Bean之间的依赖关系，确保特定Bean在初始化之前，其依赖的Bean已经正确初始化");
 
 		for (String beanName : getBeanNames(beanFactory)) {
 			BeanDefinition definition = getBeanDefinition(beanName, beanFactory);

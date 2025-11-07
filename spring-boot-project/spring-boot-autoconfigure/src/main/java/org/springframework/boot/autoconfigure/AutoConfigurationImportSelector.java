@@ -267,7 +267,9 @@ public class AutoConfigurationImportSelector implements DeferredImportSelector, 
 	}
 
 	protected List<AutoConfigurationImportFilter> getAutoConfigurationImportFilters() {
-		return SpringFactoriesLoader.loadFactories(AutoConfigurationImportFilter.class, this.beanClassLoader);
+		List<AutoConfigurationImportFilter> autoConfigurationImportFilterList = SpringFactoriesLoader.loadFactories(AutoConfigurationImportFilter.class, this.beanClassLoader);
+		autoConfigurationImportFilterList.forEach(a ->{logger.info("[SPRINGBOOT] 自定义日志---加载的AutoConfigurationImportFilter："+ a.getClass().getName());});
+		return autoConfigurationImportFilterList;
 	}
 
 	private ConfigurationClassFilter getConfigurationClassFilter() {

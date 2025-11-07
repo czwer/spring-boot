@@ -127,7 +127,7 @@ public abstract class AutoConfigurationPackages {
 		private static final Log logger = LogFactory.getLog(Registrar.class);
 		@Override
 		public void registerBeanDefinitions(AnnotationMetadata metadata, BeanDefinitionRegistry registry) {
-			logger.info("自定义日志【重要】---AutoConfigurationPackages$Registrar通过@Import导入，在registerBeanDefinitions方法中调用：register方法");
+			logger.info("[SPRINGBOOT] 自定义日志【重要】---AutoConfigurationPackages$Registrar通过@Import导入，在registerBeanDefinitions方法中调用：register方法");
 			register(registry, new PackageImports(metadata).getPackageNames().toArray(new String[0]));
 		}
 
